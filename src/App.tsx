@@ -43,10 +43,13 @@ interface MenuItem {
 interface CartItem {
   cartId: string;
   name: string;
+  category: string;
   price: number;
   quantity: number;
   variant?: string;
   sauce?: string;
+  sauces?: string[];
+  crudites?: string[];
   isMenu?: boolean;
   supplements?: string[];
 }
@@ -96,11 +99,8 @@ const ReviewCard = ({ name, initials, rating, date, text, tags }: {
     const displayText = isExpanded ? text : text.slice(0, 150) + (isLongText ? '...' : '');
 
     return (
-        <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-100 relative group flex flex-col h-full"
+        <div 
+            className="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-md transition-shadow relative group flex flex-col h-full"
         >
             <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-600 font-bold text-lg">
@@ -136,21 +136,21 @@ const ReviewCard = ({ name, initials, rating, date, text, tags }: {
                     </span>
                 ))}
             </div>
-        </motion.div>
+        </div>
     );
 };
 
 // --- Data ---
 const PIZZA_MENU: MenuItem[] = [
   // Base Tomate
-  { name: 'Marguerita', price: { standard: 450, large: 800 }, description: 'Sauce tomate, fromage, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1574071318508-1cdbad80ad38?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Thon', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, thon, oignons, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Poulet', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poulet, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Viande Hachée', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, viande hachée, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1593504049359-74330189a355?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Vegie', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poivrons, oignons, tomate fraîche, aubergines, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1528137871350-5fca72322bcd?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Oriental', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, merguez, poivrons, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?q=80&w=400&auto=format&fit=crop' },
-  { name: 'BBQ', price: { standard: 700, large: 1300 }, description: 'Sauce tomate, fromage, viande hachée, oeuf, poivrons, olives, sauce BBQ.', base: 'tomato', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=400&auto=format&fit=crop' },
-  { name: '3 Fromages', price: { standard: 750, large: 1400 }, description: 'Sauce tomate, mozzarella, gruyère, boursin, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-151152857478e-94fbbf0d7414?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Marguerita', price: { standard: 450, large: 800 }, description: 'Sauce tomate, fromage, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
+  { name: 'Thon', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, thon, oignons, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
+  { name: 'Poulet', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poulet, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
+  { name: 'Viande Hachée', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, viande hachée, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
+  { name: 'Vegie', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poivrons, oignons, tomate fraîche, aubergines, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
+  { name: 'Oriental', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, merguez, poivrons, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
+  { name: 'BBQ', price: { standard: 700, large: 1300 }, description: 'Sauce tomate, fromage, viande hachée, oeuf, poivrons, olives, sauce BBQ.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
+  { name: '3 Fromages', price: { standard: 750, large: 1400 }, description: 'Sauce tomate, mozzarella, gruyère, boursin, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
   // Base Crème
   { name: 'Forestière', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, oignons, champignons, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=400&auto=format&fit=crop' },
   { name: 'Tartiflette', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, champignons, pomme de terre, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=400&auto=format&fit=crop' },
@@ -162,34 +162,34 @@ const PIZZA_MENU: MenuItem[] = [
 ];
 
 const BURGER_MENU: MenuItem[] = [
-  { name: 'Cheese Burger', price: 300, description: 'Steak de boeuf, cheddar fondant, salade croquante, tomate, oignons rouges.', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Chicken Crispy', price: 450, description: 'Filet de poulet pané maison, croustillant à souhait, sauce blanche.', image: 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Double Cheese', price: 600, description: 'Double dose de plaisir : 2 steaks, double cheddar, oignons grillés.', image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Double Chicken Crispy', price: 650, description: 'Deux filets de poulet croustillants pour une faim monumentale.', image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Triple Cheese', price: 800, description: 'Le défi ultime : 3 steaks, 3 tranches de fromage, gourmandise absolue.', image: 'https://images.unsplash.com/photo-1550317144-b38c5f693240?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Mix Burger', price: 700, description: 'Le meilleur des deux mondes : steak de boeuf et poulet crispy réunis.', image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Gourmand', price: 750, description: 'Steak, dinde fumée, bacon de boeuf grillé, sauce barbecue Artisanale.', image: 'https://images.unsplash.com/photo-1547584370-2cc98b8b8dc8?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Cheese Burger', price: 300, description: 'Steak de boeuf, cheddar fondant, salade croquante, tomate, oignons rouges.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Chicken Crispy', price: 450, description: 'Filet de poulet pané maison, croustillant à souhait, sauce blanche.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Double Cheese', price: 600, description: 'Double dose de plaisir : 2 steaks, double cheddar, oignons grillés.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Double Chicken Crispy', price: 650, description: 'Deux filets de poulet croustillants pour une faim monumentale.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Triple Cheese', price: 800, description: 'Le défi ultime : 3 steaks, 3 tranches de fromage, gourmandise absolue.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Mix Burger', price: 700, description: 'Le meilleur des deux mondes : steak de boeuf et poulet crispy réunis.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Le Gourmand', price: 750, description: 'Steak, dinde fumée, bacon de boeuf grillé, sauce barbecue Artisanale.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
 ];
 
 const TACOS_MENU: MenuItem[] = [
-  { name: 'Le Poulet', price: 550, description: 'Poulet mariné, frites croustillantes, sauce fromagère onctueuse.', image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=400&auto=format&fit=crop' },
-  { name: "L'Indien", price: 600, description: 'Poulet au curry façon Madras, frites et notre fameuse sauce fromage.', image: 'https://images.unsplash.com/photo-1613514785940-daed07799d9b?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Tandoori', price: 600, description: 'Poulet tandoori épicé, frites, sauce fromagère maison.', image: 'https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Mix', price: 600, description: 'Mélange savoureux de viande hachée et poulet mariné.', image: 'https://images.unsplash.com/photo-1562059390-a761a084768e?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Beef', price: 650, description: 'Viande hachée 100% pur boeuf, frites et sauce fromagère.', image: 'https://images.unsplash.com/photo-1585238341267-1cfec2046a55?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Crispy', price: 650, description: 'Poulet pané ultra croustillant, frites, sauce au choix.', image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Fermier', price: 650, description: 'Dinde fumée, poulet tendre, frites et coeur fondant de fromage.', image: 'https://images.unsplash.com/photo-1619193100630-91896791194e?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Farmer', price: 700, description: 'Gros appétit : dinde fumée, viande hachée, double dose de frites.', image: 'https://images.unsplash.com/photo-1593504049359-74330189a355?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Le Poulet', price: 550, description: 'Poulet mariné, frites croustillantes, sauce fromagère onctueuse.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: "L'Indien", price: 600, description: 'Poulet au curry façon Madras, frites et notre fameuse sauce fromage.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Le Tandoori', price: 600, description: 'Poulet tandoori épicé, frites, sauce fromagère maison.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Le Mix', price: 600, description: 'Mélange savoureux de viande hachée et poulet mariné.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Le Beef', price: 650, description: 'Viande hachée 100% pur boeuf, frites et sauce fromagère.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Le Crispy', price: 650, description: 'Poulet pané ultra croustillant, frites, sauce au choix.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Le Fermier', price: 650, description: 'Dinde fumée, poulet tendre, frites et coeur fondant de fromage.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Le Farmer', price: 700, description: 'Gros appétit : dinde fumée, viande hachée, double dose de frites.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
 ];
 
 const TEXMEX_MENU: MenuItem[] = [
-  { name: 'CHICKEN PARTY medium', price: 2000, description: 'Le combo parfait : 5 WINGS • 5 TENDERS • 7 NUGGETS • 2 FRITES • 1 BOUTEILLE 1L', image: 'https://images.unsplash.com/photo-1562967914-608f82629710?q=80&w=400&auto=format&fit=crop' },
-  { name: 'CHICKEN PARTY xxl', price: 3500, description: 'Pour toute la famille : 10 WINGS • 10 TENDERS • 14 NUGGETS • 4 FRITES • 1 BOUTEILLE 1L', image: 'https://images.unsplash.com/photo-1623653387945-2fd25214f8fc?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Wrap Poulet', price: 550, description: 'Poulet mariné 24h, crudités fraîches, sauce blanche onctueuse.', image: 'https://images.unsplash.com/photo-1626700051175-656fc7bc31ee?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Croque-Monsieur', price: 250, description: 'Pain de mie toasté, dinde fumée, fromage fondu et gratiné.', image: 'https://images.unsplash.com/photo-1475090169720-6f784260907d?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Barquette Frites x3', price: 300, image: 'https://images.unsplash.com/photo-1573016608964-f4b0ab1ae1cb?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Barquette Frites x5', price: 500, image: 'https://images.unsplash.com/photo-1576107232684-1279f390859f?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Barquette Frites x7', price: 600, image: 'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?q=80&w=400&auto=format&fit=crop' },
+  { name: 'CHICKEN PARTY medium', price: 2000, description: 'Le combo parfait : 5 WINGS • 5 TENDERS • 7 NUGGETS • 2 FRITES • 1 BOUTEILLE 1L', image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
+  { name: 'CHICKEN PARTY xxl', price: 3500, description: 'Pour toute la famille : 10 WINGS • 10 TENDERS • 14 NUGGETS • 4 FRITES • 1 BOUTEILLE 1L', image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
+  { name: 'Wrap Poulet', price: 550, description: 'Poulet mariné 24h, crudités fraîches, sauce blanche onctueuse.', image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
+  { name: 'Croque-Monsieur', price: 250, description: 'Pain de mie toasté, dinde fumée, fromage fondu et gratiné.', image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
+  { name: 'Barquette Frites x3', price: 300, image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
+  { name: 'Barquette Frites x5', price: 500, image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
+  { name: 'Barquette Frites x7', price: 600, image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
 ];
 
 const SUPPLEMENTS = [
@@ -202,18 +202,18 @@ const SUPPLEMENTS = [
 ];
 
 const DESSERT_MENU: MenuItem[] = [
-  { name: 'Tiramisu Maison', price: 450, description: 'Le classique italien revisité par notre chef.', image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Mousse au Chocolat', price: 350, description: 'Onctueuse et légère, un nuage de cacao.', image: 'https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Panacotta Fruits Rouges', price: 400, description: 'Douceur lactée et coulis acidulé.', image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Cheesecake Citron', price: 500, description: 'Frais et fondant, pour finir en légèreté.', image: 'https://images.unsplash.com/photo-1524351199679-46cddfdbb647?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Tiramisu Maison', price: 450, description: 'Le classique italien revisité par notre chef.', image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg' },
+  { name: 'Mousse au Chocolat', price: 350, description: 'Onctueuse et légère, un nuage de cacao.', image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg' },
+  { name: 'Panacotta Fruits Rouges', price: 400, description: 'Douceur lactée et coulis acidulé.', image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg' },
+  { name: 'Cheesecake Citron', price: 500, description: 'Frais et fondant, pour finir en légèreté.', image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg' },
 ];
 
 const DRINKS = [
-  { name: 'Eau 33cl', price: 30, image: 'https://images.unsplash.com/photo-1523362628242-f513a30efaf3?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Eau gazeuse 33cl', price: 50, image: 'https://images.unsplash.com/photo-1560023907-5f339617ea30?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Jus 33cl', price: 100, image: 'https://images.unsplash.com/photo-1600271886332-699bb2798bca?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Canette 33cl', price: 100, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Boisson gazeuse 1L', price: 150, image: 'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Eau 33cl', price: 30, image: 'https://www.pequerecetas.com/wp-content/uploads/2013/04/refrescos-para-ninos.jpg' },
+  { name: 'Eau gazeuse 33cl', price: 50, image: 'https://www.pequerecetas.com/wp-content/uploads/2013/04/refrescos-para-ninos.jpg' },
+  { name: 'Jus 33cl', price: 100, image: 'https://www.pequerecetas.com/wp-content/uploads/2013/04/refrescos-para-ninos.jpg' },
+  { name: 'Canette 33cl', price: 100, image: 'https://www.pequerecetas.com/wp-content/uploads/2013/04/refrescos-para-ninos.jpg' },
+  { name: 'Boisson gazeuse 1L', price: 150, image: 'https://www.pequerecetas.com/wp-content/uploads/2013/04/refrescos-para-ninos.jpg' },
 ];
 
 const CATEGORIES = [
@@ -223,7 +223,7 @@ const CATEGORIES = [
     subtitle: 'Au Feu de Bois', 
     menu: PIZZA_MENU, 
     icon: <UtensilsCrossed className="w-4 h-4 md:w-5 md:h-5" />, 
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg',
     bentoSpan: 'md:col-span-8'
   },
   { 
@@ -232,7 +232,7 @@ const CATEGORIES = [
     subtitle: 'Gourmet', 
     menu: BURGER_MENU, 
     icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-orange-400" />, 
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg',
     bentoSpan: 'md:col-span-4'
   },
   { 
@@ -241,7 +241,7 @@ const CATEGORIES = [
     subtitle: "L'Authentique", 
     menu: TACOS_MENU, 
     icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-sm bg-yellow-400" />, 
-    image: 'https://images.unsplash.com/photo-1565299507177-b0ac66763828?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png',
     bentoSpan: 'md:col-span-4'
   },
   { 
@@ -250,7 +250,7 @@ const CATEGORIES = [
     subtitle: 'Délices Mix', 
     menu: TEXMEX_MENU, 
     icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-red-400" />, 
-    image: 'https://images.unsplash.com/photo-1534352956279-b4230ad3ca31?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg',
     bentoSpan: 'md:col-span-8'
   },
   { 
@@ -259,7 +259,7 @@ const CATEGORIES = [
     subtitle: 'Fraîcheur', 
     menu: DRINKS, 
     icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-blue-400" />, 
-    image: 'https://images.unsplash.com/photo-1544145945-f904253db0ad?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://www.pequerecetas.com/wp-content/uploads/2013/04/refrescos-para-ninos.jpg',
     bentoSpan: 'hidden'
   },
   { 
@@ -268,13 +268,26 @@ const CATEGORIES = [
     subtitle: 'Douceurs', 
     menu: DESSERT_MENU, 
     icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-pink-400" />, 
-    image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg',
     bentoSpan: 'hidden'
   },
 ];
 
+const CRUDITES = [
+  'Salade', 'Tomate', 'Oignons'
+];
+
 const SAUCES = [
   'Ketchup', 'Mayonnaise', 'Moutarde', 'Harissa', 'Burger', 'Algérienne', 'Barbecue', 'Brazil', 'Samourai'
+];
+
+const GALLERY_IMAGES = [
+  { url: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg', title: 'Pizza Artisanale' },
+  { url: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg', title: 'Burger Gourmet' },
+  { url: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg', title: 'Tex-Mex Délices' },
+  { url: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png', title: 'Tacos Authentique' },
+  { url: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg', title: 'Desserts Maison' },
+  { url: 'https://www.pequerecetas.com/wp-content/uploads/2013/04/refrescos-para-ninos.jpg', title: 'Boissons Fraîches' },
 ];
 
 // --- Helper Functions ---
@@ -427,12 +440,14 @@ const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, title }: {
  
         <div className="flex items-center gap-4">
             <div className="hidden md:flex items-center gap-6">
-                <button 
-                  onClick={onOrderClick}
-                  className="bg-red-600 text-white px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-red-900/10"
-                >
-                  Commander en ligne
-                </button>
+                {onOrderClick && (
+                  <button 
+                    onClick={onOrderClick}
+                    className="bg-red-600 text-white px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-red-900/10"
+                  >
+                    Commander en ligne
+                  </button>
+                )}
                 <button 
                   onClick={() => onMenuClick?.()} 
                   className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 hover:bg-slate-100 transition-all"
@@ -496,6 +511,15 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
               {[
                 { label: 'Accueil', action: () => onNavigate('home') },
                 { label: 'La Carte', action: () => onNavigate('full_menu') },
+                { label: 'Galerie', action: () => {
+                  const el = document.getElementById('gallery-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  else onNavigate('home');
+                  setTimeout(() => {
+                    const el2 = document.getElementById('gallery-section');
+                    if (el2) el2.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }},
                 { label: 'Adresse', href: 'https://maps.google.com/maps?q=L\'Artisanale+Draria' },
                 { label: 'Livraison', href: 'tel:0782777560' },
               ].map((item, index) => (
@@ -655,6 +679,22 @@ const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }
               </button>
             </li>
             <li>
+              <button 
+                onClick={() => {
+                  const el = document.getElementById('gallery-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  else onNavigate?.('home');
+                  setTimeout(() => {
+                    const el2 = document.getElementById('gallery-section');
+                    if (el2) el2.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="text-sm font-medium text-slate-300 hover:text-red-500 transition-colors flex items-center gap-2"
+              >
+                Galerie
+              </button>
+            </li>
+            <li>
               <a 
                 href="https://www.google.com/maps/search/L'Artisanale+Draria+Alger" 
                 target="_blank" 
@@ -738,18 +778,18 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
             className="absolute inset-0 w-full h-full"
           >
             <img 
-                src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop" 
+                src="https://tb-static.uber.com/prod/image-proc/processed_images/56ca44860149e20d3b8e469263f518fd/c9252e6c6cd289c588c3381bc77b1dfc.jpeg" 
                 alt="Hero Pizza" 
                 className="w-full h-full object-cover"
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-white" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-transparent" />
           
           <div className="relative z-10 text-center px-4 md:px-16 lg:px-24">
             <div className="mb-4 inline-block relative">
                 <div className="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 bg-white/10 backdrop-blur-md mx-auto relative ring-1 ring-white/20">
                     <img 
-                        src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=300&h=300&auto=format&fit=crop" 
+                        src="https://scontent.falg7-6.fna.fbcdn.net/v/t39.30808-1/298339068_379924957653168_8646108471508860568_n.jpg?stp=dst-jpg_s480x480_tt6&_nc_cat=110&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=lskXSF_FD-8Q7kNvwEHtc90&_nc_oc=AdoofTpowtnL9uukTrs7KIQ4Sel9ClJSxCVDA0YYyZezKMIroAfq1wI2cHqYDMZehUQ&_nc_zt=24&_nc_ht=scontent.falg7-6.fna&_nc_gid=d5ODKHHPuh8eNPWVdhoVnA&_nc_ss=7b289&oh=00_Af2JIiMyUNHaUdQ1MYpfY5_CHv2VWn9EePkgDrvvx5C00A&oe=69F57F3A" 
                         alt="L'Artisanale Logo" 
                         className="w-full h-full rounded-full object-cover border border-white/30"
                         referrerPolicy="no-referrer"
@@ -774,15 +814,10 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
 
         <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 -mt-16 relative z-20 pb-16">
             {/* Quick Link Bio Section */}
-            <motion.div 
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={containerVariants}
+            <div 
                 className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-[92px]"
             >
-                <motion.button 
-                    variants={childVariants}
+                <button 
                     id="link-order-online"
                     onClick={() => onNavigate('full_menu')}
                     className="w-full bg-red-600 text-white p-7 md:p-8 rounded-2xl md:rounded-3xl flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98]"
@@ -796,10 +831,9 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                             <span className="text-[10px] md:text-[10px] uppercase opacity-60 font-bold tracking-widest block text-red-100">Service Rapide</span>
                         </div>
                     </div>
-                </motion.button>
+                </button>
 
-                <motion.a 
-                    variants={childVariants}
+                <a 
                     href="tel:0782777560" 
                     className="bg-white border border-slate-100 p-7 md:p-8 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                 >
@@ -810,10 +844,9 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                         <span className="block font-black text-xl md:text-2xl leading-tight">Nous Appeler</span>
                         <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">0782 77 75 60</span>
                     </div>
-                </motion.a>
+                </a>
 
-                <motion.a 
-                    variants={childVariants}
+                <a 
                     href="https://www.google.com/maps/search/L'Artisanale+Draria+Alger" 
                     target="_blank" 
                     rel="noreferrer"
@@ -826,8 +859,8 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                         <span className="block font-black text-xl md:text-2xl leading-tight">Notre Adresse</span>
                         <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Draria, Alger</span>
                     </div>
-                </motion.a>
-            </motion.div>
+                </a>
+            </div>
 
 
             {/* Category Grid - Bento Style Optimized for Desktop */}
@@ -877,32 +910,47 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-12 md:gap-y-4">
                     {[
-                        { name: 'Pizza Saumon', price: '1100 DA', desc: 'Saumon fumé de qualité, aneth fraîche, crème onctueuse.', cat: 'Signature' },
-                        { name: 'Double Smash', price: '900 DA', desc: 'Deux steaks de boeuf pur jus, cheddar affiné, sauce secrète.', cat: 'Gourmet' },
-                        { name: 'Wrap Poulet', price: '550 DA', desc: 'Poulet mariné 24h, crudités croquantes, sauce maison.', cat: 'Authentique' },
+                        { name: 'Pizza Saumon', price: '1100 DA', desc: 'Saumon fumé de qualité, aneth fraîche, crème onctueuse.', cat: 'Signature', catId: 'pizza' },
+                        { name: 'Double Smash', price: '900 DA', desc: 'Deux steaks de boeuf pur jus, cheddar affiné, sauce secrète.', cat: 'Gourmet', catId: 'burger' },
+                        { name: 'Wrap Poulet', price: '550 DA', desc: 'Poulet mariné 24h, crudités croquantes, sauce maison.', cat: 'Authentique', catId: 'texmex' },
                     ].map((item, idx) => (
                         <div 
                             key={idx} 
-                            onClick={() => onNavigate('full_menu')}
+                            onClick={() => onNavigate('full_menu', item.catId)}
                             className="group py-5 flex flex-col justify-between gap-4 transition-all hover:bg-slate-100/50 rounded-2xl px-4 bg-slate-50/10 md:bg-transparent md:px-2 md:py-6 cursor-pointer border border-transparent hover:border-slate-100"
                         >
-                            <div className="space-y-2">
-                                <div className="flex justify-between items-start gap-2">
-                                    <h4 className="font-serif text-base md:text-lg font-bold text-slate-950 group-hover:text-red-600 transition-colors leading-tight">
-                                        {item.name}
-                                    </h4>
-                                    <span className="text-sm md:text-base font-black text-slate-950 tabular-nums whitespace-nowrap">
-                                        {item.price}
-                                    </span>
+                            <div className="space-y-4">
+                                <div className="space-y-2">
+                                    <div className="flex justify-between items-start gap-2">
+                                        <h4 className="font-serif text-base md:text-lg font-bold text-slate-950 group-hover:text-red-600 transition-colors leading-tight">
+                                            {item.name}
+                                        </h4>
+                                        <span className="text-sm md:text-base font-black text-slate-950 tabular-nums whitespace-nowrap">
+                                            {item.price}
+                                        </span>
+                                    </div>
+                                    <p className="text-slate-600 text-[12px] md:text-sm font-medium leading-relaxed line-clamp-2">
+                                        {item.desc}
+                                    </p>
+                                    <div className="flex items-center gap-1.5 pt-1">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-red-600/40 group-hover:bg-red-600 transition-colors" />
+                                        <span className="text-[10px] md:text-[11px] font-black uppercase text-slate-400 tracking-wider group-hover:text-slate-500 transition-colors">
+                                            {item.cat}
+                                        </span>
+                                    </div>
                                 </div>
-                                <p className="text-slate-600 text-[12px] md:text-sm font-medium leading-relaxed line-clamp-2">
-                                    {item.desc}
-                                </p>
-                                <div className="flex items-center gap-1.5 pt-1">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-red-600/40 group-hover:bg-red-600 transition-colors" />
-                                    <span className="text-[10px] md:text-[11px] font-black uppercase text-slate-400 tracking-wider group-hover:text-slate-500 transition-colors">
-                                        {item.cat}
-                                    </span>
+                                
+                                <div className="pt-2 md:pt-0">
+                                    <button 
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onNavigate('full_menu', item.catId);
+                                        }}
+                                        className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-full text-[10px] uppercase font-black tracking-widest hover:bg-red-600 transition-colors shadow-lg active:scale-95"
+                                    >
+                                        Commander
+                                        <ChevronRight className="w-3 h-3" />
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -916,15 +964,8 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                             <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Valeurs</span>
                             <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Notre Engagement</h3>
                         </div>
-                        <p className="text-slate-400 text-xs md:text-sm max-w-lg font-medium leading-relaxed">
-                            Plus qu'une pizzeria, un savoir-faire transmis pour vous offrir le meilleur de la cuisine artisanale.
-                        </p>
                     </div>
-                    <motion.div 
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={containerVariants}
+                    <div 
                         className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
                     >
                         {[
@@ -947,9 +988,8 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                                 color: 'blue'
                             },
                         ].map((item, idx) => (
-                            <motion.div 
+                            <div 
                                 key={idx}
-                                variants={childVariants}
                                 className="group p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-700 relative overflow-hidden"
                             >
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/5 blur-[40px] group-hover:bg-red-600/10 transition-all" />
@@ -962,26 +1002,54 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                                         {item.desc}
                                     </p>
                                 </div>
-                            </motion.div>
+                            </div>
                         ))}
-                    </motion.div>
+                    </div>
                 </div>
 
-            {/* Testimonials section optimization for PC */}
+            {/* Gallery Section */}
+            <div id="gallery-section" className="mb-20 md:mb-[7.5rem] scroll-mt-24">
+                <div className="flex flex-col text-left mb-12">
+                    <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Galerie</span>
+                    <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Nos Réalisations</h3>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+                    {GALLERY_IMAGES.map((img, idx) => (
+                        <motion.div 
+                            key={idx}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: idx * 0.1, duration: 0.5 }}
+                            viewport={{ once: true }}
+                            className={`${idx >= 4 ? 'hidden md:block' : ''} aspect-square relative group overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg`}
+                        >
+                            <img 
+                                src={img.url} 
+                                alt={img.title}
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                            />
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                                <p className="text-white font-bold text-sm md:text-lg text-center">{img.title}</p>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Review Section */}
             <div className="mb-20 md:mb-[7.5rem]">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
                     <div className="flex flex-col text-left">
                         <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Avis Clients</span>
                         <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Ce qu'on dit de nous</h3>
                     </div>
-                    <motion.div 
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        whileInView={{ scale: 1, opacity: 1 }}
+                    <div 
                         className="flex items-center gap-3 bg-red-50 px-6 py-3 rounded-full border border-red-100 shadow-lg shadow-red-900/5 self-start md:self-auto"
                     >
                         <Star className="w-4 h-4 text-red-600 fill-red-600" />
                         <span className="text-[11px] font-black text-red-600 uppercase tracking-[0.2em]">4.8/5 sur Google</span>
-                    </motion.div>
+                    </div>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -1317,47 +1385,80 @@ const CustomizationModal = ({
   onClose, 
   onConfirm,
   initialVariant,
-  initialPrice
+  initialPrice,
+  initialSauce,
+  initialSauces,
+  initialCrudites,
+  initialIsMenu,
+  initialSupplements,
+  isEditing
 }: { 
   item: MenuItem | null, 
   category?: string,
   isOpen: boolean, 
   onClose: () => void, 
-  onConfirm: (sauce?: string, isMenu?: boolean, variant?: string, price?: number, supplements?: string[]) => void,
+  onConfirm: (sauces?: string[], isMenu?: boolean, variant?: string, price?: number, supplements?: string[], crudites?: string[]) => void,
   initialVariant?: string,
-  initialPrice?: number
+  initialPrice?: number,
+  initialSauce?: string,
+  initialSauces?: string[],
+  initialCrudites?: string[],
+  initialIsMenu?: boolean,
+  initialSupplements?: string[],
+  isEditing?: boolean
 }) => {
-  const [selectedSauce, setSelectedSauce] = useState('');
-  const [isMenu, setIsMenu] = useState(false);
-  const [selectedSupplements, setSelectedSupplements] = useState<string[]>([]);
+  const [selectedSauces, setSelectedSauces] = useState<string[]>(initialSauces || (initialSauce ? [initialSauce] : []));
+  const [selectedCrudites, setSelectedCrudites] = useState<string[]>(initialCrudites || CRUDITES);
+  const [isMenu, setIsMenu] = useState(initialIsMenu || false);
+  const [selectedSupplements, setSelectedSupplements] = useState<string[]>(initialSupplements || []);
   const [selectedVariant, setSelectedVariant] = useState(initialVariant || '');
   const [currentPrice, setCurrentPrice] = useState(initialPrice || 0);
 
   useEffect(() => {
     if (item) {
-      if (initialVariant) {
+      if (initialVariant !== undefined) {
         setSelectedVariant(initialVariant);
         setCurrentPrice(initialPrice || 0);
       } else if (typeof item.price === 'number') {
+        setSelectedVariant('');
         setCurrentPrice(item.price);
       } else if ('standard' in item.price) {
-        setSelectedVariant('Standard');
+        setSelectedVariant('L');
         setCurrentPrice(item.price.standard);
       } else if ('s' in item.price) {
         setSelectedVariant('S');
         setCurrentPrice(item.price.s);
       }
-      setSelectedSauce('');
-      setIsMenu(false);
-      setSelectedSupplements([]);
+      setSelectedSauces(category === 'pizza' ? [] : (initialSauces || (initialSauce ? [initialSauce] : [])));
+      setSelectedCrudites(initialCrudites || CRUDITES);
+      setIsMenu(category === 'pizza' ? false : initialIsMenu || false);
+      setSelectedSupplements(initialSupplements || []);
     }
-  }, [item, initialVariant, initialPrice]);
+  }, [item, initialVariant, initialPrice, initialSauce, initialSauces, initialCrudites, initialIsMenu, initialSupplements, category]);
 
   if (!item) return null;
 
   const handleVariantChange = (v: string, p: number) => {
     setSelectedVariant(v);
     setCurrentPrice(p);
+  };
+
+  const toggleSauce = (sauce: string) => {
+    setSelectedSauces(prev => {
+      if (prev.includes(sauce)) {
+        return prev.filter(s => s !== sauce);
+      }
+      if (prev.length < 2) {
+        return [...prev, sauce];
+      }
+      return prev;
+    });
+  };
+
+  const toggleCrudite = (name: string) => {
+    setSelectedCrudites(prev => 
+      prev.includes(name) ? prev.filter(c => c !== name) : [...prev, name]
+    );
   };
 
   const toggleSupplement = (name: string) => {
@@ -1420,16 +1521,16 @@ const CustomizationModal = ({
                     {'standard' in item.price ? (
                       <>
                         <button 
-                          onClick={() => handleVariantChange('Standard', (item.price as any).standard)}
-                          className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold ${selectedVariant === 'Standard' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
+                          onClick={() => handleVariantChange('L', (item.price as any).standard)}
+                          className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold ${selectedVariant === 'L' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
                         >
-                          Standard
+                          L
                         </button>
                         <button 
-                          onClick={() => handleVariantChange('Large', (item.price as any).large)}
-                          className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold ${selectedVariant === 'Large' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
+                          onClick={() => handleVariantChange('XL', (item.price as any).large)}
+                          className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold ${selectedVariant === 'XL' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
                         >
-                          Large
+                          XL
                         </button>
                       </>
                     ) : (
@@ -1448,7 +1549,7 @@ const CustomizationModal = ({
               )}
 
               {/* Menu or Solo - Only for main dishes */}
-              {['pizza', 'burger', 'tacos', 'texmex'].includes(category || '') && (
+              {['burger', 'tacos', 'texmex'].includes(category || '') && (
                 <div className="space-y-3">
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Formule</h4>
                   <div className="flex gap-3">
@@ -1470,19 +1571,42 @@ const CustomizationModal = ({
                 </div>
               )}
 
-              {/* Sauce Selection - Only for main dishes */}
-              {['pizza', 'burger', 'tacos', 'texmex'].includes(category || '') && (
+              {/* Crudités Selection - Only for burgers */}
+              {category === 'burger' && (
                 <div className="space-y-3">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Choisir une sauce</h4>
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Crudités</h4>
+                  <div className="grid grid-cols-2 gap-2">
+                    {CRUDITES.map(item => (
+                      <button 
+                        key={item}
+                        onClick={() => toggleCrudite(item)}
+                        className={`py-3 px-4 rounded-xl border-2 text-xs font-bold transition-all text-left flex items-center justify-between ${selectedCrudites.includes(item) ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-600'}`}
+                      >
+                        {item}
+                        {selectedCrudites.includes(item) ? <Plus className="w-3 h-3 rotate-45" /> : <Plus className="w-3 h-3 text-slate-300" />}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Sauce Selection - Only for main dishes */}
+              {['burger', 'tacos', 'texmex'].includes(category || '') && (
+                <div className="space-y-3">
+                   <div className="flex items-center justify-between">
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Choisir vos sauces (2 max)</h4>
+                    <span className="text-[10px] font-bold text-slate-400">{selectedSauces.length}/2</span>
+                  </div>
                   <div className="grid grid-cols-2 gap-2">
                     {SAUCES.map(sauce => (
                       <button 
                          key={sauce}
-                         onClick={() => setSelectedSauce(sauce)}
-                         className={`py-3 px-4 rounded-xl border-2 text-xs font-bold transition-all text-left flex items-center justify-between ${selectedSauce === sauce ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-600'}`}
+                         onClick={() => toggleSauce(sauce)}
+                         className={`py-3 px-4 rounded-xl border-2 text-xs font-bold transition-all text-left flex items-center justify-between ${selectedSauces.includes(sauce) ? 'border-red-600 bg-red-50 text-red-600' : (selectedSauces.length >= 2 ? 'opacity-50 cursor-not-allowed border-slate-100 text-slate-400' : 'border-slate-100 text-slate-600')}`}
+                         disabled={!selectedSauces.includes(sauce) && selectedSauces.length >= 2}
                       >
                          {sauce}
-                         {selectedSauce === sauce && <div className="w-2 h-2 rounded-full bg-red-600" />}
+                         {selectedSauces.includes(sauce) && <div className="w-2 h-2 rounded-full bg-red-600" />}
                       </button>
                     ))}
                   </div>
@@ -1524,10 +1648,10 @@ const CustomizationModal = ({
             <div className="p-6 bg-slate-50 border-t border-slate-100">
                 <div className="flex justify-center">
                     <button 
-                      onClick={() => onConfirm(selectedSauce, isMenu, selectedVariant, currentPrice, selectedSupplements)}
+                      onClick={() => onConfirm(selectedSauces, isMenu, selectedVariant, currentPrice, selectedSupplements, selectedCrudites)}
                       className="w-full md:w-auto md:min-w-[280px] py-4 px-10 bg-red-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all"
                     >
-                      Ajouter au panier • {finalPrice} DA
+                      {isEditing ? 'Mettre à jour' : 'Ajouter au panier'} • {finalPrice} DA
                     </button>
                 </div>
             </div>
@@ -1700,13 +1824,15 @@ const CartDrawer = ({
   onClose, 
   cart, 
   onUpdateQuantity, 
-  onRemove 
+  onRemove,
+  onEdit
 }: { 
   isOpen: boolean, 
   onClose: () => void, 
   cart: CartItem[], 
   onUpdateQuantity: (id: string, delta: number) => void,
-  onRemove: (id: string) => void
+  onRemove: (id: string) => void,
+  onEdit: (item: CartItem) => void
 }) => {
   const [userInfo, setUserInfo] = useState<UserInfo>({ 
     name: '', 
@@ -1750,7 +1876,16 @@ const CartDrawer = ({
     let details = [];
     if (item.variant) details.push(item.variant);
     if (item.isMenu) details.push('MENU');
-    if (item.sauce) details.push(`Sauce ${item.sauce}`);
+    if (item.sauce) details.push(`Sauce: ${item.sauce}`);
+    
+    if (item.category === 'burger' && item.crudites) {
+      if (item.crudites.length === 0) {
+        details.push('Sans crudités');
+      } else if (item.crudites.length < CRUDITES.length) {
+        details.push(`Crudités: ${item.crudites.join(', ')}`);
+      }
+    }
+
     if (item.supplements && item.supplements.length > 0) details.push(`Suppléments: ${item.supplements.join(', ')}`);
     return `${item.name} ${details.length > 0 ? `(${details.join(', ')})` : ''}`;
   };
@@ -1801,11 +1936,26 @@ const CartDrawer = ({
                                   {item.variant && <span className="text-[9px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-black uppercase">{item.variant}</span>}
                                   {item.isMenu && <span className="text-[9px] bg-slate-900 text-white px-1.5 py-0.5 rounded font-black uppercase">MENU</span>}
                                   {item.sauce && <span className="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-black uppercase">Sauce: {item.sauce}</span>}
+                                  {item.crudites && item.crudites.length < CRUDITES.length && (
+                                    <span className="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-black uppercase">
+                                      {item.crudites.length === 0 ? 'Sans crudités' : `Crudités: ${item.crudites.join(', ')}`}
+                                    </span>
+                                  )}
                                   {item.supplements && item.supplements.map(s => (
                                     <span key={s} className="text-[9px] bg-green-50 text-green-700 px-1.5 py-0.5 rounded font-black uppercase">+{s}</span>
                                   ))}
                                 </div>
                                 <p className="text-sm font-semibold text-slate-400 mt-1">{item.price} DA / unité</p>
+                                <button 
+                                  onClick={() => {
+                                    onEdit(item);
+                                    onClose();
+                                  }}
+                                  className="mt-2 text-[10px] font-black uppercase tracking-widest text-red-600 hover:text-red-700 flex items-center gap-1"
+                                >
+                                  Modifier le produit
+                                  <ChevronRight className="w-3 h-3" />
+                                </button>
                               </div>
                               <div className="flex items-center gap-3">
                                 <div className="flex items-center bg-slate-100 rounded-xl p-1 gap-1">
@@ -1931,7 +2081,10 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
               {CATEGORIES.map((cat) => (
                 <button 
                   key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
+                  onClick={(e) => {
+                    setActiveCategory(cat.id);
+                    e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+                  }}
                   className={`px-4 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap flex items-center gap-2
                     ${activeCategory === cat.id 
                       ? 'bg-slate-900 text-white shadow-xl shadow-slate-900/10' 
@@ -2057,6 +2210,12 @@ export default function App() {
   const [customizingCategory, setCustomizingCategory] = useState<string | undefined>();
   const [initialVariant, setInitialVariant] = useState<string | undefined>();
   const [initialPrice, setInitialPrice] = useState<number | undefined>();
+  const [initialSauce, setInitialSauce] = useState<string | undefined>();
+  const [initialSauces, setInitialSauces] = useState<string[] | undefined>();
+  const [initialCrudites, setInitialCrudites] = useState<string[] | undefined>();
+  const [initialIsMenu, setInitialIsMenu] = useState<boolean | undefined>();
+  const [initialSupplements, setInitialSupplements] = useState<string[] | undefined>();
+  const [editingCartId, setEditingCartId] = useState<string | null>(null);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -2082,6 +2241,8 @@ export default function App() {
     
     if (category) {
       setActiveMenuCategory(category);
+    } else if (page === 'full_menu') {
+      setActiveMenuCategory('pizza');
     }
     setCurrentPage(page);
     setIsNavOpen(false);
@@ -2092,9 +2253,45 @@ export default function App() {
     setCustomizingCategory(category);
     setInitialVariant(variant);
     setInitialPrice(priceVal);
+    setInitialSauce(undefined);
+    setInitialSauces(undefined);
+    setInitialCrudites(undefined);
+    setInitialIsMenu(undefined);
+    setInitialSupplements(undefined);
+    setEditingCartId(null);
   };
 
-  const confirmAddToCart = (sauce?: string, isMenu?: boolean, variant?: string, price?: number, supplements?: string[]) => {
+  const startEditCartItem = (cartItem: CartItem) => {
+    // Find the original MenuItem to pass to the modal
+    const allMenuSources = [...PIZZA_MENU, ...BURGER_MENU, ...TACOS_MENU, ...TEXMEX_MENU, ...DESSERT_MENU, ...DRINKS];
+    const originalItem = allMenuSources.find(i => i.name === cartItem.name);
+    
+    if (originalItem) {
+      setCustomizingItem(originalItem);
+      setCustomizingCategory(cartItem.category);
+      setInitialVariant(cartItem.variant);
+      // We need to pass the base price of the variant, not the total price
+      let basePrice = typeof originalItem.price === 'number' ? originalItem.price : 0;
+      if (cartItem.variant && typeof originalItem.price === 'object') {
+        const vKey = cartItem.variant.toLowerCase();
+        basePrice = (originalItem.price as any)[vKey] || 
+                    (vKey === 'l' ? (originalItem.price as any).standard : 0) || 
+                    (vKey === 'xl' ? (originalItem.price as any).large : 0) || 
+                    (originalItem.price as any).standard || 
+                    (originalItem.price as any).m || 0;
+      }
+      
+      setInitialPrice(basePrice);
+      setInitialSauce(cartItem.sauce);
+      setInitialSauces(cartItem.sauces);
+      setInitialCrudites(cartItem.crudites);
+      setInitialIsMenu(cartItem.isMenu);
+      setInitialSupplements(cartItem.supplements);
+      setEditingCartId(cartItem.cartId);
+    }
+  };
+
+  const confirmAddToCart = (sauces?: string[], isMenu?: boolean, variant?: string, price?: number, supplements?: string[], crudites?: string[]) => {
     if (!customizingItem) return;
     
     const supplementsPrice = supplements?.reduce((acc, name) => {
@@ -2104,30 +2301,54 @@ export default function App() {
 
     const finalPrice = (isMenu ? (price || 0) + 250 : (price || 0)) + supplementsPrice;
     
-    // Sort supplements to ensure consistent cartId
-    const sortedSups = supplements ? [...supplements].sort().join(',') : 'none';
-    const cartId = `${customizingItem.name}-${variant || 'default'}-${sauce || 'nosauce'}-${isMenu ? 'menu' : 'solo'}-${sortedSups}`;
+    const sauce = sauces && sauces.length > 0 ? sauces.join(', ') : undefined;
+    
+    // Generate a truly unique ID for this specific addition/edit
+    const cartId = editingCartId || `cart-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 
     setCart(prev => {
-      const existing = prev.find(i => i.cartId === cartId);
-      if (existing) {
-        return prev.map(i => i.cartId === cartId ? { ...i, quantity: i.quantity + 1 } : i);
+      if (editingCartId) {
+        // Find existing item to preserve its quantity
+        return prev.map(i => i.cartId === editingCartId ? { 
+          ...i,
+          cartId, // remains same
+          name: customizingItem.name,
+          category: customizingCategory!,
+          price: finalPrice,
+          variant, 
+          sauce, 
+          sauces,
+          crudites,
+          isMenu,
+          supplements
+        } : i);
       }
+
+      // Fresh addition - always unique
       return [...prev, { 
         cartId, 
         name: customizingItem.name, 
+        category: customizingCategory!,
         price: finalPrice, 
         quantity: 1, 
         variant, 
         sauce, 
+        sauces,
+        crudites,
         isMenu,
         supplements
       }];
     });
 
     setCustomizingItem(null);
+    setEditingCartId(null);
     setInitialVariant(undefined);
     setInitialPrice(undefined);
+    setInitialSauce(undefined);
+    setInitialSauces(undefined);
+    setInitialCrudites(undefined);
+    setInitialIsMenu(undefined);
+    setInitialSupplements(undefined);
   };
 
   const updateQuantity = (id: string, delta: number) => {
@@ -2194,10 +2415,15 @@ export default function App() {
         isOpen={!!customizingItem}
         item={customizingItem}
         category={customizingCategory}
-        onClose={() => { setCustomizingItem(null); setCustomizingCategory(undefined); }}
+        onClose={() => { setCustomizingItem(null); setEditingCartId(null); }}
         onConfirm={confirmAddToCart}
         initialVariant={initialVariant}
         initialPrice={initialPrice}
+        initialSauces={initialSauces}
+        initialCrudites={initialCrudites}
+        initialIsMenu={initialIsMenu}
+        initialSupplements={initialSupplements}
+        isEditing={!!editingCartId}
       />
 
       <CartDrawer 
@@ -2206,6 +2432,7 @@ export default function App() {
         cart={cart}
         onUpdateQuantity={updateQuantity}
         onRemove={removeItem}
+        onEdit={startEditCartItem}
       />
 
       {/* Floating Cart Button */}
