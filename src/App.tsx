@@ -144,52 +144,52 @@ const ReviewCard = ({ name, initials, rating, date, text, tags }: {
 const PIZZA_MENU: MenuItem[] = [
   // Base Tomate
   { name: 'Marguerita', price: { standard: 450, large: 800 }, description: 'Sauce tomate, fromage, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1574071318508-1cdbad80ad38?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Thon', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, thon, oignons, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Thon', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, thon, oignons, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1544982503-9f984c14501a?q=80&w=400&auto=format&fit=crop' },
   { name: 'Poulet', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poulet, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Viande Hachée', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, viande hachée, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Viande Hachée', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, viande hachée, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1593504049359-74330189a355?q=80&w=400&auto=format&fit=crop' },
   { name: 'Vegie', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poivrons, oignons, tomate fraîche, aubergines, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1528137871350-5fca72322bcd?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Oriental', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, merguez, poivrons, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1593504049359-74330189a355?q=80&w=400&auto=format&fit=crop' },
-  { name: 'BBQ', price: { standard: 700, large: 1300 }, description: 'Sauce tomate, fromage, viande hachée, oeuf, poivrons, olives, sauce BBQ.', base: 'tomato', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Oriental', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, merguez, poivrons, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?q=80&w=400&auto=format&fit=crop' },
+  { name: 'BBQ', price: { standard: 700, large: 1300 }, description: 'Sauce tomate, fromage, viande hachée, oeuf, poivrons, olives, sauce BBQ.', base: 'tomato', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=400&auto=format&fit=crop' },
   { name: '3 Fromages', price: { standard: 750, large: 1400 }, description: 'Sauce tomate, mozzarella, gruyère, boursin, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-151152857478e-94fbbf0d7414?q=80&w=400&auto=format&fit=crop' },
   // Base Crème
   { name: 'Forestière', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, oignons, champignons, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Tartiflette', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, champignons, pomme de terre, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Boisée', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, poivrons, sauce fromagère.', base: 'cream', image: 'https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Tartiflette', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, champignons, pomme de terre, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Boisée', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, poivrons, sauce fromagère.', base: 'cream', image: 'https://images.unsplash.com/photo-1534080564607-c92751f8933f?q=80&w=400&auto=format&fit=crop' },
   { name: 'Boursin', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, boursin, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Raclette', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, raclette, pomme de terre, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Raclette', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, raclette, pomme de terre, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=400&auto=format&fit=crop' },
   { name: "L'Artisanale", price: { standard: 900, large: 1700 }, description: 'Crème fraîche ou sauce tomate, viande hachée, poulet fumé, boursin, olives.', image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Saumon', price: { standard: 1100, large: 2100 }, description: 'Crème fraîche, fromage, saumon, oignons, boursin.', base: 'cream', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Saumon', price: { standard: 1100, large: 2100 }, description: 'Crème fraîche, fromage, saumon, oignons, boursin.', base: 'cream', image: 'https://images.unsplash.com/photo-1544333303-577546e393b2?q=80&w=400&auto=format&fit=crop' },
 ];
 
 const BURGER_MENU: MenuItem[] = [
-  { name: 'Cheese Burger', price: 300, description: 'Steak, slice, salade, tomate, sauce au choix.', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Chicken Crispy', price: 450, description: 'Chicken, slice, salade, tomate, sauce au choix.', image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Double Cheese', price: 600, description: '2 Steaks, 2 slices, salade, tomate, sauce au choix.', image: 'https://images.unsplash.com/photo-1550317144-b38c5f693240?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Double Chicken Crispy', price: 650, description: '2 Chickens, 2 slices, salade, tomate, sauce au choix.', image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Triple Cheese', price: 800, description: '3 Steaks, 3 slices, salade, tomate, sauce au choix.', image: 'https://images.unsplash.com/photo-1550317144-b38c5f693240?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Mix Burger', price: 700, description: 'Steak, chicken, 2 slices, salade, tomate, sauce au choix.', image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Gourmand', price: 750, description: 'Steak, dinde fumée, slices, salade, tomate, sauce au choix.', image: 'https://images.unsplash.com/photo-1550317144-b38c5f693240?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Cheese Burger', price: 300, description: 'Steak de boeuf, cheddar fondant, salade croquante, tomate, oignons rouges.', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Chicken Crispy', price: 450, description: 'Filet de poulet pané maison, croustillant à souhait, sauce blanche.', image: 'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Double Cheese', price: 600, description: 'Double dose de plaisir : 2 steaks, double cheddar, oignons grillés.', image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Double Chicken Crispy', price: 650, description: 'Deux filets de poulet croustillants pour une faim monumentale.', image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Triple Cheese', price: 800, description: 'Le défi ultime : 3 steaks, 3 tranches de fromage, gourmandise absolue.', image: 'https://images.unsplash.com/photo-1550317144-b38c5f693240?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Mix Burger', price: 700, description: 'Le meilleur des deux mondes : steak de boeuf et poulet crispy réunis.', image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Le Gourmand', price: 750, description: 'Steak, dinde fumée, bacon de boeuf grillé, sauce barbecue Artisanale.', image: 'https://images.unsplash.com/photo-1547584370-2cc98b8b8dc8?q=80&w=400&auto=format&fit=crop' },
 ];
 
 const TACOS_MENU: MenuItem[] = [
-  { name: 'Le Poulet', price: 550, description: 'Poulet, frites, sauce fromage.', image: 'https://images.unsplash.com/photo-1562059390-a761a084768e?q=80&w=400&auto=format&fit=crop' },
-  { name: "L'Indien", price: 600, description: 'Poulet curry, frites, sauce fromage.', image: 'https://images.unsplash.com/photo-1613514785940-daed07799d9b?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Tandoori', price: 600, description: 'Poulet tandoori, frites, sauce fromage.', image: 'https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Mix', price: 600, description: 'Viande hachée, poulet, frites, sauce fromage.', image: 'https://images.unsplash.com/photo-1562059390-a761a084768e?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Beef', price: 650, description: 'Viande hachée, frites, sauce fromage.', image: 'https://images.unsplash.com/photo-1613514785940-daed07799d9b?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Crispy', price: 650, description: 'Poulet crispy, frites, sauce fromage.', image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Fermier', price: 650, description: 'Dinde fumée, poulet, frites, sauce fromage.', image: 'https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?q=80&w=400&auto=format&fit=crop' },
-  { name: 'Le Farmer', price: 700, description: 'Dinde fumée, viande hachée, frites, sauce fromage.', image: 'https://images.unsplash.com/photo-1562059390-a761a084768e?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Le Poulet', price: 550, description: 'Poulet mariné, frites croustillantes, sauce fromagère onctueuse.', image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?q=80&w=400&auto=format&fit=crop' },
+  { name: "L'Indien", price: 600, description: 'Poulet au curry façon Madras, frites et notre fameuse sauce fromage.', image: 'https://images.unsplash.com/photo-1613514785940-daed07799d9b?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Le Tandoori', price: 600, description: 'Poulet tandoori épicé, frites, sauce fromagère maison.', image: 'https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Le Mix', price: 600, description: 'Mélange savoureux de viande hachée et poulet mariné.', image: 'https://images.unsplash.com/photo-1562059390-a761a084768e?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Le Beef', price: 650, description: 'Viande hachée 100% pur boeuf, frites et sauce fromagère.', image: 'https://images.unsplash.com/photo-1585238341267-1cfec2046a55?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Le Crispy', price: 650, description: 'Poulet pané ultra croustillant, frites, sauce au choix.', image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Le Fermier', price: 650, description: 'Dinde fumée, poulet tendre, frites et coeur fondant de fromage.', image: 'https://images.unsplash.com/photo-1619193100630-91896791194e?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Le Farmer', price: 700, description: 'Gros appétit : dinde fumée, viande hachée, double dose de frites.', image: 'https://images.unsplash.com/photo-1593504049359-74330189a355?q=80&w=400&auto=format&fit=crop' },
 ];
 
 const TEXMEX_MENU: MenuItem[] = [
-  { name: 'CHICKEN PARTY medium', price: 2000, description: '5 WINGS • 5 TENDERS • 7 NUGGETS • 2 FRITES • 1 BOUTEILLE 1L' },
-  { name: 'CHICKEN PARTY xxl', price: 3500, description: '10 WINGS • 10 TENDERS • 14 NUGGETS • 4 FRITES • 1 BOUTEILLE 1L' },
-  { name: 'Wrap Poulet', price: 550, description: 'Poulet mariné 24h, crudités croquantes, sauce blanche.' },
-  { name: 'Croque-Monsieur', price: 250, description: 'Crème fraîche, dinde fumée, slice, fromage râpé.' },
-  { name: 'Barquette Frites x3', price: 300 },
-  { name: 'Barquette Frites x5', price: 500 },
-  { name: 'Barquette Frites x7', price: 600 },
+  { name: 'CHICKEN PARTY medium', price: 2000, description: 'Le combo parfait : 5 WINGS • 5 TENDERS • 7 NUGGETS • 2 FRITES • 1 BOUTEILLE 1L', image: 'https://images.unsplash.com/photo-1562967914-608f82629710?q=80&w=400&auto=format&fit=crop' },
+  { name: 'CHICKEN PARTY xxl', price: 3500, description: 'Pour toute la famille : 10 WINGS • 10 TENDERS • 14 NUGGETS • 4 FRITES • 1 BOUTEILLE 1L', image: 'https://images.unsplash.com/photo-1623653387945-2fd25214f8fc?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Wrap Poulet', price: 550, description: 'Poulet mariné 24h, crudités fraîches, sauce blanche onctueuse.', image: 'https://images.unsplash.com/photo-1626700051175-656fc7bc31ee?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Croque-Monsieur', price: 250, description: 'Pain de mie toasté, dinde fumée, fromage fondu et gratiné.', image: 'https://images.unsplash.com/photo-1475090169720-6f784260907d?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Barquette Frites x3', price: 300, image: 'https://images.unsplash.com/photo-1573016608964-f4b0ab1ae1cb?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Barquette Frites x5', price: 500, image: 'https://images.unsplash.com/photo-1576107232684-1279f390859f?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Barquette Frites x7', price: 600, image: 'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?q=80&w=400&auto=format&fit=crop' },
 ];
 
 const SUPPLEMENTS = [
@@ -202,18 +202,18 @@ const SUPPLEMENTS = [
 ];
 
 const DESSERT_MENU: MenuItem[] = [
-  { name: 'Tiramisu Maison', price: 450, description: 'Le classique italien revisité par notre chef.' },
-  { name: 'Mousse au Chocolat', price: 350, description: 'Onctueuse et légère.' },
-  { name: 'Panacotta Fruits Rouges', price: 400 },
-  { name: 'Cheesecake Citron', price: 500 },
+  { name: 'Tiramisu Maison', price: 450, description: 'Le classique italien revisité par notre chef.', image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Mousse au Chocolat', price: 350, description: 'Onctueuse et légère, un nuage de cacao.', image: 'https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Panacotta Fruits Rouges', price: 400, description: 'Douceur lactée et coulis acidulé.', image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Cheesecake Citron', price: 500, description: 'Frais et fondant, pour finir en légèreté.', image: 'https://images.unsplash.com/photo-1524351199679-46cddfdbb647?q=80&w=400&auto=format&fit=crop' },
 ];
 
 const DRINKS = [
-  { name: 'Eau 33cl', price: 30 },
-  { name: 'Eau gazeuse 33cl', price: 50 },
-  { name: 'Jus 33cl', price: 100 },
-  { name: 'Canette 33cl', price: 100 },
-  { name: 'Boisson gazeuse 1L', price: 150 },
+  { name: 'Eau 33cl', price: 30, image: 'https://images.unsplash.com/photo-1523362628242-f513a30efaf3?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Eau gazeuse 33cl', price: 50, image: 'https://images.unsplash.com/photo-1560023907-5f339617ea30?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Jus 33cl', price: 100, image: 'https://images.unsplash.com/photo-1600271886332-699bb2798bca?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Canette 33cl', price: 100, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=400&auto=format&fit=crop' },
+  { name: 'Boisson gazeuse 1L', price: 150, image: 'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?q=80&w=400&auto=format&fit=crop' },
 ];
 
 const SAUCES = [
@@ -453,7 +453,7 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
                       onClick={() => { item.action(); onClose(); }}
                       className="group py-4 text-left w-full border-b border-transparent hover:border-slate-100 transition-all"
                     >
-                      <span className="text-4xl md:text-5xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
+                      <span className="text-2xl md:text-3xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
                         {item.label}
                       </span>
                     </button>
@@ -465,7 +465,7 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
                       onClick={onClose}
                       className="group py-4 text-left block w-full border-b border-transparent hover:border-slate-100 transition-all"
                     >
-                      <span className="text-4xl md:text-5xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
+                      <span className="text-2xl md:text-3xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
                         {item.label}
                       </span>
                     </a>
@@ -481,7 +481,7 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
               transition={{ delay: 0.4 }}
               className="mt-8 pt-6 border-t border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
             >
-              <div className="flex gap-8">
+          <div className="flex gap-10">
                 {[
                   { icon: Instagram, href: "https://instagram.com" },
                   { icon: Music, href: "https://tiktok.com" },
@@ -547,9 +547,9 @@ const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }
     <div className="absolute bottom-0 left-0 w-64 h-64 bg-red-600/5 blur-[100px] rounded-full" />
     
     <div className="max-w-7xl mx-auto px-4 py-12 md:px-12 lg:px-24 relative z-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-20">
         {/* Column 1: Brand */}
-        <div className="space-y-6">
+        <div className="space-y-8">
           <div className="flex items-center gap-4">
             <div className="w-11 h-11 rounded-lg bg-red-600 flex items-center justify-center shadow-lg shadow-red-900/50">
               <UtensilsCrossed className="w-6 h-6 text-white" />
@@ -564,7 +564,7 @@ const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }
               LE GOÛT AUTHENTIQUE LIVRÉ CHEZ VOUS
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {[
               { icon: Instagram, href: "https://instagram.com" },
               { icon: Music, href: "https://tiktok.com" },
@@ -578,7 +578,7 @@ const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }
         </div>
 
         {/* Column 2: Navigation */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           <h5 className="font-black text-[11px] uppercase tracking-[0.2em] text-slate-500">Navigation</h5>
           <ul className="space-y-3">
             <li>
@@ -618,7 +618,7 @@ const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }
         </div>
 
         {/* Column 3: Contact Info */}
-        <div className="space-y-6">
+        <div className="space-y-8">
           <h5 className="font-black text-[11px] uppercase tracking-[0.2em] text-slate-500">Contact</h5>
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -645,7 +645,7 @@ const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }
 
       <div className="mt-12 pt-6 border-t border-white/5 flex justify-center items-center">
         <p className="text-[8px] text-slate-500 font-black uppercase tracking-[0.3em]">
-          L'ARTISANALE DRARIA 2026
+          L'ARTISANALE DRARIA - 2026
         </p>
       </div>
     </div>
@@ -657,6 +657,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
     const handleScroll = () => setScrolled(window.scrollY > 100);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -822,33 +823,34 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Sélection</span>
                     <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Nos Incontournables</h3>
                 </div>
-                <div className="flex flex-col">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-12 md:gap-y-4">
                     {[
-                        { name: 'Pizza Saumon', price: '1100 DA', desc: 'Crème fraîche, saumon fumé de qualité, aneth fraîchement coupée.', cat: 'Signature' },
-                        { name: 'Double Smash', price: '900 DA', desc: '2 steaks de boeuf 150g, cheddar affiné, sauce secrète Artisanale.', cat: 'Gourmet' },
+                        { name: 'Pizza Saumon', price: '1100 DA', desc: 'Saumon fumé de qualité, aneth fraîche, crème onctueuse.', cat: 'Signature' },
+                        { name: 'Double Smash', price: '900 DA', desc: 'Deux steaks de boeuf pur jus, cheddar affiné, sauce secrète.', cat: 'Gourmet' },
                         { name: 'Wrap Poulet', price: '550 DA', desc: 'Poulet mariné 24h, crudités croquantes, sauce maison.', cat: 'Authentique' },
                     ].map((item, idx) => (
                         <div 
                             key={idx} 
                             onClick={() => onNavigate('full_menu')}
-                            className="group py-8 md:py-10 border-b border-slate-100 last:border-0 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:bg-slate-50/50 px-4 md:px-0 cursor-pointer"
+                            className="group py-5 flex flex-col justify-between gap-4 transition-all hover:bg-slate-100/50 rounded-2xl px-4 bg-slate-50/10 md:bg-transparent md:px-2 md:py-6 cursor-pointer border border-transparent hover:border-slate-100"
                         >
-                            <div className="flex-1 space-y-3">
-                                <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6">
-                                    <h4 className="font-serif text-xl md:text-2xl font-bold text-slate-900 group-hover:text-red-600 transition-colors">
+                            <div className="space-y-2">
+                                <div className="flex justify-between items-start gap-2">
+                                    <h4 className="font-serif text-base md:text-lg font-bold text-slate-950 group-hover:text-red-600 transition-colors leading-tight">
                                         {item.name}
                                     </h4>
-                                    <div className="hidden md:block h-px flex-1 bg-slate-100 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                    <span className="text-lg md:text-xl font-black text-slate-900 tabular-nums">
+                                    <span className="text-sm md:text-base font-black text-slate-950 tabular-nums whitespace-nowrap">
                                         {item.price}
                                     </span>
                                 </div>
-                                <p className="text-slate-500 text-[13px] md:text-base font-medium leading-relaxed max-w-4xl group-hover:text-slate-600 transition-colors">
+                                <p className="text-slate-600 text-[12px] md:text-sm font-medium leading-relaxed line-clamp-2">
                                     {item.desc}
                                 </p>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-6 h-1 bg-red-600 group-hover:w-12 transition-all rounded-full" />
-                                    <span className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em]">{item.cat}</span>
+                                <div className="flex items-center gap-1.5 pt-1">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-red-600/40 group-hover:bg-red-600 transition-colors" />
+                                    <span className="text-[10px] md:text-[11px] font-black uppercase text-slate-400 tracking-wider group-hover:text-slate-500 transition-colors">
+                                        {item.cat}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -1153,7 +1155,7 @@ const MenuPage = ({ category, onBack, onMenuClick, onAddToCart }: { category: Pa
                           }
                         }
                       }}
-                      className="px-4 pt-2 pb-10 grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6"
+                      className="px-4 pt-4 pb-20 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-12 md:gap-y-4"
                     >
                     {menuItems.map((item, idx) => (
                         <MenuListItem 
@@ -1818,7 +1820,6 @@ const CartDrawer = ({
 
 const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setActiveCategory, onLogoClick }: { onBack: () => void, onMenuClick: () => void, onAddToCart: (item: MenuItem, cat: string, variant?: string, priceVal?: number) => void, activeCategory: string, setActiveCategory: (cat: string) => void, onLogoClick: () => void }) => {
   const [pizzaBase, setPizzaBase] = useState<'tomato' | 'cream'>('tomato');
-  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -1838,16 +1839,8 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
   }, [pizzaBase]);
 
   const filteredItems = useMemo(() => {
-    let items = activeCategory === 'pizza' ? filteredPizzaMenu : categories.find(c => c.id === activeCategory)?.menu || [];
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      items = items.filter(item => 
-        item.name.toLowerCase().includes(q) || 
-        (item.description && item.description.toLowerCase().includes(q))
-      );
-    }
-    return items;
-  }, [activeCategory, filteredPizzaMenu, categories, searchQuery]);
+    return activeCategory === 'pizza' ? filteredPizzaMenu : categories.find(c => c.id === activeCategory)?.menu || [];
+  }, [activeCategory, filteredPizzaMenu, categories]);
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -1887,27 +1880,9 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
         </aside>
 
         {/* Mobile Sub-Header & Tabs */}
-        <div className="md:hidden sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100">
-          <div className="px-4 py-4">
-            <div className="relative mb-4">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <input 
-                type="text"
-                placeholder="Chercher un plat..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-3 pl-11 pr-4 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-red-600/10 focus:border-red-600 transition-all"
-              />
-              {searchQuery && (
-                <button 
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-600"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-            <div className="flex overflow-x-auto no-scrollbar gap-2 pb-1">
+        <div className="md:hidden sticky top-[57px] z-30 bg-white/95 backdrop-blur-md border-b border-slate-100">
+          <div className="px-4 py-3">
+            <div className="flex overflow-x-auto no-scrollbar gap-2">
               {categories.map((cat) => (
                 <button 
                   key={cat.id}
@@ -1968,18 +1943,6 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
             </div>
 
             <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4">
-              {/* Desktop Search */}
-              <div className="hidden md:relative md:block">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input 
-                  type="text"
-                  placeholder="Rechercher..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-slate-50 border border-slate-100 rounded-2xl py-2.5 pl-11 pr-4 text-sm font-bold min-w-[240px] focus:outline-none focus:ring-2 focus:ring-red-600/10 transition-all"
-                />
-              </div>
-
               {activeCategory === 'pizza' && (
                 <div className="bg-slate-50 p-1 rounded-2xl flex border border-slate-100 min-w-0">
                   <button 
@@ -2017,10 +1980,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
             ))}
             {filteredItems.length === 0 && (
               <div className="py-20 text-center">
-                <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 opacity-40">
-                  <Search className="w-8 h-8 text-slate-300" />
-                </div>
-                <p className="text-slate-400 text-sm font-bold">Aucun résultat trouvé.</p>
+                <p className="text-slate-400 text-sm font-bold">Aucun produit dans cette catégorie.</p>
               </div>
             )}
           </motion.div>
@@ -2061,10 +2021,6 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [currentPage]);
 
   const toggleNav = () => setIsNavOpen(!isNavOpen);
 
@@ -2143,7 +2099,7 @@ export default function App() {
 
   return (
     <div id="app-root" className="min-h-screen">
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         {currentPage === 'home' ? (
           <motion.div 
             key="home"
