@@ -216,6 +216,63 @@ const DRINKS = [
   { name: 'Boisson gazeuse 1L', price: 150, image: 'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?q=80&w=400&auto=format&fit=crop' },
 ];
 
+const CATEGORIES = [
+  { 
+    id: 'pizza', 
+    name: 'Pizzas', 
+    subtitle: 'Au Feu de Bois', 
+    menu: PIZZA_MENU, 
+    icon: <UtensilsCrossed className="w-4 h-4 md:w-5 md:h-5" />, 
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop',
+    bentoSpan: 'md:col-span-8'
+  },
+  { 
+    id: 'burger', 
+    name: 'Burgers', 
+    subtitle: 'Gourmet', 
+    menu: BURGER_MENU, 
+    icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-orange-400" />, 
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop',
+    bentoSpan: 'md:col-span-4'
+  },
+  { 
+    id: 'tacos', 
+    name: 'Tacos', 
+    subtitle: "L'Authentique", 
+    menu: TACOS_MENU, 
+    icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-sm bg-yellow-400" />, 
+    image: 'https://images.unsplash.com/photo-1565299507177-b0ac66763828?q=80&w=1200&auto=format&fit=crop',
+    bentoSpan: 'md:col-span-4'
+  },
+  { 
+    id: 'texmex', 
+    name: 'Tex-Mex', 
+    subtitle: 'Délices Mix', 
+    menu: TEXMEX_MENU, 
+    icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-red-400" />, 
+    image: 'https://images.unsplash.com/photo-1534352956279-b4230ad3ca31?q=80&w=1200&auto=format&fit=crop',
+    bentoSpan: 'md:col-span-8'
+  },
+  { 
+    id: 'drinks', 
+    name: 'Boissons', 
+    subtitle: 'Fraîcheur', 
+    menu: DRINKS, 
+    icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-blue-400" />, 
+    image: 'https://images.unsplash.com/photo-1544145945-f904253db0ad?q=80&w=1200&auto=format&fit=crop',
+    bentoSpan: 'hidden'
+  },
+  { 
+    id: 'desserts', 
+    name: 'Desserts', 
+    subtitle: 'Douceurs', 
+    menu: DESSERT_MENU, 
+    icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-pink-400" />, 
+    image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=1200&auto=format&fit=crop',
+    bentoSpan: 'hidden'
+  },
+];
+
 const SAUCES = [
   'Ketchup', 'Mayonnaise', 'Moutarde', 'Harissa', 'Burger', 'Algérienne', 'Barbecue', 'Brazil', 'Samourai'
 ];
@@ -782,19 +839,14 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-3 lg:gap-4">
-                    {[
-                        { id: 'pizza', name: 'Nos Pizzas', subtitle: 'Feu de Bois', img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=600&auto=format&fit=crop', span: 'md:col-span-8' },
-                        { id: 'burger', name: 'Nos Burgers', subtitle: 'Gourmet', img: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=600&auto=format&fit=crop', span: 'md:col-span-4' },
-                        { id: 'tacos', name: 'Nos Tacos', subtitle: 'L\'Authentique', img: 'https://images.unsplash.com/photo-1565299507177-b0ac66763828?q=80&w=600&auto=format&fit=crop', span: 'md:col-span-4' },
-                        { id: 'texmex', name: 'Délices Mix', subtitle: 'Tex-Mex', img: 'https://images.unsplash.com/photo-1534080564607-c92751f8933f?q=80&w=600&auto=format&fit=crop', span: 'md:col-span-8' },
-                    ].map((cat) => (
+                    {CATEGORIES.filter(c => c.bentoSpan !== 'hidden').map((cat) => (
                         <button 
                             key={cat.id}
                             onClick={() => onNavigate('full_menu', cat.id)}
-                            className={`relative h-48 md:h-[300px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 ${cat.span}`}
+                            className={`relative h-48 md:h-[300px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 ${cat.bentoSpan}`}
                         >
                             <img 
-                                src={cat.img} 
+                                src={cat.image} 
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s] ease-out" 
                                 alt={cat.name} 
                             />
@@ -1825,22 +1877,15 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [activeCategory]);
 
-  const categories = [
-    { id: 'pizza', name: 'Pizzas', menu: PIZZA_MENU, icon: <UtensilsCrossed className="w-4 h-4 md:w-5 md:h-5" />, image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=800&auto=format&fit=crop' },
-    { id: 'burger', name: 'Burgers', menu: BURGER_MENU, icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-orange-400" />, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop' },
-    { id: 'tacos', name: 'Tacos', menu: TACOS_MENU, icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-sm bg-yellow-400" />, image: 'https://images.unsplash.com/photo-1562059390-a761a084768e?q=80&w=800&auto=format&fit=crop' },
-    { id: 'texmex', name: 'Tex-Mex', menu: TEXMEX_MENU, icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-red-400" />, image: 'https://images.unsplash.com/photo-1534352956279-b4230ad3ca31?q=80&w=800&auto=format&fit=crop' },
-    { id: 'drinks', name: 'Boissons', menu: DRINKS, icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-blue-400" />, image: 'https://images.unsplash.com/photo-1544145945-f904253db0ad?q=80&w=800&auto=format&fit=crop' },
-    { id: 'desserts', name: 'Desserts', menu: DESSERT_MENU, icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-pink-400" />, image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=800&auto=format&fit=crop' },
-  ];
+  const activeCategoryData = useMemo(() => CATEGORIES.find(c => c.id === activeCategory), [activeCategory]);
 
   const filteredPizzaMenu = useMemo(() => {
     return PIZZA_MENU.filter(p => !p.base || p.base === pizzaBase);
   }, [pizzaBase]);
 
   const filteredItems = useMemo(() => {
-    return activeCategory === 'pizza' ? filteredPizzaMenu : categories.find(c => c.id === activeCategory)?.menu || [];
-  }, [activeCategory, filteredPizzaMenu, categories]);
+    return activeCategory === 'pizza' ? filteredPizzaMenu : activeCategoryData?.menu || [];
+  }, [activeCategory, filteredPizzaMenu, activeCategoryData]);
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -1852,7 +1897,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
           <div className="mb-8">
             <h2 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-6">Catégories</h2>
             <nav className="space-y-1">
-              {categories.map((cat) => (
+              {CATEGORIES.map((cat) => (
                 <button 
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
@@ -1883,7 +1928,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
         <div className="md:hidden sticky top-[57px] z-30 bg-white/95 backdrop-blur-md border-b border-slate-100">
           <div className="px-4 py-3">
             <div className="flex overflow-x-auto no-scrollbar gap-2">
-              {categories.map((cat) => (
+              {CATEGORIES.map((cat) => (
                 <button 
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
@@ -1906,29 +1951,34 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
         {/* Main Content Area */}
         <main className="flex-1 p-4 md:p-8 lg:p-12 pb-10">
           {/* Category Hero Image */}
-          <motion.div 
-            key={activeCategory}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="relative h-48 md:h-64 rounded-[32px] md:rounded-[48px] overflow-hidden mb-6 md:mb-12 shadow-xl"
-          >
-            <img 
-              src={categories.find(c => c.id === activeCategory)?.image} 
-              alt={categories.find(c => c.id === activeCategory)?.name}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
-            <div className="absolute bottom-6 md:bottom-8 left-6 md:left-10">
-              <h1 className="text-3xl md:text-5xl font-serif font-bold text-white mb-2">
-                {categories.find(c => c.id === activeCategory)?.name}
-              </h1>
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-1 bg-red-600 rounded-full" />
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/80">L'Artisanale</span>
-              </div>
-            </div>
-          </motion.div>
+          <div className="relative h-48 md:h-64 rounded-[32px] md:rounded-[48px] overflow-hidden mb-6 md:mb-12 shadow-xl">
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={activeCategory}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0"
+              >
+                <img 
+                  src={activeCategoryData?.image} 
+                  alt={activeCategoryData?.name}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
+                <div className="absolute bottom-6 md:bottom-8 left-6 md:left-10">
+                  <h1 className="text-3xl md:text-5xl font-serif font-bold text-white mb-2">
+                    {activeCategoryData?.name}
+                  </h1>
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-1 bg-red-600 rounded-full" />
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/80">L'Artisanale</span>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
  
           {/* Section Header */}
           <div className={`${activeCategory === 'pizza' ? 'mb-8 md:mb-12' : 'hidden md:flex md:mb-12'} flex flex-col md:flex-row md:items-end justify-between gap-6`}>
