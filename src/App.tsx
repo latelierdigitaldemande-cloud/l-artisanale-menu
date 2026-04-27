@@ -273,10 +273,7 @@ const MenuListItem = ({ item, category, onAddToCart }: MenuListItemProps) => {
   const startingPrice = typeof price === 'number' ? price : ('standard' in price ? price.standard : price.s);
 
   return (
-    <motion.div 
-      variants={itemVariants}
-      className="group py-5 flex flex-col justify-between gap-4 transition-all hover:bg-slate-50/50 rounded-2xl px-4 bg-slate-50/30 md:bg-transparent md:px-2 md:py-6"
-    >
+    <div className="group py-5 flex flex-col justify-between gap-4 transition-all hover:bg-slate-100/50 rounded-2xl px-4 bg-slate-50/10 md:bg-transparent md:px-2 md:py-6">
       <div className="space-y-2">
         <div className="flex justify-between items-start gap-2">
           <h4 className="font-serif text-base md:text-lg font-bold text-slate-950 group-hover:text-red-600 transition-colors leading-tight">
@@ -313,7 +310,7 @@ const MenuListItem = ({ item, category, onAddToCart }: MenuListItemProps) => {
           Commander
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -347,7 +344,13 @@ const Accordion = ({ title, children }: { title: string, children: ReactNode }) 
   );
 };
 
-const Header = ({ onMenuClick, onBack, title }: { onMenuClick?: () => void, onBack?: () => void, title?: string }) => (
+const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, title }: { 
+    onMenuClick?: () => void, 
+    onBack?: () => void, 
+    onLogoClick?: () => void,
+    onOrderClick?: () => void,
+    title?: string 
+}) => (
   <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 md:px-12 lg:px-24 py-3">
     <div className="max-w-7xl mx-auto w-full flex items-center justify-between relative">
         {onBack ? (
@@ -355,22 +358,42 @@ const Header = ({ onMenuClick, onBack, title }: { onMenuClick?: () => void, onBa
             <ArrowLeft className="w-5 h-5 text-slate-800" />
         </button>
         ) : (
-        <div className="flex items-center gap-2">
+        <button onClick={onLogoClick} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <UtensilsCrossed className="w-5 h-5 text-red-600" />
             <span className="font-bold text-base md:text-lg tracking-tight">L'Artisanale</span>
-        </div>
+        </button>
         )}
         
         <div className="absolute left-1/2 -translate-x-1/2">
         {title && <h1 className="font-semibold text-slate-900 text-sm md:text-base whitespace-nowrap">{title}</h1>}
         </div>
-
-        {onMenuClick && (
-        <button onClick={onMenuClick} id="header-menu" className="p-2 -mr-2 rounded-full hover:bg-slate-100">
-            <MenuIcon className="w-5 h-5 text-slate-800" />
-        </button>
-        )}
-        {!onMenuClick && <div className="w-10"></div>}
+ 
+        <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-6">
+                <button 
+                  onClick={onOrderClick}
+                  className="bg-red-600 text-white px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-red-900/10"
+                >
+                  Commander en ligne
+                </button>
+                <button 
+                  onClick={() => onMenuClick?.()} 
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 hover:bg-slate-100 transition-all"
+                >
+                  <MenuIcon className="w-5 h-5" />
+                </button>
+            </div>
+            {onMenuClick && (
+            <button 
+                onClick={() => onMenuClick()} 
+                id="header-menu" 
+                className="md:hidden p-2 -mr-2 rounded-full hover:bg-slate-100"
+            >
+                <MenuIcon className="w-5 h-5 text-slate-800" />
+            </button>
+            )}
+        </div>
+        {!onMenuClick && !onOrderClick && <div className="w-10"></div>}
     </div>
   </header>
 );
@@ -415,7 +438,7 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
             <nav className="flex flex-col gap-2">
               {[
                 { label: 'Accueil', action: () => onNavigate('home') },
-                { label: 'La Carte', action: () => onNavigate('full_menu') },
+                { label: 'Commander en ligne', action: () => onNavigate('full_menu') },
                 { label: 'Adresse', href: 'https://maps.google.com/maps?q=L\'Artisanale+Draria' },
                 { label: 'Livraison', href: 'tel:0782777560' },
               ].map((item, index) => (
@@ -642,7 +665,11 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
   
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Header onMenuClick={onMenuClick} />
+      <Header 
+        onMenuClick={onMenuClick} 
+        onOrderClick={() => onNavigate('full_menu')} 
+        onLogoClick={() => onNavigate('home')} 
+      />
       
       <main className="flex-1 w-full flex flex-col items-center">
         {/* Hero Section */}
@@ -662,11 +689,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-white" />
           
           <div className="relative z-10 text-center px-4 md:px-16 lg:px-24">
-            <motion.div 
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                className="mb-4 inline-block relative"
-            >
+            <div className="mb-4 inline-block relative">
                 <div className="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 bg-white/10 backdrop-blur-md mx-auto relative ring-1 ring-white/20">
                     <img 
                         src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=300&h=300&auto=format&fit=crop" 
@@ -676,12 +699,8 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     />
                     <div className={`absolute bottom-2 right-2 w-5 h-5 md:w-7 md:h-7 rounded-full border-2 border-white ${isOpen ? 'bg-green-500' : 'bg-red-500'} shadow-lg z-10`} />
                 </div>
-            </motion.div>
-            <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-            >
+            </div>
+            <div>
                 <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-2 tracking-tight">
                     L'Artisanale
                 </h2>
@@ -692,7 +711,29 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     </p>
                     <div className="h-px w-8 md:w-10 bg-red-600" />
                 </div>
-            </motion.div>
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 mt-10 md:mt-12">
+                        <motion.button 
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => onNavigate('full_menu')}
+                            className="w-[auto] min-w-[250px] bg-red-600 text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl shadow-red-900/40 hover:bg-slate-900 transition-all flex items-center justify-center gap-3"
+                        >
+                            <ShoppingBag className="w-5 h-5" />
+                            Commander en ligne
+                        </motion.button>
+                        <motion.button 
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => {
+                                const bento = document.getElementById('bento-grid');
+                                if (bento) bento.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className="w-[auto] min-w-[200px] bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-white/20 transition-all"
+                        >
+                            Voir la carte
+                        </motion.button>
+                    </div>
+            </div>
           </div>
         </section>
 
@@ -709,15 +750,15 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     variants={childVariants}
                     id="link-order-online"
                     onClick={() => onNavigate('full_menu')}
-                    className="w-full bg-red-600 text-white p-6 md:p-6 rounded-2xl md:rounded-3xl flex items-center justify-between group hover:bg-red-700 transition-all shadow-xl active:scale-[0.98]"
+                    className="w-full bg-slate-900 text-white p-6 md:p-6 rounded-2xl md:rounded-3xl flex items-center justify-between group hover:bg-red-600 transition-all shadow-xl active:scale-[0.98]"
                 >
                     <div className="flex items-center gap-4 text-left">
-                        <div className="bg-white/20 p-3 md:p-3 rounded-xl">
+                        <div className="bg-white/10 p-3 md:p-3 rounded-xl">
                             <ShoppingBag className="w-6 h-6 md:w-7 md:h-7" />
                         </div>
                         <div>
-                            <span className="block font-black text-xl md:text-xl leading-tight">Explorer la Carte</span>
-                            <span className="text-[10px] md:text-[10px] uppercase opacity-60 font-bold tracking-widest block">L'Artisanale</span>
+                            <span className="block font-black text-xl md:text-xl leading-tight text-white">Commander en Ligne</span>
+                            <span className="text-[10px] md:text-[10px] uppercase opacity-60 font-bold tracking-widest block text-red-100">Service Rapide</span>
                         </div>
                     </div>
                 </motion.button>
@@ -755,29 +796,22 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
 
 
             {/* Category Grid - Bento Style Optimized for Desktop */}
-            <div className="mb-12 md:mb-16">
+            <div id="bento-grid" className="mb-12 md:mb-16">
                 <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 gap-4">
                     <div className="flex flex-col text-left">
                         <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Gastronomie</span>
                         <h3 className="font-serif text-4xl md:text-5xl font-bold text-slate-900 leading-none">Explorer l'Univers</h3>
                     </div>
                 </div>
-                <motion.div 
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={containerVariants}
-                    className="grid grid-cols-1 md:grid-cols-12 gap-3 lg:gap-4"
-                >
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 lg:gap-4">
                     {[
                         { id: 'pizza', name: 'Nos Pizzas', subtitle: 'Feu de Bois', img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=600&auto=format&fit=crop', span: 'md:col-span-8' },
                         { id: 'burger', name: 'Nos Burgers', subtitle: 'Gourmet', img: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=600&auto=format&fit=crop', span: 'md:col-span-4' },
                         { id: 'tacos', name: 'Nos Tacos', subtitle: 'L\'Authentique', img: 'https://images.unsplash.com/photo-1565299507177-b0ac66763828?q=80&w=600&auto=format&fit=crop', span: 'md:col-span-4' },
                         { id: 'texmex', name: 'Délices Mix', subtitle: 'Tex-Mex', img: 'https://images.unsplash.com/photo-1534080564607-c92751f8933f?q=80&w=600&auto=format&fit=crop', span: 'md:col-span-8' },
-                    ].map((cat, idx) => (
-                        <motion.button 
+                    ].map((cat) => (
+                        <button 
                             key={cat.id}
-                            variants={childVariants}
                             onClick={() => onNavigate('full_menu', cat.id)}
                             className={`relative h-48 md:h-[300px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 ${cat.span}`}
                         >
@@ -800,9 +834,9 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                                     <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                                 </div>
                             </div>
-                        </motion.button>
+                        </button>
                     ))}
-                </motion.div>
+                </div>
             </div>
 
             {/* Nos Incontournables Section */}
@@ -820,21 +854,14 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                         <ArrowLeft className="w-3.5 h-3.5 rotate-180 group-hover:translate-x-1 transition-transform" />
                     </button>
                 </div>
-                <motion.div 
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={containerVariants}
-                    className="flex flex-col"
-                >
+                <div className="flex flex-col">
                     {[
                         { name: 'Pizza Saumon', price: '1100 DA', desc: 'Crème fraîche, saumon fumé de qualité, aneth fraîchement coupée.', cat: 'Signature' },
                         { name: 'Double Smash', price: '900 DA', desc: '2 steaks de boeuf 150g, cheddar affiné, sauce secrète Artisanale.', cat: 'Gourmet' },
                         { name: 'Wrap Poulet', price: '550 DA', desc: 'Poulet mariné 24h, crudités croquantes, sauce maison.', cat: 'Authentique' },
                     ].map((item, idx) => (
-                        <motion.div 
+                        <div 
                             key={idx} 
-                            variants={childVariants}
                             className="group py-8 md:py-10 border-b border-slate-100 last:border-0 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:bg-slate-50/50 px-4 md:px-0"
                         >
                             <div className="flex-1 space-y-3">
@@ -864,12 +891,9 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                                     Commander
                                 </button>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
-                </motion.div>
-            </div>
-
-            {/* Why Us section with full-width background trick within the container layout */}
+                </div>
             </div>
             
             <div className="w-full bg-white border-b border-slate-100 py-16 md:py-24 mb-16">
@@ -977,6 +1001,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     />
                 </div>
             </div>
+        </div>
 
             <div className="max-w-7xl mx-auto px-4 md:px-16 lg:px-24 mt-4 mb-16">
                 {/* Localisation Section */}
@@ -1485,12 +1510,14 @@ const CustomizationModal = ({
             </div>
 
             <div className="p-6 bg-slate-50 border-t border-slate-100">
-                <button 
-                  onClick={() => onConfirm(selectedSauce, isMenu, selectedVariant, currentPrice, selectedSupplements)}
-                  className="w-full py-4 bg-red-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all"
-                >
-                  Ajouter au panier • {finalPrice} DA
-                </button>
+                <div className="flex justify-center">
+                    <button 
+                      onClick={() => onConfirm(selectedSauce, isMenu, selectedVariant, currentPrice, selectedSupplements)}
+                      className="w-full md:w-auto md:min-w-[280px] py-4 px-10 bg-red-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all"
+                    >
+                      Ajouter au panier • {finalPrice} DA
+                    </button>
+                </div>
             </div>
           </motion.div>
         </>
@@ -1831,7 +1858,7 @@ const CartDrawer = ({
   );
 };
 
-const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setActiveCategory }: { onBack: () => void, onMenuClick: () => void, onAddToCart: (item: MenuItem, cat: string, variant?: string, priceVal?: number) => void, activeCategory: string, setActiveCategory: (cat: string) => void }) => {
+const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setActiveCategory, onLogoClick }: { onBack: () => void, onMenuClick: () => void, onAddToCart: (item: MenuItem, cat: string, variant?: string, priceVal?: number) => void, activeCategory: string, setActiveCategory: (cat: string) => void, onLogoClick: () => void }) => {
   const [pizzaBase, setPizzaBase] = useState<'tomato' | 'cream'>('tomato');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -1866,7 +1893,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Header onBack={onBack} onMenuClick={onMenuClick} title="La Carte" />
+      <Header onBack={onBack} onMenuClick={onMenuClick} onLogoClick={onLogoClick} title="La Carte" />
       
       <div className="flex-1 max-w-7xl mx-auto w-full flex flex-col md:flex-row bg-white">
         {/* Desktop Sidebar */}
@@ -2014,10 +2041,17 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
             </div>
           </div>
 
-          <div className="flex flex-col divide-y divide-slate-100">
-            {filteredItems.map((item, idx) => (
+          <motion.div 
+            key={activeCategory}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="flex flex-col divide-y divide-slate-100"
+          >
+            {filteredItems.map((item) => (
               <MenuListItem 
-                key={idx} 
+                key={`${activeCategory}-${item.name}`} 
                 item={item} 
                 category={activeCategory} 
                 onAddToCart={(v, p) => onAddToCart(item, activeCategory, v, p)} 
@@ -2031,7 +2065,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                 <p className="text-slate-400 text-sm font-bold">Aucun résultat trouvé.</p>
               </div>
             )}
-          </div>
+          </motion.div>
         </main>
       </div>
     </div>
@@ -2040,7 +2074,12 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
 
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [currentPage, setCurrentPage] = useState<Page>(() => {
+    if (typeof window !== 'undefined') {
+      return window.location.pathname === '/carte' ? 'full_menu' : 'home';
+    }
+    return 'home';
+  });
   const [activeMenuCategory, setActiveMenuCategory] = useState<string>('pizza');
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -2052,16 +2091,36 @@ export default function App() {
   const [initialPrice, setInitialPrice] = useState<number | undefined>();
 
   useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      if (path === '/carte') {
+        setCurrentPage('full_menu');
+      } else {
+        setCurrentPage('home');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
   const toggleNav = () => setIsNavOpen(!isNavOpen);
 
   const navigateTo = (page: Page, category?: string) => {
+    const url = page === 'home' ? '/' : '/carte';
+    if (window.location.pathname !== url) {
+      window.history.pushState({ page, category }, '', url);
+    }
+    
     if (category) {
       setActiveMenuCategory(category);
     }
     setCurrentPage(page);
+    setIsNavOpen(false);
   };
 
   const startCustomization = (item: MenuItem, category: string, variant?: string, priceVal?: number) => {
@@ -2137,35 +2196,25 @@ export default function App() {
           >
             <HomePage onNavigate={navigateTo} onMenuClick={toggleNav} hasCart={cartCount > 0} />
           </motion.div>
-        ) : currentPage === 'full_menu' ? (
+        ) : (
           <motion.div 
-            key="full_menu"
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.02 }}
+            key="full_menu_view"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
             <FullMenuPage 
-              onBack={() => setCurrentPage('home')} 
+              onBack={() => navigateTo('home')} 
               onMenuClick={toggleNav}
               onAddToCart={startCustomization}
-              activeCategory={activeMenuCategory}
-              setActiveCategory={setActiveMenuCategory}
-            />
-          </motion.div>
-        ) : (
-          <motion.div 
-            key={currentPage}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <MenuPage 
-              category={currentPage} 
-              onBack={() => setCurrentPage('home')} 
-              onMenuClick={toggleNav}
-              onAddToCart={startCustomization}
+              activeCategory={currentPage === 'full_menu' ? activeMenuCategory : currentPage}
+              setActiveCategory={(cat) => {
+                setActiveMenuCategory(cat);
+                setCurrentPage('full_menu');
+                // Optional: update URL with category if desired, e.g. history.replaceState
+              }}
+              onLogoClick={() => navigateTo('home')}
             />
           </motion.div>
         )}
