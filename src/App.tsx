@@ -435,10 +435,10 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
 
           {/* Menu Content */}
           <div className="flex-1 flex flex-col justify-center px-4 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
-            <nav className="flex flex-col gap-2">
+            <nav className="flex flex-col gap-6">
               {[
                 { label: 'Accueil', action: () => onNavigate('home') },
-                { label: 'Commander en ligne', action: () => onNavigate('full_menu') },
+                { label: 'La Carte', action: () => onNavigate('full_menu') },
                 { label: 'Adresse', href: 'https://maps.google.com/maps?q=L\'Artisanale+Draria' },
                 { label: 'Livraison', href: 'tel:0782777560' },
               ].map((item, index) => (
@@ -451,9 +451,9 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
                   {item.action ? (
                     <button 
                       onClick={() => { item.action(); onClose(); }}
-                      className="group py-2 text-left w-full border-b border-transparent hover:border-slate-100 transition-all"
+                      className="group py-4 text-left w-full border-b border-transparent hover:border-slate-100 transition-all"
                     >
-                      <span className="text-2xl md:text-3xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
+                      <span className="text-4xl md:text-5xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
                         {item.label}
                       </span>
                     </button>
@@ -463,9 +463,9 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={onClose}
-                      className="group py-2 text-left block w-full border-b border-transparent hover:border-slate-100 transition-all"
+                      className="group py-4 text-left block w-full border-b border-transparent hover:border-slate-100 transition-all"
                     >
-                      <span className="text-2xl md:text-3xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
+                      <span className="text-4xl md:text-5xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
                         {item.label}
                       </span>
                     </a>
@@ -550,17 +550,16 @@ const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-16">
         {/* Column 1: Brand */}
         <div className="space-y-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center shadow-lg shadow-red-900/50">
-              <UtensilsCrossed className="w-4 h-4 text-white" />
+          <div className="flex items-center gap-4">
+            <div className="w-11 h-11 rounded-lg bg-red-600 flex items-center justify-center shadow-lg shadow-red-900/50">
+              <UtensilsCrossed className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h4 className="font-serif text-lg font-bold tracking-tight">L'Artisanale</h4>
-              <p className="text-[8px] font-black uppercase tracking-[0.2em] text-red-500">Draria • Qualité Supérieure</p>
+              <h4 className="font-serif text-2xl font-bold tracking-tight">L'Artisanale</h4>
+              <p className="text-[11px] font-black uppercase tracking-[0.2em] text-red-500">Draria • Qualité Supérieure</p>
             </div>
           </div>
           <div className="space-y-2">
-            <p className="text-sm text-slate-300 font-bold uppercase tracking-widest">DRARIA</p>
             <p className="text-sm text-slate-400 leading-relaxed max-w-xs font-medium uppercase">
               LE GOÛT AUTHENTIQUE LIVRÉ CHEZ VOUS
             </p>
@@ -728,7 +727,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     variants={childVariants}
                     id="link-order-online"
                     onClick={() => onNavigate('full_menu')}
-                    className="w-full bg-slate-900 text-white p-7 md:p-8 rounded-2xl md:rounded-3xl flex items-center justify-between group hover:bg-red-600 transition-all shadow-xl active:scale-[0.98]"
+                    className="w-full bg-red-600 text-white p-7 md:p-8 rounded-2xl md:rounded-3xl flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98]"
                 >
                     <div className="flex items-center gap-4 text-left">
                         <div className="bg-white/10 p-3 md:p-4 rounded-xl">
@@ -778,7 +777,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 gap-4">
                     <div className="flex flex-col text-left">
                         <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Gastronomie</span>
-                        <h3 className="font-serif text-4xl md:text-5xl font-bold text-slate-900 leading-none">Explorer l'Univers</h3>
+                        <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Explorer la Carte</h3>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-3 lg:gap-4">
@@ -821,7 +820,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
             <div className="pt-12 pb-9 md:pt-20 md:pb-15">
                 <div className="flex flex-col text-left mb-8">
                     <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Sélection</span>
-                    <h3 className="font-serif text-4xl md:text-5xl font-bold text-slate-900 leading-none">Nos Incontournables</h3>
+                    <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Nos Incontournables</h3>
                 </div>
                 <div className="flex flex-col">
                     {[
@@ -861,7 +860,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
                         <div className="flex flex-col text-left">
                             <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Valeurs</span>
-                            <h3 className="font-serif text-3xl md:text-5xl font-bold text-slate-900 leading-none">Notre Engagement</h3>
+                            <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Notre Engagement</h3>
                         </div>
                         <p className="text-slate-400 text-xs md:text-sm max-w-lg font-medium leading-relaxed">
                             Plus qu'une pizzeria, un savoir-faire transmis pour vous offrir le meilleur de la cuisine artisanale.
@@ -915,11 +914,11 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 </div>
 
             {/* Testimonials section optimization for PC */}
-            <div className="mb-16 md:mb-24">
+            <div className="mb-20 md:mb-[7.5rem]">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
                     <div className="flex flex-col text-left">
                         <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Avis Clients</span>
-                        <h3 className="font-serif text-4xl md:text-5xl font-bold text-slate-900 leading-none">Ce qu'on dit de nous</h3>
+                        <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Ce qu'on dit de nous</h3>
                     </div>
                     <motion.div 
                         initial={{ scale: 0.9, opacity: 0 }}
@@ -947,7 +946,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                         rating={5}
                         date="il y a 9 mois"
                         text="Excellente qualité !!! Et très très bon rapport qualité-prix !"
-                        tags={["Local Guide", "25 avis", "6 photos"]}
+                        tags={["Local Guide", "25 avis"]}
                     />
 
                     <ReviewCard 
