@@ -711,53 +711,31 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     </p>
                     <div className="h-px w-8 md:w-10 bg-red-600" />
                 </div>
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 mt-10 md:mt-12">
-                        <motion.button 
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => onNavigate('full_menu')}
-                            className="w-[auto] min-w-[250px] bg-red-600 text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest shadow-2xl shadow-red-900/40 hover:bg-slate-900 transition-all flex items-center justify-center gap-3"
-                        >
-                            <ShoppingBag className="w-5 h-5" />
-                            Commander en ligne
-                        </motion.button>
-                        <motion.button 
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={() => {
-                                const bento = document.getElementById('bento-grid');
-                                if (bento) bento.scrollIntoView({ behavior: 'smooth' });
-                            }}
-                            className="w-[auto] min-w-[200px] bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-white/20 transition-all"
-                        >
-                            Voir la carte
-                        </motion.button>
-                    </div>
             </div>
           </div>
         </section>
 
-        <div className="max-w-7xl mx-auto w-full px-4 md:px-16 lg:px-24 -mt-16 relative z-20 pb-16">
+        <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 -mt-16 relative z-20 pb-16">
             {/* Quick Link Bio Section */}
             <motion.div 
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={containerVariants}
-                className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12"
+                className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-[92px]"
             >
                 <motion.button 
                     variants={childVariants}
                     id="link-order-online"
                     onClick={() => onNavigate('full_menu')}
-                    className="w-full bg-slate-900 text-white p-6 md:p-6 rounded-2xl md:rounded-3xl flex items-center justify-between group hover:bg-red-600 transition-all shadow-xl active:scale-[0.98]"
+                    className="w-full bg-slate-900 text-white p-7 md:p-8 rounded-2xl md:rounded-3xl flex items-center justify-between group hover:bg-red-600 transition-all shadow-xl active:scale-[0.98]"
                 >
                     <div className="flex items-center gap-4 text-left">
-                        <div className="bg-white/10 p-3 md:p-3 rounded-xl">
+                        <div className="bg-white/10 p-3 md:p-4 rounded-xl">
                             <ShoppingBag className="w-6 h-6 md:w-7 md:h-7" />
                         </div>
                         <div>
-                            <span className="block font-black text-xl md:text-xl leading-tight text-white">Commander en Ligne</span>
+                            <span className="block font-black text-xl md:text-2xl leading-tight text-white">Commander en Ligne</span>
                             <span className="text-[10px] md:text-[10px] uppercase opacity-60 font-bold tracking-widest block text-red-100">Service Rapide</span>
                         </div>
                     </div>
@@ -766,13 +744,13 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 <motion.a 
                     variants={childVariants}
                     href="tel:0782777560" 
-                    className="bg-white border border-slate-100 p-6 md:p-6 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                    className="bg-white border border-slate-100 p-7 md:p-8 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                 >
-                    <div className="bg-red-50 p-3 md:p-3 rounded-xl text-red-600">
+                    <div className="bg-red-50 p-3 md:p-4 rounded-xl text-red-600">
                         <Phone className="w-6 h-6 md:w-7 md:h-7" />
                     </div>
                     <div className="text-left">
-                        <span className="block font-black text-xl md:text-xl leading-tight">Nous Appeler</span>
+                        <span className="block font-black text-xl md:text-2xl leading-tight">Nous Appeler</span>
                         <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">0782 77 75 60</span>
                     </div>
                 </motion.a>
@@ -782,13 +760,13 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     href="https://www.google.com/maps/search/L'Artisanale+Draria+Alger" 
                     target="_blank" 
                     rel="noreferrer"
-                    className="bg-white border border-slate-100 p-6 md:p-6 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                    className="bg-white border border-slate-100 p-7 md:p-8 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                 >
-                    <div className="bg-red-50 p-3 md:p-3 rounded-xl text-red-600">
+                    <div className="bg-red-50 p-3 md:p-4 rounded-xl text-red-600">
                         <MapPin className="w-6 h-6 md:w-7 md:h-7" />
                     </div>
                     <div className="text-left">
-                        <span className="block font-black text-xl md:text-xl leading-tight">Notre Adresse</span>
+                        <span className="block font-black text-xl md:text-2xl leading-tight">Notre Adresse</span>
                         <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Draria, Alger</span>
                     </div>
                 </motion.a>
@@ -796,7 +774,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
 
 
             {/* Category Grid - Bento Style Optimized for Desktop */}
-            <div id="bento-grid" className="mb-12 md:mb-16">
+            <div id="bento-grid" className="mb-16 md:mb-18">
                 <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 gap-4">
                     <div className="flex flex-col text-left">
                         <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Gastronomie</span>
@@ -840,19 +818,10 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
             </div>
 
             {/* Nos Incontournables Section */}
-            <div className="py-12 md:py-20">
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-                    <div className="flex flex-col text-left">
-                        <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Sélection</span>
-                        <h3 className="font-serif text-4xl md:text-5xl font-bold text-slate-900 leading-none">Nos Incontournables</h3>
-                    </div>
-                    <button 
-                        onClick={() => onNavigate('full_menu')} 
-                        className="group flex items-center gap-3 text-red-600 font-black text-[10px] uppercase tracking-[0.2em] hover:bg-red-50 px-6 py-3 rounded-full transition-all border border-red-100 self-start md:self-auto"
-                    >
-                        Tout explorer
-                        <ArrowLeft className="w-3.5 h-3.5 rotate-180 group-hover:translate-x-1 transition-transform" />
-                    </button>
+            <div className="pt-12 pb-9 md:pt-20 md:pb-15">
+                <div className="flex flex-col text-left mb-8">
+                    <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Sélection</span>
+                    <h3 className="font-serif text-4xl md:text-5xl font-bold text-slate-900 leading-none">Nos Incontournables</h3>
                 </div>
                 <div className="flex flex-col">
                     {[
@@ -862,7 +831,8 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     ].map((item, idx) => (
                         <div 
                             key={idx} 
-                            className="group py-8 md:py-10 border-b border-slate-100 last:border-0 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:bg-slate-50/50 px-4 md:px-0"
+                            onClick={() => onNavigate('full_menu')}
+                            className="group py-8 md:py-10 border-b border-slate-100 last:border-0 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:bg-slate-50/50 px-4 md:px-0 cursor-pointer"
                         >
                             <div className="flex-1 space-y-3">
                                 <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6">
@@ -882,23 +852,13 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                                     <span className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em]">{item.cat}</span>
                                 </div>
                             </div>
-                            <div className="pt-2 md:pt-0">
-                                <button 
-                                    onClick={() => onNavigate('full_menu')} 
-                                    className="flex items-center gap-3 px-8 py-4 rounded-full bg-slate-900 text-white hover:bg-red-600 transition-all font-black text-[10px] uppercase tracking-widest active:scale-95 shadow-xl shadow-slate-900/10"
-                                >
-                                    <ShoppingBag className="w-4 h-4" />
-                                    Commander
-                                </button>
-                            </div>
                         </div>
                     ))}
                 </div>
             </div>
             
-            <div className="w-full bg-white border-b border-slate-100 py-16 md:py-24 mb-16">
-                <div className="max-w-7xl mx-auto px-4 md:px-16 lg:px-24">
-                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
+            <div className="pt-12 pb-16 md:pt-18 md:pb-24 mb-12">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
                         <div className="flex flex-col text-left">
                             <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Valeurs</span>
                             <h3 className="font-serif text-3xl md:text-5xl font-bold text-slate-900 leading-none">Notre Engagement</h3>
@@ -953,10 +913,9 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                         ))}
                     </motion.div>
                 </div>
-            </div>
 
             {/* Testimonials section optimization for PC */}
-            <div className="max-w-7xl mx-auto px-4 md:px-16 lg:px-24 mb-20 md:mb-32">
+            <div className="mb-16 md:mb-24">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
                     <div className="flex flex-col text-left">
                         <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Avis Clients</span>
@@ -1001,9 +960,8 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     />
                 </div>
             </div>
-        </div>
 
-            <div className="max-w-7xl mx-auto px-4 md:px-16 lg:px-24 mt-4 mb-16">
+            <div className="mt-4 mb-16">
                 {/* Localisation Section */}
                 <div className="relative overflow-hidden group rounded-[2rem] md:rounded-[3rem]">
                     {/* Background with parallax-like scaling */}
@@ -1067,6 +1025,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     </div>
                 </div>
             </div>
+        </div>
 
       </main>
 
