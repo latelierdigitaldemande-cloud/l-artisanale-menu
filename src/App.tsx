@@ -2184,7 +2184,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
             ))}
             
             {/* Mini Footer */}
-            <div className="mt-12 -mx-4 md:-mx-8 lg:-mx-12 p-10 bg-slate-900 flex flex-col items-center gap-3">
+            <div className="mt-12 -mx-4 md:-mx-8 lg:-mx-12 -mb-10 py-12 px-10 bg-slate-900 flex flex-col items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-white border border-white/10">
                 <UtensilsCrossed className="w-4 h-4" />
               </div>
