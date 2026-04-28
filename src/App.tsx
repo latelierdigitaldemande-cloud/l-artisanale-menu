@@ -23,6 +23,7 @@ import {
   Minus,
   Trash2,
   Send,
+  MessageCircle,
   Home,
   Navigation,
   Star
@@ -305,16 +306,17 @@ const checkIsOpen = () => {
   const minutes = algerNow.getMinutes();
   const timeInMinutes = hours * 60 + minutes;
 
-  // Matin (Daily except Fri): 07:50–14:50
-  const isMidiOpen = day !== 5 && timeInMinutes >= (7 * 60 + 50) && timeInMinutes <= (14 * 60 + 50);
+  // Samedi(6)-Lundi(1)-Mardi(2)-Mercredi(3)-Jeudi(4): 11h30-15h30 / 18h-00h
+  // Vendredi(5): 18h00-00h
+  // Dimanche(0): Fermé
 
-  // Soir (Sat–Wed): 18:30–22:30
-  const isEarlySoirOpen = [6, 0, 1, 2, 3].includes(day) && timeInMinutes >= (18 * 60 + 30) && timeInMinutes <= (22 * 60 + 30);
+  if (day === 0) return false;
 
-  // Soir (Thu–Fri): 18:30–23:00
-  const isLateSoirOpen = [4, 5].includes(day) && timeInMinutes >= (18 * 60 + 30) && timeInMinutes <= (23 * 60);
+  const isLunch = timeInMinutes >= (11 * 60 + 30) && timeInMinutes <= (15 * 60 + 30);
+  const isDinner = timeInMinutes >= (18 * 60) && (hours < 24); // Handles until midnight
 
-  return isMidiOpen || isEarlySoirOpen || isLateSoirOpen;
+  if (day === 5) return isDinner;
+  return isLunch || isDinner;
 };
 
 // --- Components ---
@@ -725,7 +727,7 @@ const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase text-slate-500 mb-0.5 tracking-widest">Par Téléphone</p>
-                <p className="text-base font-bold">0782 77 75 60</p>
+                <p className="text-base font-bold underline cursor-pointer hover:text-red-500 transition-colors">0782 77 75 60</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -734,9 +736,10 @@ const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase text-slate-500 mb-0.5 tracking-widest">Localisation</p>
-                <p className="text-base font-bold">Route des Chwayin, Draria</p>
+                <p className="text-sm font-bold">Route des Chwayin, Draria</p>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -1103,7 +1106,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                             <span className="text-red-500 font-black text-[9px] uppercase tracking-[0.4em] mb-4 block">Le Rendez-vous</span>
                             <h3 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">Venez nous voir à Draria</h3>
                             <p className="text-slate-400 text-sm md:text-base mb-8 font-medium leading-relaxed">
-                                Une ambiance chaleureuse vous attend tous les jours de 11h30 à minuit.
+                                Sam-Jeu: 11h30—15h30 / 18h00—00h00 | Ven: 18h00—00h00 | Dimanche: Fermé
                             </p>
                             
                             <motion.a 
@@ -1119,31 +1122,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                             </motion.a>
                         </div>
                         
-                        {/* Right side info for desktop/tablet */}
-                        <div className="hidden md:block">
-                            <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-[2rem] w-72 ring-1 ring-white/20">
-                                <div className="space-y-6">
-                                    <div className="flex items-start gap-4">
-                                        <div className="bg-red-600 p-2 rounded-xl flex-shrink-0">
-                                            <Clock className="w-4 h-4 text-white" />
-                                        </div>
-                                        <div>
-                                            <span className="block text-white font-bold text-xs">Horaires</span>
-                                            <span className="text-slate-400 text-[10px] uppercase tracking-tighter">11h30 — 00h00</span>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-start gap-4">
-                                        <div className="bg-red-600 p-2 rounded-xl flex-shrink-0">
-                                            <Phone className="w-4 h-4 text-white" />
-                                        </div>
-                                        <div>
-                                            <span className="block text-white font-bold text-xs">Contact</span>
-                                            <span className="text-slate-400 text-[10px] tracking-tighter">0782 77 75 60</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {/* Right side info for desktop/tablet removed per request */}
                     </div>
                 </div>
             </div>
@@ -1700,20 +1679,23 @@ const CheckoutStep = ({
         {/* Method */}
         <div className="space-y-3">
           <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Mode de retrait</h4>
-          <div className="flex gap-3">
-            <button 
-              onClick={() => setUserInfo({ ...userInfo, method: 'delivery' })}
-              className={`flex-1 py-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-1 ${userInfo.method === 'delivery' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
-            >
-              <Send className="w-5 h-5" />
-              <span className="text-xs font-bold">Livraison</span>
-            </button>
+          <div className="relative p-1 bg-slate-100 rounded-xl flex items-center h-12">
+            <div 
+              className={`absolute h-10 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-out ${userInfo.method === 'pickup' ? 'translate-x-0' : 'translate-x-full'}`}
+            />
             <button 
               onClick={() => setUserInfo({ ...userInfo, method: 'pickup' })}
-              className={`flex-1 py-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-1 ${userInfo.method === 'pickup' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
+              className={`relative flex-1 flex items-center justify-center gap-2 text-xs font-black transition-colors h-full ${userInfo.method === 'pickup' ? 'text-slate-900' : 'text-slate-500'}`}
             >
-              <ShoppingBag className="w-5 h-5" />
-              <span className="text-xs font-bold">À emporter</span>
+              <ShoppingBag className="w-4 h-4" />
+              <span>À EMPORTER</span>
+            </button>
+            <button 
+              onClick={() => setUserInfo({ ...userInfo, method: 'delivery' })}
+              className={`relative flex-1 flex items-center justify-center gap-2 text-xs font-black transition-colors h-full ${userInfo.method === 'delivery' ? 'text-red-600' : 'text-slate-500'}`}
+            >
+              <Send className="w-4 h-4" />
+              <span>LIVRAISON</span>
             </button>
           </div>
         </div>
@@ -1727,14 +1709,14 @@ const CheckoutStep = ({
               placeholder="Nom et Prénom"
               value={userInfo.name}
               onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-sm"
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base"
             />
             <input 
               type="tel" 
               placeholder="Numéro de Téléphone"
               value={userInfo.phone}
               onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-sm"
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base"
             />
             {userInfo.method === 'delivery' && (
               <textarea 
@@ -1742,7 +1724,7 @@ const CheckoutStep = ({
                 rows={2}
                 value={userInfo.address}
                 onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-sm scrollbar-hide"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base scrollbar-hide"
               />
             )}
           </div>
@@ -1755,43 +1737,34 @@ const CheckoutStep = ({
             <select 
               value={userInfo.timeslot}
               onChange={(e) => setUserInfo({ ...userInfo, timeslot: e.target.value })}
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-sm appearance-none"
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base appearance-none"
             >
               <option value="">Sélectionnez un créneau</option>
               <option value="Dès que possible">Dès que possible</option>
+              <option value="11:30 - 12:00">11:30 - 12:00</option>
               <option value="12:00 - 12:30">12:00 - 12:30</option>
               <option value="12:30 - 13:00">12:30 - 13:00</option>
               <option value="13:00 - 13:30">13:00 - 13:30</option>
               <option value="13:30 - 14:00">13:30 - 14:00</option>
+              <option value="14:00 - 14:30">14:00 - 14:30</option>
+              <option value="14:30 - 15:00">14:30 - 15:00</option>
+              <option value="18:00 - 18:30">18:00 - 18:30</option>
               <option value="18:30 - 19:00">18:30 - 19:00</option>
               <option value="19:00 - 19:30">19:00 - 19:30</option>
               <option value="19:30 - 20:00">19:30 - 20:00</option>
               <option value="20:00 - 20:30">20:00 - 20:30</option>
               <option value="20:30 - 21:00">20:30 - 21:00</option>
               <option value="21:00 - 21:30">21:00 - 21:30</option>
+              <option value="21:30 - 22:00">21:30 - 22:00</option>
+              <option value="22:00 - 22:30">22:00 - 22:30</option>
+              <option value="22:30 - 23:00">22:30 - 23:00</option>
+              <option value="23:00 - 23:30">23:00 - 23:30</option>
+              <option value="23:30 - 00:00">23:30 - 00:00</option>
             </select>
             <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
           </div>
         </div>
 
-        {/* Payment */}
-        <div className="space-y-3">
-          <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Paiement</h4>
-          <div className="flex gap-3">
-            <button 
-              onClick={() => setUserInfo({ ...userInfo, payment: 'cash' })}
-              className={`flex-1 py-3 rounded-xl border-2 transition-all font-bold text-xs ${userInfo.payment === 'cash' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
-            >
-              Espèces
-            </button>
-            <button 
-              onClick={() => setUserInfo({ ...userInfo, payment: 'card' })}
-              className={`flex-1 py-3 rounded-xl border-2 transition-all font-bold text-xs ${userInfo.payment === 'card' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
-            >
-              Carte (CIB/Edahabia)
-            </button>
-          </div>
-        </div>
 
         {errors.length > 0 && (
           <div className="bg-red-50 border border-red-100 p-3 rounded-xl">
@@ -1810,10 +1783,10 @@ const CheckoutStep = ({
             onClick={() => {
               if (validate()) onConfirm();
             }}
-            className="w-full py-4 bg-red-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all flex items-center justify-center gap-3"
+            className="w-full py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all flex items-center justify-center gap-3"
           >
-            <Send className="w-5 h-5" />
-            Confirmer la commande
+            <MessageCircle className="w-5 h-5 fill-white/20" />
+            Commander
           </button>
       </div>
     </div>
@@ -1862,8 +1835,7 @@ const CartDrawer = ({
       `*Tél:* ${userInfo.phone}\n` +
       `*Mode:* ${userInfo.method === 'delivery' ? '🚗 Livraison' : '🏘️ À Emporter'}\n` +
       (userInfo.method === 'delivery' ? `*Adresse:* ${userInfo.address}\n` : '') +
-      `*Créneau:* ${userInfo.timeslot}\n` +
-      `*Paiement:* ${userInfo.payment === 'cash' ? '💵 Espèces' : '💳 Carte'}\n\n` +
+      `*Créneau:* ${userInfo.timeslot}\n\n` +
       `*Articles:*\n` +
       cart.map(item => `- ${getFullItemName(item)} x${item.quantity} : ${item.price * item.quantity} DA`).join('\n') +
       `\n\n*TOTAL: ${total} DA*`;
@@ -2184,12 +2156,12 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
             ))}
             
             {/* Mini Footer */}
-            <div className="mt-12 -mx-4 md:-mx-8 lg:-mx-12 -mb-10 py-12 px-10 bg-slate-900 flex flex-col items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-white border border-white/10">
-                <UtensilsCrossed className="w-4 h-4" />
+            <div className="mt-12 -mx-4 md:-mx-8 lg:-mx-12 -mb-10 py-14 px-10 bg-slate-900 flex flex-col items-center gap-3">
+              <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-white border border-white/10">
+                <UtensilsCrossed className="w-5 h-5" />
               </div>
-              <span className="font-serif font-bold text-base tracking-tight text-white">L'Artisanale</span>
-              <div className="w-6 h-1 bg-red-600 rounded-full mt-1" />
+              <span className="font-serif font-bold text-lg tracking-tight text-white">L'Artisanale</span>
+              <div className="w-7 h-1 bg-red-600 rounded-full mt-1" />
             </div>
 
             {filteredItems.length === 0 && (
