@@ -2151,13 +2151,13 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                 <div className="bg-slate-50 p-1 rounded-2xl flex border border-slate-100 min-w-0">
                   <button 
                     onClick={() => setPizzaBase('tomato')}
-                    className={`flex-1 px-5 py-3 rounded-xl text-[12px] font-black uppercase tracking-widest transition-all ${pizzaBase === 'tomato' ? 'bg-white shadow-md text-red-600' : 'text-slate-500'}`}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${pizzaBase === 'tomato' ? 'bg-white shadow-md text-red-600' : 'text-slate-500'}`}
                   >
                     Tomate
                   </button>
                   <button 
                     onClick={() => setPizzaBase('cream')}
-                    className={`flex-1 px-5 py-3 rounded-xl text-[12px] font-black uppercase tracking-widest transition-all ${pizzaBase === 'cream' ? 'bg-white shadow-md text-red-600' : 'text-slate-500'}`}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${pizzaBase === 'cream' ? 'bg-white shadow-md text-red-600' : 'text-slate-500'}`}
                   >
                     Crème
                   </button>
