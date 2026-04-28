@@ -2182,6 +2182,16 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                 onAddToCart={(v, p) => onAddToCart(item, activeCategory, v, p)} 
               />
             ))}
+            
+            {/* Mini Footer */}
+            <div className="mt-12 -mx-4 md:-mx-8 lg:-mx-12 p-10 bg-slate-900 flex flex-col items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-white border border-white/10">
+                <UtensilsCrossed className="w-4 h-4" />
+              </div>
+              <span className="font-serif font-bold text-base tracking-tight text-white">L'Artisanale</span>
+              <div className="w-6 h-1 bg-red-600 rounded-full mt-1" />
+            </div>
+
             {filteredItems.length === 0 && (
               <div className="py-20 text-center">
                 <p className="text-slate-400 text-sm font-bold">Aucun produit dans cette catégorie.</p>
