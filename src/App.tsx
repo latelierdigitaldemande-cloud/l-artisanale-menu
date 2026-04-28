@@ -521,7 +521,7 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
                     if (el2) el2.scrollIntoView({ behavior: 'smooth' });
                   }, 100);
                 }},
-                { label: 'Adresse', href: 'https://maps.google.com/maps?q=L\'Artisanale+Draria' },
+                { label: 'Adresse', href: 'https://maps.app.goo.gl/ooZi92NoWhsah1iX6' },
                 { label: 'Livraison', href: 'tel:0782777560' },
               ].map((item, index) => (
                 <motion.div
@@ -565,9 +565,9 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
             >
           <div className="flex gap-10">
                 {[
-                  { icon: Instagram, href: "https://instagram.com" },
+                  { icon: Instagram, href: "https://www.instagram.com/lartisanale_draria/" },
                   { icon: Music, href: "https://tiktok.com" },
-                  { icon: Facebook, href: "https://facebook.com" }
+                  { icon: Facebook, href: "https://www.facebook.com/lartisanaledraria/?locale=fr_FR" }
                 ].map((social, i) => (
                   <a 
                     key={i} 
@@ -648,9 +648,9 @@ const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }
           </div>
           <div className="flex items-center gap-3">
             {[
-              { icon: Instagram, href: "https://instagram.com" },
+              { icon: Instagram, href: "https://www.instagram.com/lartisanale_draria/" },
               { icon: Music, href: "https://tiktok.com" },
-              { icon: Facebook, href: "https://facebook.com" }
+              { icon: Facebook, href: "https://www.facebook.com/lartisanaledraria/?locale=fr_FR" }
             ].map((social, i) => (
               <a key={i} href={social.href} target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-red-600 transition-all border border-white/5">
                 <social.icon className="w-3.5 h-3.5" />
@@ -697,7 +697,7 @@ const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }
             </li>
             <li>
               <a 
-                href="https://www.google.com/maps/search/L'Artisanale+Draria+Alger" 
+                href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-sm font-medium text-slate-300 hover:text-red-500 transition-colors flex items-center gap-2"
@@ -848,7 +848,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 </a>
 
                 <a 
-                    href="https://www.google.com/maps/search/L'Artisanale+Draria+Alger" 
+                    href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
                     target="_blank" 
                     rel="noreferrer"
                     className="bg-white border border-slate-100 p-7 md:p-8 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
@@ -877,7 +877,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                         <button 
                             key={cat.id}
                             onClick={() => onNavigate('full_menu', cat.id)}
-                            className={`relative h-48 md:h-[300px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 ${cat.bentoSpan}`}
+                            className={`relative h-56 md:h-[300px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 ${cat.bentoSpan}`}
                         >
                             <img 
                                 src={cat.image} 
@@ -909,7 +909,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Sélection</span>
                     <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Nos Incontournables</h3>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-12 md:gap-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-1 gap-4 md:gap-y-4">
                     {[
                         { name: 'Pizza Saumon', price: '1100 DA', desc: 'Saumon fumé de qualité, aneth fraîche, crème onctueuse.', cat: 'Signature', catId: 'pizza' },
                         { name: 'Double Smash', price: '900 DA', desc: 'Deux steaks de boeuf pur jus, cheddar affiné, sauce secrète.', cat: 'Gourmet', catId: 'burger' },
@@ -1023,7 +1023,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ delay: idx * 0.1, duration: 0.5 }}
                             viewport={{ once: true }}
-                            className={`${idx >= 4 ? 'hidden md:block' : ''} aspect-square relative group overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg`}
+                            className={`${idx >= 4 ? 'hidden md:block' : ''} aspect-[1/1.15] md:aspect-square relative group overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg`}
                         >
                             <img 
                                 src={img.url} 
@@ -1109,7 +1109,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                             <motion.a 
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                href="https://www.google.com/maps/search/L'Artisanale+Draria+Alger" 
+                                href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
                                 target="_blank" 
                                 rel="noreferrer"
                                 className="inline-flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all shadow-xl"
@@ -2086,7 +2086,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                     setActiveCategory(cat.id);
                     e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
                   }}
-                  className={`px-5 py-3 rounded-full text-[12px] font-black uppercase tracking-widest transition-all whitespace-nowrap flex items-center gap-2
+                  className={`px-4.5 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest transition-all whitespace-nowrap flex items-center gap-2
                     ${activeCategory === cat.id 
                       ? 'bg-slate-900 text-white shadow-xl shadow-slate-900/10' 
                       : 'bg-white border border-slate-100 text-slate-500'}
