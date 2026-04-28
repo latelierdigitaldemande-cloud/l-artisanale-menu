@@ -346,7 +346,7 @@ const MenuListItem = ({ item, category, onAddToCart }: MenuListItemProps) => {
     <div className="group py-5 flex flex-col justify-between gap-4 transition-all hover:bg-slate-100/50 rounded-2xl px-4 bg-slate-50/10 md:bg-transparent md:px-2 md:py-6">
       <div className="space-y-2">
         <div className="flex justify-between items-start gap-2">
-          <h4 className="font-serif text-base md:text-lg font-bold text-slate-950 group-hover:text-red-600 transition-colors leading-tight">
+          <h4 className="font-serif text-[1.2rem] md:text-lg font-bold text-slate-950 group-hover:text-red-600 transition-colors leading-tight">
             {item.name}
           </h4>
           <span className="text-sm md:text-base font-black text-slate-950 tabular-nums whitespace-nowrap">
@@ -368,16 +368,17 @@ const MenuListItem = ({ item, category, onAddToCart }: MenuListItemProps) => {
         </div>
       </div>
 
-      <div className="pt-2">
+      <div className="flex items-center justify-between pt-2">
+        <div />
         <button 
           onClick={(e) => {
             e.stopPropagation();
             onAddToCart();
           }}
-          className="flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-slate-900 text-white hover:bg-red-600 transition-all font-black text-[10px] uppercase tracking-widest active:scale-95 shadow-lg shadow-slate-900/10 self-start"
+          className="w-9 h-9 flex items-center justify-center bg-slate-100 text-slate-900 hover:bg-red-600 hover:text-white rounded-full transition-all active:scale-95 shadow-sm"
+          aria-label="Ajouter au panier"
         >
-          <Plus className="w-3.5 h-3.5" />
-          Commander
+          <Plus className="w-5 h-5" />
         </button>
       </div>
     </div>
@@ -2085,7 +2086,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                     setActiveCategory(cat.id);
                     e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
                   }}
-                  className={`px-4 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap flex items-center gap-2
+                  className={`px-5 py-3 rounded-2xl text-[12px] font-black uppercase tracking-widest transition-all whitespace-nowrap flex items-center gap-2
                     ${activeCategory === cat.id 
                       ? 'bg-slate-900 text-white shadow-xl shadow-slate-900/10' 
                       : 'bg-white border border-slate-100 text-slate-500'}
@@ -2150,13 +2151,13 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                 <div className="bg-slate-50 p-1 rounded-2xl flex border border-slate-100 min-w-0">
                   <button 
                     onClick={() => setPizzaBase('tomato')}
-                    className={`flex-1 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${pizzaBase === 'tomato' ? 'bg-white shadow-md text-red-600' : 'text-slate-500'}`}
+                    className={`flex-1 px-5 py-3 rounded-xl text-[12px] font-black uppercase tracking-widest transition-all ${pizzaBase === 'tomato' ? 'bg-white shadow-md text-red-600' : 'text-slate-500'}`}
                   >
                     Tomate
                   </button>
                   <button 
                     onClick={() => setPizzaBase('cream')}
-                    className={`flex-1 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${pizzaBase === 'cream' ? 'bg-white shadow-md text-red-600' : 'text-slate-500'}`}
+                    className={`flex-1 px-5 py-3 rounded-xl text-[12px] font-black uppercase tracking-widest transition-all ${pizzaBase === 'cream' ? 'bg-white shadow-md text-red-600' : 'text-slate-500'}`}
                   >
                     Crème
                   </button>
