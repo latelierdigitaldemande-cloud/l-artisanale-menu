@@ -1736,7 +1736,7 @@ const CheckoutStep = ({
                 placeholder="Nom complet *"
                 value={userInfo.name}
                 onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
-                className="flex-1 w-full px-4 py-3 bg-slate-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base text-slate-400 placeholder:text-slate-300"
+                className="flex-1 w-full px-4 py-3 bg-slate-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base text-slate-900 placeholder:text-slate-500"
               />
               <input 
                 required
@@ -1744,7 +1744,7 @@ const CheckoutStep = ({
                 placeholder="Téléphone *"
                 value={userInfo.phone}
                 onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
-                className="flex-1 w-full px-4 py-3 bg-slate-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base text-slate-400 placeholder:text-slate-300"
+                className="flex-1 w-full px-4 py-3 bg-slate-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base text-slate-900 placeholder:text-slate-500"
               />
             </div>
             {userInfo.method === 'delivery' && (
@@ -1754,7 +1754,7 @@ const CheckoutStep = ({
                 rows={2}
                 value={userInfo.address}
                 onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })}
-                className="w-full px-4 py-3 bg-slate-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base scrollbar-hide text-slate-400 placeholder:text-slate-300"
+                className="w-full px-4 py-3 bg-slate-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base scrollbar-hide text-slate-900 placeholder:text-slate-500"
               />
             )}
           </div>
@@ -1768,7 +1768,7 @@ const CheckoutStep = ({
               required
               value={userInfo.timeslot}
               onChange={(e) => setUserInfo({ ...userInfo, timeslot: e.target.value })}
-              className="w-full px-4 py-3 bg-slate-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base appearance-none text-slate-400"
+              className={`w-full px-4 py-3 bg-slate-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base appearance-none ${userInfo.timeslot ? 'text-slate-900' : 'text-slate-500'}`}
             >
               <option value="">Sélectionnez un créneau *</option>
               <option value="Dès que possible">Dès que possible</option>
@@ -1799,7 +1799,7 @@ const CheckoutStep = ({
 
       <hr className="border-slate-100 !mt-2" />
 
-      <div className="!mt-2 space-y-4">
+      <div className="!mt-2 space-y-6 md:space-y-4">
           <div className="flex items-center justify-between px-2">
             <span className="text-slate-500 font-bold uppercase tracking-wider text-[10px]">Total</span>
             <span className="text-2xl font-black text-slate-900">{total.toLocaleString()} DA</span>
@@ -1808,7 +1808,7 @@ const CheckoutStep = ({
           <button 
             type="submit"
             disabled={!isFormValid}
-            className={`w-full py-4 rounded-2xl font-black shadow-xl active:scale-95 transition-all flex items-center justify-center gap-3 ${isFormValid ? 'bg-slate-900 text-white cursor-pointer opacity-100' : 'bg-blue-50 text-blue-300 cursor-not-allowed'}`}
+            className={`w-full py-4 rounded-2xl font-black shadow-xl active:scale-95 transition-all flex items-center justify-center gap-3 bg-slate-900 text-white ${isFormValid ? 'opacity-100 cursor-pointer' : 'opacity-60 cursor-not-allowed'}`}
           >
             <MessageCircle className="w-5 h-5 fill-white/20" />
             Commander
