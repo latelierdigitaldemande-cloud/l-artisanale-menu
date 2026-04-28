@@ -1646,30 +1646,26 @@ const CheckoutStep = ({
   userInfo, 
   setUserInfo, 
   onBack, 
-  onConfirm 
+  onConfirm,
+  total
 }: { 
   userInfo: UserInfo, 
   setUserInfo: (u: UserInfo) => void, 
   onBack: () => void, 
-  onConfirm: () => void 
+  onConfirm: () => void,
+  total: number
 }) => {
-  const [errors, setErrors] = useState<string[]>([]);
-
-  const validate = () => {
-    const newErrors = [];
-    if (!userInfo.name) newErrors.push('Nom requis');
-    if (!userInfo.phone) newErrors.push('Téléphone requis');
-    if (userInfo.method === 'delivery' && !userInfo.address) newErrors.push('Adresse requise pour la livraison');
-    if (!userInfo.timeslot) newErrors.push('Créneau horaire requis');
-    
-    setErrors(newErrors);
-    return newErrors.length === 0;
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onConfirm();
   };
 
+  const isFormValid = userInfo.name && userInfo.phone && (userInfo.method === 'pickup' || userInfo.address) && userInfo.timeslot;
+
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
+    <form onSubmit={handleSubmit} className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
       <div className="flex items-center gap-3">
-        <button onClick={onBack} className="p-2 hover:bg-slate-100 rounded-full">
+        <button type="button" onClick={onBack} className="p-2 hover:bg-slate-100 rounded-full">
           <ArrowLeft className="w-5 h-5 text-slate-600" />
         </button>
         <h3 className="text-xl font-bold text-slate-800">Finaliser la commande</h3>
@@ -1679,22 +1675,24 @@ const CheckoutStep = ({
         {/* Method */}
         <div className="space-y-3">
           <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Mode de retrait</h4>
-          <div className="relative p-1 bg-slate-100 rounded-xl flex items-center h-12">
+          <div className="relative p-1 bg-slate-100 rounded-xl flex items-center h-10">
             <div 
-              className={`absolute h-10 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-out ${userInfo.method === 'pickup' ? 'translate-x-0' : 'translate-x-full'}`}
+              className={`absolute h-8 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-out ${userInfo.method === 'pickup' ? 'translate-x-0' : 'translate-x-full'}`}
             />
             <button 
+              type="button"
               onClick={() => setUserInfo({ ...userInfo, method: 'pickup' })}
-              className={`relative flex-1 flex items-center justify-center gap-2 text-xs font-black transition-colors h-full ${userInfo.method === 'pickup' ? 'text-slate-900' : 'text-slate-500'}`}
+              className={`relative flex-1 flex items-center justify-center gap-2 text-[10px] font-black transition-colors h-full ${userInfo.method === 'pickup' ? 'text-slate-900' : 'text-slate-500'}`}
             >
-              <ShoppingBag className="w-4 h-4" />
+              <ShoppingBag className="w-3.5 h-3.5" />
               <span>À EMPORTER</span>
             </button>
             <button 
+              type="button"
               onClick={() => setUserInfo({ ...userInfo, method: 'delivery' })}
-              className={`relative flex-1 flex items-center justify-center gap-2 text-xs font-black transition-colors h-full ${userInfo.method === 'delivery' ? 'text-red-600' : 'text-slate-500'}`}
+              className={`relative flex-1 flex items-center justify-center gap-2 text-[10px] font-black transition-colors h-full ${userInfo.method === 'delivery' ? 'text-red-600' : 'text-slate-500'}`}
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-3.5 h-3.5" />
               <span>LIVRAISON</span>
             </button>
           </div>
@@ -1704,22 +1702,27 @@ const CheckoutStep = ({
         <div className="space-y-3">
           <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Vos Informations</h4>
           <div className="space-y-2">
-            <input 
-              type="text" 
-              placeholder="Nom et Prénom"
-              value={userInfo.name}
-              onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base"
-            />
-            <input 
-              type="tel" 
-              placeholder="Numéro de Téléphone"
-              value={userInfo.phone}
-              onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base"
-            />
+            <div className="flex gap-2">
+              <input 
+                required
+                type="text" 
+                placeholder="Nom complet"
+                value={userInfo.name}
+                onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+                className="flex-1 w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base"
+              />
+              <input 
+                required
+                type="tel" 
+                placeholder="Téléphone"
+                value={userInfo.phone}
+                onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
+                className="flex-1 w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base"
+              />
+            </div>
             {userInfo.method === 'delivery' && (
               <textarea 
+                required
                 placeholder="Adresse complète (Quartier, Immeuble, Appt...)"
                 rows={2}
                 value={userInfo.address}
@@ -1735,6 +1738,7 @@ const CheckoutStep = ({
           <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Créneau Souhaité</h4>
           <div className="relative">
             <select 
+              required
               value={userInfo.timeslot}
               onChange={(e) => setUserInfo({ ...userInfo, timeslot: e.target.value })}
               className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base appearance-none"
@@ -1764,32 +1768,24 @@ const CheckoutStep = ({
             <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
           </div>
         </div>
-
-
-        {errors.length > 0 && (
-          <div className="bg-red-50 border border-red-100 p-3 rounded-xl">
-            {errors.map((err, i) => (
-              <p key={i} className="text-[10px] text-red-600 font-bold uppercase tracking-wider flex items-center gap-2">
-                <span className="w-1 h-1 rounded-full bg-red-600" />
-                {err}
-              </p>
-            ))}
-          </div>
-        )}
       </div>
 
-      <div className="pt-4">
+      <div className="pt-4 space-y-4">
+          <div className="flex items-center justify-between px-2">
+            <span className="text-slate-500 font-bold uppercase tracking-wider text-[10px]">Total</span>
+            <span className="text-base font-black text-slate-900">{total.toLocaleString()} DA</span>
+          </div>
+
           <button 
-            onClick={() => {
-              if (validate()) onConfirm();
-            }}
-            className="w-full py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all flex items-center justify-center gap-3"
+            type="submit"
+            disabled={!isFormValid}
+            className={`w-full py-4 rounded-2xl font-black shadow-xl active:scale-95 transition-all flex items-center justify-center gap-3 ${isFormValid ? 'bg-slate-900 text-white cursor-pointer opacity-100' : 'bg-blue-50 text-blue-300 cursor-not-allowed'}`}
           >
             <MessageCircle className="w-5 h-5 fill-white/20" />
             Commander
           </button>
       </div>
-    </div>
+    </form>
   );
 };
 
@@ -1812,7 +1808,7 @@ const CartDrawer = ({
     name: '', 
     phone: '', 
     address: '', 
-    method: 'delivery',
+    method: 'pickup',
     timeslot: '',
     payment: 'cash'
   });
@@ -1983,6 +1979,7 @@ const CartDrawer = ({
                      setUserInfo={setUserInfo}
                      onBack={() => setStep('cart')}
                      onConfirm={handleSendOrder}
+                     total={total}
                    />
                 </div>
             )}
