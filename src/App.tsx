@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, useMemo, ReactNode } from 'react';
+import { useState, useEffect, useMemo, ReactNode, FormEvent } from 'react';
 import { 
   Instagram, 
   Facebook,
@@ -152,13 +152,14 @@ const PIZZA_MENU: MenuItem[] = [
   { name: 'Oriental', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, merguez, poivrons, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
   { name: 'BBQ', price: { standard: 700, large: 1300 }, description: 'Sauce tomate, fromage, viande hachée, oeuf, poivrons, olives, sauce BBQ.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
   { name: '3 Fromages', price: { standard: 750, large: 1400 }, description: 'Sauce tomate, mozzarella, gruyère, boursin, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
+  { name: "L'Artisanale", price: { standard: 900, large: 1700 }, description: 'Sauce tomate ou crème fraîche, viande hachée, poulet fumé, boursin, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=400&auto=format&fit=crop' },
   // Base Crème
   { name: 'Forestière', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, oignons, champignons, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=400&auto=format&fit=crop' },
   { name: 'Tartiflette', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, champignons, pomme de terre, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=400&auto=format&fit=crop' },
   { name: 'Boisée', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, poivrons, sauce fromagère.', base: 'cream', image: 'https://images.unsplash.com/photo-1534080564607-c92751f8933f?q=80&w=400&auto=format&fit=crop' },
   { name: 'Boursin', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, boursin, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=400&auto=format&fit=crop' },
   { name: 'Raclette', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, raclette, pomme de terre, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=400&auto=format&fit=crop' },
-  { name: "L'Artisanale", price: { standard: 900, large: 1700 }, description: 'Crème fraîche ou sauce tomate, viande hachée, poulet fumé, boursin, olives.', image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=400&auto=format&fit=crop' },
+  { name: "L'Artisanale", price: { standard: 900, large: 1700 }, description: 'Crème fraîche ou sauce tomate, viande hachée, poulet fumé, boursin, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=400&auto=format&fit=crop' },
   { name: 'Saumon', price: { standard: 1100, large: 2100 }, description: 'Crème fraîche, fromage, saumon, oignons, boursin.', base: 'cream', image: 'https://images.unsplash.com/photo-1544333303-577546e393b2?q=80&w=400&auto=format&fit=crop' },
 ];
 
@@ -173,14 +174,14 @@ const BURGER_MENU: MenuItem[] = [
 ];
 
 const TACOS_MENU: MenuItem[] = [
-  { name: 'Le Poulet', price: 550, description: 'Poulet mariné, frites croustillantes, sauce fromagère onctueuse.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
-  { name: "L'Indien", price: 600, description: 'Poulet au curry façon Madras, frites et notre fameuse sauce fromage.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
-  { name: 'Le Tandoori', price: 600, description: 'Poulet tandoori épicé, frites, sauce fromagère maison.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
-  { name: 'Le Mix', price: 600, description: 'Mélange savoureux de viande hachée et poulet mariné.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
-  { name: 'Le Beef', price: 650, description: 'Viande hachée 100% pur boeuf, frites et sauce fromagère.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
-  { name: 'Le Crispy', price: 650, description: 'Poulet pané ultra croustillant, frites, sauce au choix.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
-  { name: 'Le Fermier', price: 650, description: 'Dinde fumée, poulet tendre, frites et coeur fondant de fromage.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
-  { name: 'Le Farmer', price: 700, description: 'Gros appétit : dinde fumée, viande hachée, double dose de frites.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Classique', price: { standard: 600, large: 950 }, description: 'Viande ou escalope, fromagère, crudités, frites, sauce au choix.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Raclette', price: { standard: 800, large: 1150 }, description: 'Viande, raclette, fromagère, crudités, frites, sauce au choix.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Boursin', price: { standard: 700, large: 1050 }, description: 'Escalope, boursin, crème fraîche, crudités, frites, sauce au choix.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Crousty', price: { standard: 750, large: 1100 }, description: 'Tenders, boursin, fromagère, crudités, frites, sauce au choix.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Oriental', price: { standard: 700, large: 1050 }, description: 'Escalope ou viande, fromagère, crudités, frites, poivrons, olives, sauce au choix.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Forestier', price: { standard: 850, large: 1200 }, description: 'Escalope, oignons, champignons, dinde fumée, fromagère, crudités, frites, sauce au choix.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Chicken Beef', price: { standard: 900, large: 1350 }, description: 'Viande, tenders, fromagère, raclette, crudités, frites, sauce au choix.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
+  { name: 'Double Beef Raclette', price: { standard: 900, large: 1350 }, description: '2 portions viande, raclette, fromagère, crudités, frites, sauce au choix.', image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png' },
 ];
 
 const TEXMEX_MENU: MenuItem[] = [
@@ -197,7 +198,8 @@ const SUPPLEMENTS = [
   { name: 'Oignons Caramélisés', price: 0 },
   { name: 'Cornichons', price: 0 },
   { name: 'Oeuf / Slice Cheese', price: 50 },
-  { name: 'Dinde Fumée', price: 150 },
+  { name: 'Viande', price: 50 },
+  { name: 'Dinde Fumée', price: 250 },
   { name: 'Menu Frites + Boisson', price: 200 },
   { name: 'Gratinage Tacos', price: 150 },
 ];
@@ -239,7 +241,7 @@ const CATEGORIES = [
   { 
     id: 'tacos', 
     name: 'Tacos', 
-    subtitle: "L'Authentique", 
+    subtitle: "Sauce Fromagère Incluse", 
     menu: TACOS_MENU, 
     icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-sm bg-yellow-400" />, 
     image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png',
@@ -417,11 +419,12 @@ const Accordion = ({ title, children }: { title: string, children: ReactNode }) 
   );
 };
 
-const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, title }: { 
+const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, onCallClick, title }: { 
     onMenuClick?: () => void, 
     onBack?: () => void, 
     onLogoClick?: () => void,
     onOrderClick?: () => void,
+    onCallClick?: () => void,
     title?: string 
 }) => (
   <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 md:px-12 lg:px-24 py-3">
@@ -438,7 +441,7 @@ const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, title }: {
         )}
         
         <div className="absolute left-1/2 -translate-x-1/2">
-        {title && <h1 className="font-semibold text-slate-900 text-sm md:text-base whitespace-nowrap">{title}</h1>}
+        {title && <h1 className="font-bold text-slate-900 text-lg md:text-xl whitespace-nowrap">{title}</h1>}
         </div>
  
         <div className="flex items-center gap-4">
@@ -451,13 +454,31 @@ const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, title }: {
                     Commander en ligne
                   </button>
                 )}
-                <button 
-                  onClick={() => onMenuClick?.()} 
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 hover:bg-slate-100 transition-all"
-                >
-                  <MenuIcon className="w-5 h-5" />
-                </button>
+                {onCallClick && (
+                  <button 
+                    onClick={onCallClick} 
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 hover:bg-slate-100 transition-all"
+                  >
+                    <Phone className="w-5 h-5" />
+                  </button>
+                )}
+                {onMenuClick && (
+                  <button 
+                    onClick={() => onMenuClick?.()} 
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 hover:bg-slate-100 transition-all"
+                  >
+                    <MenuIcon className="w-5 h-5" />
+                  </button>
+                )}
             </div>
+            {onCallClick && (
+              <button 
+                onClick={onCallClick} 
+                className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 active:scale-95 transition-all -mr-1"
+              >
+                <Phone className="w-5 h-5" />
+              </button>
+            )}
             {onMenuClick && (
             <button 
                 onClick={() => onMenuClick()} 
@@ -468,7 +489,7 @@ const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, title }: {
             </button>
             )}
         </div>
-        {!onMenuClick && !onOrderClick && <div className="w-10"></div>}
+        {!onMenuClick && !onOrderClick && !onCallClick && <div className="w-10"></div>}
     </div>
   </header>
 );
@@ -787,7 +808,6 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 className="w-full h-full object-cover"
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-transparent" />
           
           <div className="relative z-10 text-center px-4 md:px-16 lg:px-24">
             <div className="mb-4 inline-block relative">
@@ -988,7 +1008,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                             { 
                                 icon: Clock, 
                                 title: 'Disponibilité', 
-                                desc: 'Ouvert tous les jours avec un service de livraison rapide et efficace à Draria.',
+                                desc: 'Ouvert du Samedi au Vendredi (Dimanche fermé) avec un service de livraison rapide et efficace à Draria.',
                                 color: 'blue'
                             },
                         ].map((item, idx) => (
@@ -1178,7 +1198,7 @@ const MenuPage = ({ category, onBack, onMenuClick, onAddToCart }: { category: Pa
 
   return (
     <div className="min-h-screen bg-white">
-      <Header onBack={onBack} onMenuClick={onMenuClick} title={titles[category as keyof typeof titles]} />
+      <Header onBack={onBack} onCallClick={() => window.location.href = 'tel:0782777560'} title={titles[category as keyof typeof titles]} />
       
       {/* Category Hero Image */}
       <div className="w-full h-48 relative overflow-hidden bg-slate-200">
@@ -1388,7 +1408,7 @@ const CustomizationModal = ({
   isEditing?: boolean
 }) => {
   const [selectedSauces, setSelectedSauces] = useState<string[]>(initialSauces || (initialSauce ? [initialSauce] : []));
-  const [selectedCrudites, setSelectedCrudites] = useState<string[]>(initialCrudites || CRUDITES);
+  const [selectedCrudites, setSelectedCrudites] = useState<string[]>(initialCrudites || []);
   const [isMenu, setIsMenu] = useState(initialIsMenu || false);
   const [selectedSupplements, setSelectedSupplements] = useState<string[]>(initialSupplements || []);
   const [selectedVariant, setSelectedVariant] = useState(initialVariant || '');
@@ -1403,14 +1423,14 @@ const CustomizationModal = ({
         setSelectedVariant('');
         setCurrentPrice(item.price);
       } else if ('standard' in item.price) {
-        setSelectedVariant('L');
+        setSelectedVariant('Standard');
         setCurrentPrice(item.price.standard);
       } else if ('s' in item.price) {
         setSelectedVariant('S');
         setCurrentPrice(item.price.s);
       }
       setSelectedSauces(category === 'pizza' ? [] : (initialSauces || (initialSauce ? [initialSauce] : [])));
-      setSelectedCrudites(initialCrudites || CRUDITES);
+      setSelectedCrudites(initialCrudites || []);
       setIsMenu(category === 'pizza' ? false : initialIsMenu || false);
       setSelectedSupplements(initialSupplements || []);
     }
@@ -1501,16 +1521,16 @@ const CustomizationModal = ({
                     {'standard' in item.price ? (
                       <>
                         <button 
-                          onClick={() => handleVariantChange('L', (item.price as any).standard)}
-                          className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold ${selectedVariant === 'L' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
+                          onClick={() => handleVariantChange('Standard', (item.price as any).standard)}
+                          className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold ${selectedVariant === 'Standard' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
                         >
-                          L
+                          Standard
                         </button>
                         <button 
-                          onClick={() => handleVariantChange('XL', (item.price as any).large)}
-                          className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold ${selectedVariant === 'XL' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
+                          onClick={() => handleVariantChange('Grande', (item.price as any).large)}
+                          className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold ${selectedVariant === 'Grande' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
                         >
-                          XL
+                          Grande
                         </button>
                       </>
                     ) : (
@@ -1531,21 +1551,27 @@ const CustomizationModal = ({
               {/* Menu or Solo - Only for main dishes */}
               {['burger', 'tacos', 'texmex'].includes(category || '') && (
                 <div className="space-y-3">
-                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Formule</h4>
-                  <div className="flex gap-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Formule</h4>
+                    {isMenu && <span className="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-1 rounded-full">+250 DA</span>}
+                  </div>
+                  <div className="relative p-1 bg-slate-100 rounded-xl flex items-center h-10">
+                    <div 
+                      className={`absolute h-8 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-out ${!isMenu ? 'translate-x-0' : 'translate-x-full'}`}
+                    />
                     <button 
+                      type="button"
                       onClick={() => setIsMenu(false)}
-                      className={`flex-1 py-4 rounded-2xl border-2 transition-all text-left px-4 ${!isMenu ? 'border-red-600 bg-red-50' : 'border-slate-100'}`}
+                      className={`relative flex-1 flex items-center justify-center gap-2 text-[10px] font-black transition-colors h-full ${!isMenu ? 'text-slate-900' : 'text-slate-500'}`}
                     >
-                      <span className={`block font-bold ${!isMenu ? 'text-red-600' : 'text-slate-800'}`}>Seul</span>
-                      <span className="text-[10px] text-slate-400">Le produit uniquement</span>
+                      SEUL
                     </button>
                     <button 
+                      type="button"
                       onClick={() => setIsMenu(true)}
-                      className={`flex-1 py-4 rounded-2xl border-2 transition-all text-left px-4 ${isMenu ? 'border-red-600 bg-red-50' : 'border-slate-100'}`}
+                      className={`relative flex-1 flex items-center justify-center gap-2 text-[10px] font-black transition-colors h-full ${isMenu ? 'text-red-600' : 'text-slate-500'}`}
                     >
-                      <span className={`block font-bold ${isMenu ? 'text-red-600' : 'text-slate-800'}`}>Menu (+250 DA)</span>
-                      <span className="text-[10px] text-slate-400">Frites + Boisson 33cl</span>
+                      MENU (Frites + Boisson)
                     </button>
                   </div>
                 </div>
@@ -1655,7 +1681,7 @@ const CheckoutStep = ({
   onConfirm: () => void,
   total: number
 }) => {
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     onConfirm();
   };
@@ -1850,7 +1876,7 @@ const CartDrawer = ({
     if (item.category === 'burger' && item.crudites) {
       if (item.crudites.length === 0) {
         details.push('Sans crudités');
-      } else if (item.crudites.length < CRUDITES.length) {
+      } else {
         details.push(`Crudités: ${item.crudites.join(', ')}`);
       }
     }
@@ -1905,7 +1931,7 @@ const CartDrawer = ({
                                   {item.variant && <span className="text-[9px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-black uppercase">{item.variant}</span>}
                                   {item.isMenu && <span className="text-[9px] bg-slate-900 text-white px-1.5 py-0.5 rounded font-black uppercase">MENU</span>}
                                   {item.sauce && <span className="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-black uppercase">Sauce: {item.sauce}</span>}
-                                  {item.crudites && item.crudites.length < CRUDITES.length && (
+                                  {item.crudites && (
                                     <span className="text-[9px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-black uppercase">
                                       {item.crudites.length === 0 ? 'Sans crudités' : `Crudités: ${item.crudites.join(', ')}`}
                                     </span>
@@ -2009,7 +2035,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Header onBack={onBack} onMenuClick={onMenuClick} onLogoClick={onLogoClick} title="La Carte" />
+      <Header onBack={onBack} onLogoClick={onLogoClick} onCallClick={() => window.location.href = 'tel:0782777560'} title="La Carte" />
       
       <div className="flex-1 max-w-7xl mx-auto w-full flex flex-col md:flex-row bg-white">
         {/* Desktop Sidebar */}
@@ -2159,6 +2185,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
               </div>
               <span className="font-serif font-bold text-lg tracking-tight text-white">L'Artisanale</span>
               <div className="w-7 h-1 bg-red-600 rounded-full mt-1" />
+              <p className="text-[9px] text-slate-500 font-black uppercase tracking-[0.2em]">2026 l'artisanale draria</p>
             </div>
 
             {filteredItems.length === 0 && (
@@ -2255,6 +2282,8 @@ export default function App() {
       if (cartItem.variant && typeof originalItem.price === 'object') {
         const vKey = cartItem.variant.toLowerCase();
         basePrice = (originalItem.price as any)[vKey] || 
+                    (vKey === 'standard' ? (originalItem.price as any).standard : 0) || 
+                    (vKey === 'grande' ? (originalItem.price as any).large : 0) || 
                     (vKey === 'l' ? (originalItem.price as any).standard : 0) || 
                     (vKey === 'xl' ? (originalItem.price as any).large : 0) || 
                     (originalItem.price as any).standard || 
