@@ -807,6 +807,9 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 alt="Hero Pizza" 
                 className="w-full h-full object-cover"
             />
+            {/* Light Overlay + Gradient over everything */}
+            <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 pointer-events-none" />
           </motion.div>
           
           <div className="relative z-10 text-center px-4 md:px-16 lg:px-24">
@@ -851,24 +854,24 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                             <ShoppingBag className="w-6 h-6 md:w-7 md:h-7" />
                         </div>
                         <div>
-                            <span className="block font-black text-xl md:text-2xl leading-tight text-white">Commander en Ligne</span>
+                            <span className="block font-black text-xl md:text-2xl leading-tight text-white">Commander Maintenant</span>
                             <span className="text-[10px] md:text-[10px] uppercase opacity-60 font-bold tracking-widest block text-red-100">Service Rapide</span>
                         </div>
                     </div>
                 </button>
 
-                <a 
-                    href="tel:0782777560" 
+                <button 
+                    onClick={() => onNavigate('full_menu')}
                     className="bg-white border border-slate-100 p-7 md:p-8 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                 >
                     <div className="bg-red-50 p-3 md:p-4 rounded-xl text-red-600">
-                        <Phone className="w-6 h-6 md:w-7 md:h-7" />
+                        <MenuIcon className="w-6 h-6 md:w-7 md:h-7" />
                     </div>
                     <div className="text-left">
-                        <span className="block font-black text-xl md:text-2xl leading-tight">Nous Appeler</span>
-                        <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">0782 77 75 60</span>
+                        <span className="block font-black text-xl md:text-2xl leading-tight">Le Menu</span>
+                        <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Découvrez nos plats</span>
                     </div>
-                </a>
+                </button>
 
                 <a 
                     href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
@@ -1423,7 +1426,7 @@ const CustomizationModal = ({
         setSelectedVariant('');
         setCurrentPrice(item.price);
       } else if ('standard' in item.price) {
-        setSelectedVariant('Standard');
+        setSelectedVariant(category === 'tacos' ? 'L' : 'Standard');
         setCurrentPrice(item.price.standard);
       } else if ('s' in item.price) {
         setSelectedVariant('S');
@@ -1521,16 +1524,16 @@ const CustomizationModal = ({
                     {'standard' in item.price ? (
                       <>
                         <button 
-                          onClick={() => handleVariantChange('Standard', (item.price as any).standard)}
-                          className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold ${selectedVariant === 'Standard' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
+                          onClick={() => handleVariantChange(category === 'tacos' ? 'L' : 'Standard', (item.price as any).standard)}
+                          className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold ${selectedVariant === (category === 'tacos' ? 'L' : 'Standard') ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
                         >
-                          Standard
+                          {category === 'tacos' ? 'L' : 'Standard'}
                         </button>
                         <button 
-                          onClick={() => handleVariantChange('Grande', (item.price as any).large)}
-                          className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold ${selectedVariant === 'Grande' ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
+                          onClick={() => handleVariantChange(category === 'tacos' ? 'XL' : 'Grande', (item.price as any).large)}
+                          className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold ${selectedVariant === (category === 'tacos' ? 'XL' : 'Grande') ? 'border-red-600 bg-red-50 text-red-600' : 'border-slate-100 text-slate-500'}`}
                         >
-                          Grande
+                          {category === 'tacos' ? 'XL' : 'Grande'}
                         </button>
                       </>
                     ) : (
@@ -1949,10 +1952,10 @@ const CartDrawer = ({
                                     onEdit(item);
                                     onClose();
                                   }}
-                                  className="mt-2 text-[10px] font-black uppercase tracking-widest text-red-600 hover:text-red-700 flex items-center gap-1"
+                                  className="mt-1.5 text-[10px] font-medium text-slate-400 hover:text-slate-600 hover:underline flex items-center gap-0.5 transition-all"
                                 >
                                   Modifier le produit
-                                  <ChevronRight className="w-3 h-3" />
+                                  <ChevronRight className="w-2.5 h-2.5" />
                                 </button>
                               </div>
                               <div className="flex items-center gap-3">
