@@ -1689,13 +1689,14 @@ const CheckoutStep = ({
   const isFormValid = userInfo.name && userInfo.phone && (userInfo.method === 'pickup' || userInfo.address) && userInfo.timeslot;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
+    <form onSubmit={handleSubmit} className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
       <div className="flex items-center gap-3">
         <button type="button" onClick={onBack} className="p-2 hover:bg-slate-100 rounded-full">
           <ArrowLeft className="w-5 h-5 text-slate-600" />
         </button>
         <h3 className="text-xl font-bold text-slate-800">Finaliser la commande</h3>
       </div>
+      <hr className="border-slate-100 !mt-2" />
 
       <div className="space-y-6">
         {/* Method */}
@@ -1732,28 +1733,28 @@ const CheckoutStep = ({
               <input 
                 required
                 type="text" 
-                placeholder="Nom complet"
+                placeholder="Nom complet *"
                 value={userInfo.name}
                 onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
-                className="flex-1 w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base"
+                className="flex-1 w-full px-4 py-3 bg-slate-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base text-slate-400 placeholder:text-slate-300"
               />
               <input 
                 required
                 type="tel" 
-                placeholder="Téléphone"
+                placeholder="Téléphone *"
                 value={userInfo.phone}
                 onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
-                className="flex-1 w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base"
+                className="flex-1 w-full px-4 py-3 bg-slate-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base text-slate-400 placeholder:text-slate-300"
               />
             </div>
             {userInfo.method === 'delivery' && (
               <textarea 
                 required
-                placeholder="Adresse complète (Quartier, Immeuble, Appt...)"
+                placeholder="Adresse de livraison *"
                 rows={2}
                 value={userInfo.address}
                 onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })}
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base scrollbar-hide"
+                className="w-full px-4 py-3 bg-slate-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base scrollbar-hide text-slate-400 placeholder:text-slate-300"
               />
             )}
           </div>
@@ -1767,9 +1768,9 @@ const CheckoutStep = ({
               required
               value={userInfo.timeslot}
               onChange={(e) => setUserInfo({ ...userInfo, timeslot: e.target.value })}
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base appearance-none"
+              className="w-full px-4 py-3 bg-slate-50 border border-red-200 rounded-xl focus:ring-2 focus:ring-red-500 focus:outline-none transition-all text-base appearance-none text-slate-400"
             >
-              <option value="">Sélectionnez un créneau</option>
+              <option value="">Sélectionnez un créneau *</option>
               <option value="Dès que possible">Dès que possible</option>
               <option value="11:30 - 12:00">11:30 - 12:00</option>
               <option value="12:00 - 12:30">12:00 - 12:30</option>
@@ -1796,10 +1797,12 @@ const CheckoutStep = ({
         </div>
       </div>
 
-      <div className="pt-4 space-y-4">
+      <hr className="border-slate-100 !mt-2" />
+
+      <div className="!mt-2 space-y-4">
           <div className="flex items-center justify-between px-2">
             <span className="text-slate-500 font-bold uppercase tracking-wider text-[10px]">Total</span>
-            <span className="text-base font-black text-slate-900">{total.toLocaleString()} DA</span>
+            <span className="text-2xl font-black text-slate-900">{total.toLocaleString()} DA</span>
           </div>
 
           <button 
