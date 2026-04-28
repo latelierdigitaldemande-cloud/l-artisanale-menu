@@ -813,17 +813,6 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
           </motion.div>
           
           <div className="relative z-10 text-center px-4 md:px-16 lg:px-24">
-            <div className="mb-4 inline-block relative">
-                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full p-1 bg-white/10 backdrop-blur-md mx-auto relative ring-1 ring-white/20">
-                    <img 
-                        src="https://scontent.falg7-6.fna.fbcdn.net/v/t39.30808-1/298339068_379924957653168_8646108471508860568_n.jpg?stp=dst-jpg_s480x480_tt6&_nc_cat=110&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=lskXSF_FD-8Q7kNvwEHtc90&_nc_oc=AdoofTpowtnL9uukTrs7KIQ4Sel9ClJSxCVDA0YYyZezKMIroAfq1wI2cHqYDMZehUQ&_nc_zt=24&_nc_ht=scontent.falg7-6.fna&_nc_gid=d5ODKHHPuh8eNPWVdhoVnA&_nc_ss=7b289&oh=00_Af2JIiMyUNHaUdQ1MYpfY5_CHv2VWn9EePkgDrvvx5C00A&oe=69F57F3A" 
-                        alt="L'Artisanale Logo" 
-                        className="w-full h-full rounded-full object-cover border border-white/30"
-                        referrerPolicy="no-referrer"
-                    />
-                    <div className={`absolute bottom-2 right-2 w-5 h-5 md:w-7 md:h-7 rounded-full border-2 border-white ${isOpen ? 'bg-green-500' : 'bg-red-500'} shadow-lg z-10`} />
-                </div>
-            </div>
             <div>
                 <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-2 tracking-tight">
                     L'Artisanale
@@ -847,28 +836,35 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 <button 
                     id="link-order-online"
                     onClick={() => onNavigate('full_menu')}
-                    className="w-full bg-red-600 text-white p-7 md:p-8 rounded-2xl md:rounded-3xl flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98]"
+                    className="w-full bg-red-600 text-white p-6 md:p-7 rounded-2xl md:rounded-3xl flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98] relative"
                 >
                     <div className="flex items-center gap-4 text-left">
                         <div className="bg-white/10 p-3 md:p-4 rounded-xl">
                             <ShoppingBag className="w-6 h-6 md:w-7 md:h-7" />
                         </div>
                         <div>
-                            <span className="block font-black text-xl md:text-2xl leading-tight text-white">Commander Maintenant</span>
+                            <span className="block font-black text-xl md:text-2xl leading-tight text-white">Commande en ligne</span>
                             <span className="text-[10px] md:text-[10px] uppercase opacity-60 font-bold tracking-widest block text-red-100">Service Rapide</span>
                         </div>
+                    </div>
+                    {/* Status Indicator at bottom right */}
+                    <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/10 px-2 py-1 rounded-full border border-white/20 backdrop-blur-sm">
+                        <div className={`w-2 h-2 rounded-full ${isOpen ? 'bg-green-500' : 'bg-red-500'} shadow-sm animate-pulse`} />
+                        <span className="text-[8px] text-white font-black uppercase tracking-wider">
+                            {isOpen ? 'Ouvert' : 'Fermé'}
+                        </span>
                     </div>
                 </button>
 
                 <button 
                     onClick={() => onNavigate('full_menu')}
-                    className="bg-white border border-slate-100 p-7 md:p-8 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                    className="bg-white border border-slate-100 p-6 md:p-7 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                 >
                     <div className="bg-red-50 p-3 md:p-4 rounded-xl text-red-600">
                         <MenuIcon className="w-6 h-6 md:w-7 md:h-7" />
                     </div>
                     <div className="text-left">
-                        <span className="block font-black text-xl md:text-2xl leading-tight">Le Menu</span>
+                        <span className="block font-black text-xl md:text-2xl leading-tight">Notre carte</span>
                         <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Découvrez nos plats</span>
                     </div>
                 </button>
@@ -877,13 +873,13 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
                     target="_blank" 
                     rel="noreferrer"
-                    className="bg-white border border-slate-100 p-7 md:p-8 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                    className="bg-white border border-slate-100 p-6 md:p-7 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                 >
                     <div className="bg-red-50 p-3 md:p-4 rounded-xl text-red-600">
                         <MapPin className="w-6 h-6 md:w-7 md:h-7" />
                     </div>
                     <div className="text-left">
-                        <span className="block font-black text-xl md:text-2xl leading-tight">Notre Adresse</span>
+                        <span className="block font-black text-xl md:text-2xl leading-tight">Nous trouver</span>
                         <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Draria, Alger</span>
                     </div>
                 </a>
@@ -903,7 +899,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                         <button 
                             key={cat.id}
                             onClick={() => onNavigate('full_menu', cat.id)}
-                            className={`relative h-56 md:h-[300px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 ${cat.bentoSpan}`}
+                            className={`relative h-44 md:h-[240px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 ${cat.bentoSpan}`}
                         >
                             <img 
                                 src={cat.image} 
@@ -1049,7 +1045,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ delay: idx * 0.1, duration: 0.5 }}
                             viewport={{ once: true }}
-                            className={`${idx >= 4 ? 'hidden md:block' : ''} aspect-[1/1.15] md:aspect-square relative group overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg`}
+                            className={`${idx >= 4 ? 'hidden md:block' : ''} aspect-[1/0.92] md:aspect-[5/4] relative group overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg`}
                         >
                             <img 
                                 src={img.url} 
