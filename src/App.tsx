@@ -148,11 +148,11 @@ const PIZZA_MENU: MenuItem[] = [
   { name: 'Thon', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, thon, oignons, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
   { name: 'Poulet', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poulet, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
   { name: 'Viande Hachée', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, viande hachée, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
-  { name: 'Vegie', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poivrons, oignons, tomate fraîche, aubergines, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
+  { name: 'Vegie', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poivrons, oignons, tomate, aubergines, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
   { name: 'Oriental', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, merguez, poivrons, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
   { name: 'BBQ', price: { standard: 700, large: 1300 }, description: 'Sauce tomate, fromage, viande hachée, oeuf, poivrons, olives, sauce BBQ.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
   { name: '3 Fromages', price: { standard: 750, large: 1400 }, description: 'Sauce tomate, mozzarella, gruyère, boursin, olives.', base: 'tomato', image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg' },
-  { name: "L'Artisanale", price: { standard: 900, large: 1700 }, description: 'Sauce tomate ou crème fraîche, viande hachée, poulet fumé, boursin, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=400&auto=format&fit=crop' },
+  { name: "L'Artisanale", price: { standard: 900, large: 1700 }, description: 'Sauce tomate ou crème, viande hachée, poulet fumé, boursin, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=400&auto=format&fit=crop' },
   // Base Crème
   { name: 'Forestière', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, oignons, champignons, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=400&auto=format&fit=crop' },
   { name: 'Tartiflette', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, champignons, pomme de terre, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=400&auto=format&fit=crop' },
@@ -164,13 +164,13 @@ const PIZZA_MENU: MenuItem[] = [
 ];
 
 const BURGER_MENU: MenuItem[] = [
-  { name: 'Cheese Burger', price: 300, description: 'Steak de boeuf, cheddar fondant, salade croquante, tomate, oignons rouges.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
-  { name: 'Chicken Crispy', price: 450, description: 'Filet de poulet pané maison, croustillant à souhait, sauce blanche.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
-  { name: 'Double Cheese', price: 600, description: 'Double dose de plaisir : 2 steaks, double cheddar, oignons grillés.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
-  { name: 'Double Chicken Crispy', price: 650, description: 'Deux filets de poulet croustillants pour une faim monumentale.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
-  { name: 'Triple Cheese', price: 800, description: 'Le défi ultime : 3 steaks, 3 tranches de fromage, gourmandise absolue.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
-  { name: 'Mix Burger', price: 700, description: 'Le meilleur des deux mondes : steak de boeuf et poulet crispy réunis.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
-  { name: 'Le Gourmand', price: 750, description: 'Steak, dinde fumée, bacon de boeuf grillé, sauce barbecue Artisanale.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Cheese Burger', price: 300, description: 'Pain brioché, Steak, cheddar, crudités.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Chicken Crispy', price: 450, description: 'Pain brioché, Poulet crispy, sauce blanche, crudités.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Double Cheese', price: 600, description: 'Pain brioché, 2 Steaks, double cheddar, crudités.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Double Chicken Crispy', price: 650, description: 'Pain brioché, 2 Poulets crispy, sauce blanche, crudités.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Triple Cheese', price: 800, description: 'Pain brioché, 3 Steaks, 3 cheddars, crudités.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Mix Burger', price: 700, description: 'Pain brioché, Steak, poulet crispy, fromage, crudités.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
+  { name: 'Le Gourmand', price: 750, description: 'Pain brioché, Steak, dinde fumée, bacon, sauce BBQ, crudités.', image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg' },
 ];
 
 const TACOS_MENU: MenuItem[] = [
@@ -187,8 +187,8 @@ const TACOS_MENU: MenuItem[] = [
 const TEXMEX_MENU: MenuItem[] = [
   { name: 'CHICKEN PARTY medium', price: 2000, description: 'Le combo parfait : 5 WINGS • 5 TENDERS • 7 NUGGETS • 2 FRITES • 1 BOUTEILLE 1L', image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
   { name: 'CHICKEN PARTY xxl', price: 3500, description: 'Pour toute la famille : 10 WINGS • 10 TENDERS • 14 NUGGETS • 4 FRITES • 1 BOUTEILLE 1L', image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
-  { name: 'Wrap Poulet', price: 550, description: 'Poulet mariné 24h, crudités fraîches, sauce blanche onctueuse.', image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
-  { name: 'Croque-Monsieur', price: 250, description: 'Pain de mie toasté, dinde fumée, fromage fondu et gratiné.', image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
+  { name: 'Wrap Poulet', price: 550, description: 'Poulet mariné, crudités, sauce blanche.', image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
+  { name: 'Croque-Monsieur', price: 250, description: 'Pain de mie, dinde fumée, fromage.', image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
   { name: 'Barquette Frites x3', price: 300, image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
   { name: 'Barquette Frites x5', price: 500, image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
   { name: 'Barquette Frites x7', price: 600, image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg' },
@@ -205,10 +205,10 @@ const SUPPLEMENTS = [
 ];
 
 const DESSERT_MENU: MenuItem[] = [
-  { name: 'Tiramisu Maison', price: 450, description: 'Le classique italien revisité par notre chef.', image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg' },
-  { name: 'Mousse au Chocolat', price: 350, description: 'Onctueuse et légère, un nuage de cacao.', image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg' },
-  { name: 'Panacotta Fruits Rouges', price: 400, description: 'Douceur lactée et coulis acidulé.', image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg' },
-  { name: 'Cheesecake Citron', price: 500, description: 'Frais et fondant, pour finir en légèreté.', image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg' },
+  { name: 'Tiramisu Maison', price: 450, description: 'Tiramisu traditionnel.', image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg' },
+  { name: 'Mousse au Chocolat', price: 350, description: 'Chocolat noir.', image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg' },
+  { name: 'Panacotta Fruits Rouges', price: 400, description: 'Panacotta, coulis fruits rouges.', image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg' },
+  { name: 'Cheesecake Citron', price: 500, description: 'Cheesecake au citron.', image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg' },
 ];
 
 const DRINKS = [
@@ -1555,23 +1555,23 @@ const CustomizationModal = ({
                     <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Formule</h4>
                     {isMenu && <span className="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-1 rounded-full">+250 DA</span>}
                   </div>
-                  <div className="relative p-1 bg-slate-100 rounded-xl flex items-center h-10">
+                  <div className="relative p-1 bg-slate-100 rounded-xl flex items-center h-12 md:h-10">
                     <div 
-                      className={`absolute h-8 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-out ${!isMenu ? 'translate-x-0' : 'translate-x-full'}`}
+                      className={`absolute h-10 md:h-8 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-out ${!isMenu ? 'translate-x-0' : 'translate-x-full'}`}
                     />
                     <button 
                       type="button"
                       onClick={() => setIsMenu(false)}
-                      className={`relative flex-1 flex items-center justify-center gap-2 text-[10px] font-black transition-colors h-full ${!isMenu ? 'text-slate-900' : 'text-slate-500'}`}
+                      className={`relative flex-1 flex items-center justify-center gap-2 text-xs md:text-[10px] font-black transition-colors h-full ${!isMenu ? 'text-slate-900' : 'text-slate-500'}`}
                     >
                       SEUL
                     </button>
                     <button 
                       type="button"
                       onClick={() => setIsMenu(true)}
-                      className={`relative flex-1 flex items-center justify-center gap-2 text-[10px] font-black transition-colors h-full ${isMenu ? 'text-red-600' : 'text-slate-500'}`}
+                      className={`relative flex-1 flex items-center justify-center gap-2 text-xs md:text-[10px] font-black transition-colors h-full ${isMenu ? 'text-red-600' : 'text-slate-500'}`}
                     >
-                      MENU (Frites + Boisson)
+                      MENU
                     </button>
                   </div>
                 </div>
@@ -1655,7 +1655,7 @@ const CustomizationModal = ({
                 <div className="flex justify-center">
                     <button 
                       onClick={() => onConfirm(selectedSauces, isMenu, selectedVariant, currentPrice, selectedSupplements, selectedCrudites)}
-                      className="w-full md:w-auto md:min-w-[280px] py-4 px-10 bg-red-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl active:scale-95 transition-all"
+                      className="w-full py-4 bg-red-600 text-white rounded-2xl font-bold shadow-xl active:scale-95 transition-all flex items-center justify-center"
                     >
                       {isEditing ? 'Mettre à jour' : 'Ajouter au panier'} • {finalPrice} DA
                     </button>
