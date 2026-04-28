@@ -2086,7 +2086,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                     setActiveCategory(cat.id);
                     e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
                   }}
-                  className={`px-5 py-3 rounded-2xl text-[12px] font-black uppercase tracking-widest transition-all whitespace-nowrap flex items-center gap-2
+                  className={`px-5 py-3 rounded-full text-[12px] font-black uppercase tracking-widest transition-all whitespace-nowrap flex items-center gap-2
                     ${activeCategory === cat.id 
                       ? 'bg-slate-900 text-white shadow-xl shadow-slate-900/10' 
                       : 'bg-white border border-slate-100 text-slate-500'}
