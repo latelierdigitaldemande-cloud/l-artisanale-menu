@@ -146,41 +146,41 @@ const ReviewCard = ({ name, initials, rating, date, text, tags }: {
 // --- Data ---
 const PIZZA_MENU: MenuItem[] = [
   // Base Tomate
-  { name: 'Marguerita', price: { standard: 450, large: 800 }, description: 'Sauce tomate, fromage, mozzarella, basilic frais, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1574071318508-1cdbad80ad38?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Thon', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, thon, oignons, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Poulet', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poulet mariné, poivrons, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Viande Hachée', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, viande hachée fraîche, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1593504049359-74330189a355?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Vegie', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poivrons, oignons, tomate, aubergines, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1511688855354-1261f6b5b6ee?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Oriental', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, merguez, poivrons grillés, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&fit=crop&q=80&w=600' },
-  { name: 'BBQ', price: { standard: 700, large: 1300 }, description: 'Sauce tomate, fromage, viande hachée, oeuf, poivrons, olives, sauce BBQ.', base: 'tomato', image: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&q=80&w=600' },
-  { name: '3 Fromages', price: { standard: 750, large: 1400 }, description: 'Sauce tomate, mozzarella, gruyère, boursin, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1573821663912-569905452b1b?auto=format&fit=crop&q=80&w=600' },
-  { name: "L'Artisanale", price: { standard: 900, large: 1700 }, description: 'Sauce tomate ou crème, viande hachée, poulet fumé, boursin, olives.', base: 'tomato', image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=600&auto=format&fit=crop' },
+  { name: 'Marguerita', price: { standard: 450, large: 800 }, description: 'Sauce tomate, fromage, mozzarella, basilic frais, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'Thon', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, thon, oignons, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'Poulet', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poulet mariné, poivrons, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'Viande Hachée', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, viande hachée fraîche, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'Vegie', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poivrons, oignons, tomate, aubergines, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'Oriental', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, merguez, poivrons grillés, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'BBQ', price: { standard: 700, large: 1300 }, description: 'Sauce tomate, fromage, viande hachée, oeuf, poivrons, olives, sauce BBQ.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: '3 Fromages', price: { standard: 750, large: 1400 }, description: 'Sauce tomate, mozzarella, gruyère, boursin, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: "L'Artisanale", price: { standard: 900, large: 1700 }, description: 'Sauce tomate ou crème, viande hachée, poulet fumé, boursin, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
   // Base Crème
-  { name: 'Forestière', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, oignons, champignons, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Tartiflette', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, champignons, pomme de terre, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Boisée', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, poivrons, sauce fromagère.', base: 'cream', image: 'https://images.unsplash.com/photo-1534080564607-c92751f8933f?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Boursin', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, boursin, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Raclette', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, raclette, pomme de terre, olives.', base: 'cream', image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Saumon', price: { standard: 1100, large: 2100 }, description: 'Crème fraîche, fromage, saumon fumé de qualité, oignons, boursin.', base: 'cream', image: 'https://images.unsplash.com/photo-1544333303-577546e393b2?q=80&w=600&auto=format&fit=crop' },
+  { name: 'Forestière', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, oignons, champignons, olives.', base: 'cream', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'Tartiflette', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, champignons, pomme de terre, olives.', base: 'cream', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'Boisée', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, poivrons, sauce fromagère.', base: 'cream', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'Boursin', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, boursin, olives.', base: 'cream', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'Raclette', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, raclette, pomme de terre, olives.', base: 'cream', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'Saumon', price: { standard: 1100, large: 2100 }, description: 'Crème fraîche, fromage, saumon fumé de qualité, oignons, boursin.', base: 'cream', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
 ];
 
 const BURGER_MENU: MenuItem[] = [
-  { name: 'Cheese Burger', price: 300, description: 'Pain brioché, Steak pur beef, cheddar fondu, crudités.', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Chicken Crispy', price: 450, description: 'Pain brioché, Poulet crispy maison, sauce blanche, crudités.', image: 'https://images.unsplash.com/photo-1508736793122-f516e3ba5569?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Double Cheese', price: 600, description: 'Pain brioché, 2 Steaks, double cheddar, crudités.', image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Double Chicken Crispy', price: 650, description: 'Pain brioché, 2 Poulets crispy, sauce blanche, crudités.', image: 'https://images.unsplash.com/photo-1512152272829-e3139592d56f?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Triple Cheese', price: 800, description: 'Pain brioché, 3 Steaks, 3 cheddars, crudités.', image: 'https://images.unsplash.com/photo-1534790561517-40e90c74071c?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Mix Burger', price: 700, description: 'Pain brioché, Steak, poulet crispy, fromage, crudités.', image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Le Gourmand', price: 750, description: 'Pain brioché, Steak, dinde fumée, bacon, sauce BBQ, crudités.', image: 'https://images.unsplash.com/photo-1521305916504-4a1121188589?auto=format&fit=crop&q=80&w=600' },
+  { name: 'Cheese Burger', price: 300, description: 'Pain brioché, Steak pur beef, cheddar fondu, crudités.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_37_uajb96' },
+  { name: 'Chicken Crispy', price: 450, description: 'Pain brioché, Poulet crispy maison, sauce blanche, crudités.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_37_uajb96' },
+  { name: 'Double Cheese', price: 600, description: 'Pain brioché, 2 Steaks, double cheddar, crudités.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_37_uajb96' },
+  { name: 'Double Chicken Crispy', price: 650, description: 'Pain brioché, 2 Poulets crispy, sauce blanche, crudités.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_37_uajb96' },
+  { name: 'Triple Cheese', price: 800, description: 'Pain brioché, 3 Steaks, 3 cheddars, crudités.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_37_uajb96' },
+  { name: 'Mix Burger', price: 700, description: 'Pain brioché, Steak, poulet crispy, fromage, crudités.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_37_uajb96' },
+  { name: 'Le Gourmand', price: 750, description: 'Pain brioché, Steak, dinde fumée, bacon, sauce BBQ, crudités.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_37_uajb96' },
 ];
 
 const TACOS_MENU: MenuItem[] = [
-  { name: 'Classique', price: { standard: 600, large: 950 }, description: 'Viande ou escalope, fromagère, frites, sauce au choix.', image: 'https://images.unsplash.com/photo-1582034986517-50d1d3a9419d?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Raclette', price: { standard: 800, large: 1150 }, description: 'Viande hachée, fromage raclette, sauce fromagère, frites.', image: 'https://images.unsplash.com/photo-1613514785940-daed07799dabd?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Boursin', price: { standard: 700, large: 1050 }, description: 'Escalope, boursin, crème fraîche, frites, sauce au choix.', image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Crousty', price: { standard: 750, large: 1100 }, description: 'Tenders crispy, boursin, fromagère, frites.', image: 'https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Forestier', price: { standard: 850, large: 1200 }, description: 'Escalope, oignons, champignons, dinde fumée, fromagère, frites.', image: 'https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Chicken Beef', price: { standard: 900, large: 1350 }, description: 'Viandehachée, tenders, fromagère, raclette, frites.', image: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&q=80&w=600' },
+  { name: 'Classique', price: { standard: 600, large: 950 }, description: 'Viande ou escalope, fromagère, frites, sauce au choix.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_39_lbayao' },
+  { name: 'Raclette', price: { standard: 800, large: 1150 }, description: 'Viande hachée, fromage raclette, sauce fromagère, frites.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_39_lbayao' },
+  { name: 'Boursin', price: { standard: 700, large: 1050 }, description: 'Escalope, boursin, crème fraîche, frites, sauce au choix.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_39_lbayao' },
+  { name: 'Crousty', price: { standard: 750, large: 1100 }, description: 'Tenders crispy, boursin, fromagère, frites.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_39_lbayao' },
+  { name: 'Forestier', price: { standard: 850, large: 1200 }, description: 'Escalope, oignons, champignons, dinde fumée, fromagère, frites.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_39_lbayao' },
+  { name: 'Chicken Beef', price: { standard: 900, large: 1350 }, description: 'Viandehachée, tenders, fromagère, raclette, frites.', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_39_lbayao' },
 ];
 
 const TEXMEX_MENU: MenuItem[] = [
@@ -211,11 +211,11 @@ const DESSERT_MENU: MenuItem[] = [
 ];
 
 const DRINKS = [
-  { name: 'Eau 33cl', price: 30, image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Eau gazeuse 33cl', price: 50, image: 'https://images.unsplash.com/photo-1559839914-17aae19cea9e?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Jus 33cl', price: 100, image: 'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Canette 33cl', price: 100, image: 'https://images.unsplash.com/photo-1527960471264-93ad993e9865?auto=format&fit=crop&q=80&w=600' },
-  { name: 'Boisson gazeuse 1L', price: 150, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&q=80&w=600' },
+  { name: 'Eau 33cl', price: 30, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_38_qzf9uk' },
+  { name: 'Eau gazeuse 33cl', price: 50, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_38_qzf9uk' },
+  { name: 'Jus 33cl', price: 100, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_38_qzf9uk' },
+  { name: 'Canette 33cl', price: 100, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_38_qzf9uk' },
+  { name: 'Boisson gazeuse 1L', price: 150, image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_38_qzf9uk' },
 ];
 
 const CATEGORIES = [
@@ -357,49 +357,41 @@ const MenuListItem = ({ item, category, onAddToCart }: MenuListItemProps) => {
   return (
     <motion.div 
       variants={itemVariants}
-      className="group bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl transition-all h-full flex flex-col"
+      className="group bg-white rounded-2xl border border-slate-100 p-3 md:p-4 hover:shadow-xl hover:border-red-100 transition-all flex gap-4 md:gap-6 items-center"
     >
-      <div className="relative h-48 md:h-52 overflow-hidden">
+      {/* Product Image - Left Side Square */}
+      <div className="relative w-24 h-24 md:w-28 md:h-28 flex-shrink-0 overflow-hidden rounded-xl bg-slate-50 border border-slate-100">
         <img 
-          src={item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=400'} 
+          src={item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=200'} 
           alt={item.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-2xl border border-slate-100 shadow-sm z-10">
-          <span className="text-sm md:text-base font-black text-slate-900 tabular-nums">
-            {startingPrice} <span className="text-[10px] uppercase text-slate-500">DA</span>
-          </span>
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
       </div>
       
-      <div className="p-5 flex flex-col flex-grow bg-white">
-        <div className="mb-2">
-          <div className="flex items-center gap-1.5 mb-1">
-             <span className="text-[10px] font-black uppercase text-red-600 tracking-widest px-2 py-0.5 bg-red-50 rounded-lg">
-              {category === 'pizza' ? 'Pizza au feu de bois' : category}
-            </span>
-          </div>
-          <h4 className="font-serif text-xl font-bold text-slate-900 leading-tight group-hover:text-red-600 transition-colors">
+      {/* Content */}
+      <div className="flex-grow min-w-0">
+        <div className="flex justify-between items-start gap-2 mb-1">
+          <h4 className="font-serif text-lg md:text-xl font-bold text-slate-900 leading-tight truncate group-hover:text-red-600 transition-colors">
             {item.name}
           </h4>
+          <span className="text-sm md:text-base font-black text-slate-900 tabular-nums whitespace-nowrap bg-red-50 text-red-600 px-2 py-1 rounded-lg">
+            {startingPrice} <span className="text-[10px] uppercase opacity-70">DA</span>
+          </span>
         </div>
         
         {item.description && (
-          <p className="text-slate-500 text-[13px] font-medium leading-relaxed mb-6 flex-grow line-clamp-2">
+          <p className="text-slate-500 text-[11px] md:text-[13px] font-medium leading-relaxed line-clamp-2 mb-3">
             {item.description}
           </p>
         )}
 
-        <div className="flex items-center justify-between mt-auto">
-          <div className="flex -space-x-2">
-             {[1,2,3].map(i => (
-                <div key={i} className="w-6 h-6 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center overflow-hidden">
-                   <img src={`https://i.pravatar.cc/100?u=${item.name}${i}`} alt="user" className="w-full h-full object-cover opacity-60" />
-                </div>
-             ))}
-             <div className="pl-4 text-[10px] font-bold text-slate-400 self-center">Populaire</div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1.5 min-w-0">
+             <span className="text-[9px] font-black uppercase text-slate-400 tracking-wider truncate">
+              {category === 'pizza' ? 'Au Feu de Bois' : category}
+            </span>
           </div>
           
           <button 
@@ -407,10 +399,10 @@ const MenuListItem = ({ item, category, onAddToCart }: MenuListItemProps) => {
               e.stopPropagation();
               onAddToCart();
             }}
-            className="w-11 h-11 flex items-center justify-center bg-slate-900 text-white rounded-2xl shadow-lg hover:bg-red-600 hover:-translate-y-1 transition-all active:scale-95"
+            className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-slate-900 text-white rounded-xl shadow-md hover:bg-red-600 hover:-translate-y-0.5 transition-all active:scale-95 flex-shrink-0"
             aria-label="Ajouter au panier"
           >
-            <Plus className="w-6 h-6" />
+            <Plus className="w-5 h-5 md:w-6 md:h-6" />
           </button>
         </div>
       </div>
@@ -922,7 +914,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                           <ShoppingBag className="w-[23px] h-[23px] md:w-[31px] md:h-[31px]" />
                       </div>
                       <div className="text-left">
-                          <span className="block font-black text-[20px] md:text-[26.4px] leading-tight">MENU COMPLET</span>
+                          <span className="block font-black text-[18px] md:text-[23px] leading-tight">MENU COMPLET</span>
                           <span className="text-[10px] md:text-[11px] uppercase text-slate-400 font-bold tracking-widest block">Service Rapide</span>
                       </div>
                   </button>
@@ -935,7 +927,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                           <MenuIcon className="w-[23px] h-[23px] md:w-[31px] md:h-[31px]" />
                       </div>
                       <div className="text-left">
-                          <span className="block font-black text-[20px] md:text-[26.4px] leading-tight">COMMANDE EN LIGNE</span>
+                          <span className="block font-black text-[18px] md:text-[23px] leading-tight">COMMANDE EN LIGNE</span>
                           <span className="text-[10px] md:text-[11px] uppercase text-slate-400 font-bold tracking-widest block">Découvrez nos plats</span>
                       </div>
                   </button>
@@ -950,7 +942,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                           <MapPin className="w-[23px] h-[23px] md:w-[31px] md:h-[31px]" />
                       </div>
                       <div className="text-left">
-                          <span className="block font-black text-[20px] md:text-[26.4px] leading-tight">NOUS TROUVER (DRARIA)</span>
+                          <span className="block font-black text-[18px] md:text-[23px] leading-tight">NOUS TROUVER (DRARIA)</span>
                           <span className="text-[10px] md:text-[11px] uppercase text-slate-400 font-bold tracking-widest block">Draria, Alger</span>
                       </div>
                   </a>
