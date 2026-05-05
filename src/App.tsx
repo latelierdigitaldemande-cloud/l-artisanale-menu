@@ -103,7 +103,7 @@ const ReviewCard = ({ name, initials, rating, date, text, tags }: {
 
     return (
         <div 
-            className="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-md transition-shadow relative group flex flex-col h-full min-h-[300px] md:min-h-[340px]"
+            className="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-md transition-shadow relative group flex flex-col h-full min-h-[237px] md:min-h-[269px]"
         >
             <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-600 font-bold text-lg">
@@ -883,9 +883,9 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                       href={social.href} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-white hover:text-red-600 transition-colors transform hover:scale-110 bg-white/10 p-2 rounded-full border border-white/20 backdrop-blur-sm"
+                      className="text-white hover:text-red-600 transition-colors transform hover:scale-110 bg-white/10 p-2.5 rounded-full border border-white/20 backdrop-blur-sm"
                     >
-                      <social.icon className="w-[17px] h-[17px]" />
+                      <social.icon className="w-[20.6px] h-[20.6px]" />
                     </a>
                   ))}
                 </motion.div>
@@ -955,7 +955,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                         <button 
                             key={cat.id}
                             onClick={() => onNavigate('full_menu', cat.id)}
-                            className={`relative h-[194px] md:h-[264px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 ${cat.bentoSpan}`}
+                            className={`relative h-[217px] md:h-[296px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 ${cat.bentoSpan}`}
                         >
                             <img 
                                 src={cat.image} 
@@ -1120,7 +1120,6 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
             <div className="py-8 md:py-16">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
                     <div className="flex flex-col text-left">
-                        <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Témoignages</span>
                         <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Avis Clients</h3>
                     </div>
                     <div 
