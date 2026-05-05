@@ -812,7 +812,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
       
       <main className="flex-1 w-full flex flex-col items-center">
         {/* Hero Section */}
-        <section className="relative w-full h-[50vh] md:h-[60vh] lg:h-[65vh] flex items-center justify-center overflow-hidden">
+        <section className="relative w-full h-[calc(100dvh-88px)] md:h-[60vh] lg:h-[65vh] flex items-center justify-center overflow-hidden">
           <motion.div 
             initial={{ scale: 1.1 }}
             animate={{ scale: 1 }}
@@ -829,7 +829,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 pointer-events-none" />
           </motion.div>
           
-          <div className="relative z-10 text-center px-4 md:px-16 lg:px-24">
+          <div className="relative z-10 text-center px-4 md:px-16 lg:px-24 mb-60 md:mb-0">
             <div>
                 <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-2 tracking-tight">
                     L'Artisanale
@@ -841,64 +841,64 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 </div>
             </div>
           </div>
+
+          {/* Action Blocks integrated for mobile visibility */}
+          <div className="absolute bottom-4 md:-bottom-16 left-0 right-0 z-20 px-4 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                  <button 
+                      id="link-order-online"
+                      onClick={() => onNavigate('full_menu')}
+                      className="w-full bg-red-600 text-white p-5 md:p-6 rounded-[2.5rem] flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98] relative"
+                  >
+                      <div className="flex items-center gap-4 text-left">
+                          <div className="bg-white/10 p-2.5 md:p-3.5 rounded-xl">
+                              <ShoppingBag className="w-6 h-6 md:w-7 md:h-7" />
+                          </div>
+                          <div>
+                              <span className="block font-black text-xl md:text-2xl leading-tight text-white">Commande en ligne</span>
+                              <span className="text-[10px] md:text-[10px] uppercase opacity-60 font-bold tracking-widest block text-red-100">Service Rapide</span>
+                          </div>
+                      </div>
+                      <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/10 px-2 py-1 rounded-full border border-white/20 backdrop-blur-sm">
+                          <div className={`w-2 h-2 rounded-full ${isOpen ? 'bg-green-500' : 'bg-red-500'} shadow-sm animate-pulse`} />
+                          <span className="text-[8px] text-white font-black uppercase tracking-wider">
+                              {isOpen ? 'Ouvert' : 'Fermé'}
+                          </span>
+                      </div>
+                  </button>
+
+                  <button 
+                      onClick={() => onNavigate('full_menu')}
+                      className="bg-white border border-slate-100 p-5 md:p-6 rounded-[2.5rem] flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                  >
+                      <div className="bg-red-50 p-2.5 md:p-3.5 rounded-xl text-red-600">
+                          <MenuIcon className="w-6 h-6 md:w-7 md:h-7" />
+                      </div>
+                      <div className="text-left">
+                          <span className="block font-black text-xl md:text-2xl leading-tight">Notre carte</span>
+                          <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Découvrez nos plats</span>
+                      </div>
+                  </button>
+
+                  <a 
+                      href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="bg-white border border-slate-100 p-5 md:p-6 rounded-[2.5rem] flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                  >
+                      <div className="bg-red-50 p-2.5 md:p-3.5 rounded-xl text-red-600">
+                          <MapPin className="w-6 h-6 md:w-7 md:h-7" />
+                      </div>
+                      <div className="text-left">
+                          <span className="block font-black text-xl md:text-2xl leading-tight">Nous trouver</span>
+                          <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Draria, Alger</span>
+                      </div>
+                  </a>
+              </div>
+          </div>
         </section>
 
-        <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 -mt-16 relative z-20 pb-16">
-            {/* Quick Link Bio Section */}
-            <div 
-                className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-[92px]"
-            >
-                <button 
-                    id="link-order-online"
-                    onClick={() => onNavigate('full_menu')}
-                    className="w-full bg-red-600 text-white p-5 md:p-6 rounded-[2.5rem] flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98] relative"
-                >
-                    <div className="flex items-center gap-4 text-left">
-                        <div className="bg-white/10 p-2.5 md:p-3.5 rounded-xl">
-                            <ShoppingBag className="w-6 h-6 md:w-7 md:h-7" />
-                        </div>
-                        <div>
-                            <span className="block font-black text-xl md:text-2xl leading-tight text-white">Commande en ligne</span>
-                            <span className="text-[10px] md:text-[10px] uppercase opacity-60 font-bold tracking-widest block text-red-100">Service Rapide</span>
-                        </div>
-                    </div>
-                    {/* Status Indicator at bottom right */}
-                    <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/10 px-2 py-1 rounded-full border border-white/20 backdrop-blur-sm">
-                        <div className={`w-2 h-2 rounded-full ${isOpen ? 'bg-green-500' : 'bg-red-500'} shadow-sm animate-pulse`} />
-                        <span className="text-[8px] text-white font-black uppercase tracking-wider">
-                            {isOpen ? 'Ouvert' : 'Fermé'}
-                        </span>
-                    </div>
-                </button>
-
-                <button 
-                    onClick={() => onNavigate('full_menu')}
-                    className="bg-white border border-slate-100 p-5 md:p-6 rounded-[2.5rem] flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
-                >
-                    <div className="bg-red-50 p-2.5 md:p-3.5 rounded-xl text-red-600">
-                        <MenuIcon className="w-6 h-6 md:w-7 md:h-7" />
-                    </div>
-                    <div className="text-left">
-                        <span className="block font-black text-xl md:text-2xl leading-tight">Notre carte</span>
-                        <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Découvrez nos plats</span>
-                    </div>
-                </button>
-
-                <a 
-                    href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="bg-white border border-slate-100 p-5 md:p-6 rounded-[2.5rem] flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
-                >
-                    <div className="bg-red-50 p-2.5 md:p-3.5 rounded-xl text-red-600">
-                        <MapPin className="w-6 h-6 md:w-7 md:h-7" />
-                    </div>
-                    <div className="text-left">
-                        <span className="block font-black text-xl md:text-2xl leading-tight">Nous trouver</span>
-                        <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Draria, Alger</span>
-                    </div>
-                </a>
-            </div>
+        <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 mt-0 md:mt-24 relative z-0 pb-16">
 
 
             {/* Category Grid - Bento Style Optimized for Desktop */}
