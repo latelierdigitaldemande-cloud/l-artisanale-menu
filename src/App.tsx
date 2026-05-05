@@ -607,7 +607,7 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
               transition={{ delay: 0.4 }}
               className="mt-8 pt-6 border-t border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
             >
-          <div className="flex gap-10">
+              <div className="flex gap-10 md:flex hidden">
                 {[
                   { icon: Instagram, href: "https://www.instagram.com/lartisanale_draria/" },
                   { icon: Music, href: "https://tiktok.com" },
@@ -834,16 +834,16 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 pointer-events-none" />
           </motion.div>
           
-          <div className="relative z-10 text-center px-4 md:px-16 lg:px-24 mb-[16rem] md:mb-0">
+          <div className="relative z-10 text-center px-4 md:px-16 lg:px-24 mb-[18rem] md:mb-0 -mt-12 md:mt-0">
             <div className="flex flex-col items-center">
                 <motion.div
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.1, duration: 0.8 }}
-                  className="mb-4 flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20"
+                  className="mb-4 flex items-center gap-[6.6px] bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20"
                 >
-                    <div className={`w-1.5 h-1.5 rounded-full ${isOpen ? 'bg-green-500' : 'bg-red-500'} shadow-[0_0_10px_rgba(239,68,68,0.5)] animate-pulse`} />
-                    <span className="text-[8px] text-white font-black uppercase tracking-widest">
+                    <div className={`w-[6.6px] h-[6.6px] rounded-full ${isOpen ? 'bg-green-500' : 'bg-red-500'} shadow-[0_0_10px_rgba(239,68,68,0.5)] animate-pulse`} />
+                    <span className="text-[8.8px] text-white font-black uppercase tracking-widest">
                         {isOpen ? 'Ouvert' : 'Fermé'}
                     </span>
                 </motion.div>
@@ -865,6 +865,30 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                         Le Goût Authentique livré chez vous
                     </p>
                 </motion.div>
+
+                {/* Mobile Social Icons - Moved here */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                  className="flex items-center gap-5 mt-5 md:hidden"
+                >
+                  {[
+                    { icon: Instagram, href: "https://www.instagram.com/lartisanale_draria/" },
+                    { icon: Music, href: "https://tiktok.com" },
+                    { icon: Facebook, href: "https://www.facebook.com/lartisanaledraria/?locale=fr_FR" }
+                  ].map((social, i) => (
+                    <a 
+                      key={i} 
+                      href={social.href} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-white hover:text-red-600 transition-colors transform hover:scale-110 bg-white/10 p-2 rounded-full border border-white/20 backdrop-blur-sm"
+                    >
+                      <social.icon className="w-[17px] h-[17px]" />
+                    </a>
+                  ))}
+                </motion.div>
             </div>
           </div>
 
@@ -874,16 +898,14 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                   <button 
                       id="link-order-online"
                       onClick={() => onNavigate('full_menu')}
-                      className="w-full bg-red-600 text-white py-[18px] px-5 md:p-6 rounded-[2.5rem] flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98] relative"
+                      className="w-full bg-white border border-slate-100 py-[18px] px-5 md:p-6 rounded-[2.5rem] flex items-center gap-3.5 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                   >
-                      <div className="flex items-center gap-3.5 text-left">
-                          <div className="bg-white/10 p-2 md:p-3.5 rounded-xl">
-                              <ShoppingBag className="w-[21px] h-[21px] md:w-7 md:h-7" />
-                          </div>
-                          <div>
-                              <span className="block font-black text-[18px] md:text-2xl leading-tight text-white">Commande en ligne</span>
-                              <span className="text-[9px] md:text-[10px] uppercase opacity-60 font-bold tracking-widest block text-red-100">Service Rapide</span>
-                          </div>
+                      <div className="bg-red-50 p-2 md:p-3.5 rounded-xl text-red-600">
+                          <ShoppingBag className="w-[21px] h-[21px] md:w-7 md:h-7" />
+                      </div>
+                      <div className="text-left">
+                          <span className="block font-black text-[18px] md:text-2xl leading-tight">Commande en ligne</span>
+                          <span className="text-[9px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Service Rapide</span>
                       </div>
                   </button>
 
@@ -979,7 +1001,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                             <div className="space-y-4">
                                 <div className="space-y-2">
                                     <div className="flex justify-between items-start gap-2">
-                                        <h4 className="font-serif text-base md:text-lg font-bold text-slate-950 group-hover:text-red-600 transition-colors leading-tight">
+                                        <h4 className="font-serif text-[19.2px] md:text-lg font-bold text-slate-950 group-hover:text-red-600 transition-colors leading-tight">
                                             {item.name}
                                         </h4>
                                         <span className="text-sm md:text-base font-black text-slate-950 tabular-nums whitespace-nowrap">
@@ -1054,7 +1076,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                                     <div className="w-14 h-14 rounded-xl bg-white shadow-xl flex items-center justify-center text-red-600 mb-8 border border-slate-100 group-hover:scale-110 transition-transform duration-700">
                                         <item.icon className="w-7 h-7" />
                                     </div>
-                                    <h4 className="font-serif text-2xl font-bold text-slate-900 mb-4">{item.title}</h4>
+                                    <h4 className="font-serif text-[21.6px] md:text-2xl font-bold text-slate-900 mb-4">{item.title}</h4>
                                     <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium transition-opacity">
                                         {item.desc}
                                     </p>
