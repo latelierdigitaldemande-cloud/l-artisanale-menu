@@ -26,7 +26,8 @@ import {
   MessageCircle,
   Home,
   Navigation,
-  Star
+  Star,
+  LayoutGrid
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
@@ -221,6 +222,15 @@ const DRINKS = [
 ];
 
 const CATEGORIES = [
+  {
+    id: 'all',
+    name: 'Voir tout',
+    subtitle: 'La Carte Complète',
+    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=2070',
+    icon: <LayoutGrid className="w-4 h-4 md:w-5 md:h-5" />,
+    hideInBento: true,
+    menu: [] // Will be merged in useMemo
+  },
   { 
     id: 'pizza', 
     name: 'Pizzas', 
@@ -420,14 +430,15 @@ const Accordion = ({ title, children }: { title: string, children: ReactNode }) 
   );
 };
 
-const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, onCallClick, title, useImageLogo }: { 
+const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, onCallClick, title, useImageLogo, isSmallLogo }: { 
     onMenuClick?: () => void, 
     onBack?: () => void, 
     onLogoClick?: () => void,
     onOrderClick?: () => void,
     onCallClick?: () => void,
     title?: string,
-    useImageLogo?: boolean
+    useImageLogo?: boolean,
+    isSmallLogo?: boolean
 }) => (
   <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 py-5 md:py-3">
     <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 flex items-center justify-between relative">
@@ -436,13 +447,13 @@ const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, onCallClick, t
                 <img 
                     src="https://scontent.falg7-6.fna.fbcdn.net/v/t39.30808-6/298339068_379924957653168_8646108471508860568_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=EwO7uVSm4CwQ7kNvwFCdIlg&_nc_oc=AdoFYx3L6RqcvVlxaLIILY8TDP-hWAw5rL-YhnuEoVEDRbtv7jPoCzqNyC5pYixYoHI&_nc_zt=23&_nc_ht=scontent.falg7-6.fna&_nc_gid=5Ir_kphaLNa1qX73hPu7mg&_nc_ss=7b289&oh=00_Af4A-933NTSqmoYI4qic2lXzxKKAlxoMxCOyqmvK1XtZ0Q&oe=69FF6900" 
                     alt="L'Artisanale Logo" 
-                    className="w-12 h-12 md:w-10 md:h-10 object-cover rounded shadow-sm border border-slate-100"
+                    className={`${isSmallLogo ? 'w-[45px] h-[45px] md:w-[43px] md:h-[43px]' : 'w-[53px] h-[53px] md:w-[51px] md:h-[51px]'} object-cover rounded shadow-sm border border-slate-100`}
                     referrerPolicy="no-referrer"
                 />
             ) : (
                 <>
-                    <UtensilsCrossed className="w-8 h-8 md:w-5 md:h-5 text-red-600" />
-                    <span className="font-bold text-xl md:text-lg tracking-tight">L'Artisanale</span>
+                    <UtensilsCrossed className={`${isSmallLogo ? 'w-[30px] h-[30px] md:w-[22px] md:h-[22px]' : 'w-[35px] h-[35px] md:w-[25px] md:h-[25px]'} text-red-600`} />
+                    <span className={`font-bold tracking-tight ${isSmallLogo ? 'text-lg md:text-[18.5px]' : 'text-xl md:text-[21px]'}`}>L'Artisanale</span>
                 </>
             )}
         </button>
@@ -812,7 +823,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
       
       <main className="flex-1 w-full flex flex-col items-center">
         {/* Hero Section */}
-        <section className="relative w-full h-[calc(100dvh-88px)] md:h-[60vh] lg:h-[65vh] flex items-center justify-center overflow-hidden">
+        <section className="relative w-full h-[calc(100dvh-88px)] md:h-[60vh] lg:h-[65vh] flex items-center justify-center overflow-hidden md:overflow-visible">
           <motion.div 
             initial={{ scale: 1.1 }}
             animate={{ scale: 1 }}
@@ -829,7 +840,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 pointer-events-none" />
           </motion.div>
           
-          <div className="relative z-10 text-center px-4 md:px-16 lg:px-24 mb-[28rem] md:mb-0">
+          <div className="relative z-10 text-center px-4 md:px-16 lg:px-24 mb-[19rem] md:mb-0">
             <div>
                 <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-2 tracking-tight">
                     L'Artisanale
@@ -843,20 +854,20 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
           </div>
 
           {/* Action Blocks integrated for mobile visibility */}
-          <div className="absolute bottom-28 md:-bottom-16 left-0 right-0 z-20 px-4 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
+          <div className="absolute bottom-16 md:-bottom-16 left-0 right-0 z-20 px-4 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                   <button 
                       id="link-order-online"
                       onClick={() => onNavigate('full_menu')}
-                      className="w-full bg-red-600 text-white p-5 md:p-6 rounded-[2.5rem] flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98] relative"
+                      className="w-full bg-red-600 text-white py-[18px] px-5 md:p-6 rounded-[2.5rem] flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98] relative"
                   >
-                      <div className="flex items-center gap-4 text-left">
-                          <div className="bg-white/10 p-2.5 md:p-3.5 rounded-xl">
-                              <ShoppingBag className="w-6 h-6 md:w-7 md:h-7" />
+                      <div className="flex items-center gap-3.5 text-left">
+                          <div className="bg-white/10 p-2 md:p-3.5 rounded-xl">
+                              <ShoppingBag className="w-[21px] h-[21px] md:w-7 md:h-7" />
                           </div>
                           <div>
-                              <span className="block font-black text-xl md:text-2xl leading-tight text-white">Commande en ligne</span>
-                              <span className="text-[10px] md:text-[10px] uppercase opacity-60 font-bold tracking-widest block text-red-100">Service Rapide</span>
+                              <span className="block font-black text-[18px] md:text-2xl leading-tight text-white">Commande en ligne</span>
+                              <span className="text-[9px] md:text-[10px] uppercase opacity-60 font-bold tracking-widest block text-red-100">Service Rapide</span>
                           </div>
                       </div>
                       <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/10 px-2 py-1 rounded-full border border-white/20 backdrop-blur-sm">
@@ -869,14 +880,14 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
 
                   <button 
                       onClick={() => onNavigate('full_menu')}
-                      className="bg-white border border-slate-100 p-5 md:p-6 rounded-[2.5rem] flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                      className="bg-white border border-slate-100 py-[18px] px-5 md:p-6 rounded-[2.5rem] flex items-center gap-3.5 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                   >
-                      <div className="bg-red-50 p-2.5 md:p-3.5 rounded-xl text-red-600">
-                          <MenuIcon className="w-6 h-6 md:w-7 md:h-7" />
+                      <div className="bg-red-50 p-2 md:p-3.5 rounded-xl text-red-600">
+                          <MenuIcon className="w-[21px] h-[21px] md:w-7 md:h-7" />
                       </div>
                       <div className="text-left">
-                          <span className="block font-black text-xl md:text-2xl leading-tight">Notre carte</span>
-                          <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Découvrez nos plats</span>
+                          <span className="block font-black text-[18px] md:text-2xl leading-tight">Notre carte</span>
+                          <span className="text-[9px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Découvrez nos plats</span>
                       </div>
                   </button>
 
@@ -884,21 +895,21 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                       href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
                       target="_blank" 
                       rel="noreferrer"
-                      className="bg-white border border-slate-100 p-5 md:p-6 rounded-[2.5rem] flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                      className="bg-white border border-slate-100 py-[18px] px-5 md:p-6 rounded-[2.5rem] flex items-center gap-3.5 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                   >
-                      <div className="bg-red-50 p-2.5 md:p-3.5 rounded-xl text-red-600">
-                          <MapPin className="w-6 h-6 md:w-7 md:h-7" />
+                      <div className="bg-red-50 p-2 md:p-3.5 rounded-xl text-red-600">
+                          <MapPin className="w-[21px] h-[21px] md:w-7 md:h-7" />
                       </div>
                       <div className="text-left">
-                          <span className="block font-black text-xl md:text-2xl leading-tight">Nous trouver</span>
-                          <span className="text-[10px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Draria, Alger</span>
+                          <span className="block font-black text-[18px] md:text-2xl leading-tight">Nous trouver</span>
+                          <span className="text-[9px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Draria, Alger</span>
                       </div>
                   </a>
               </div>
           </div>
         </section>
 
-        <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 mt-0 md:mt-24 relative z-0 pb-16">
+        <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 mt-16 md:mt-32 relative z-0 pb-16">
 
 
             {/* Category Grid - Bento Style Optimized for Desktop */}
@@ -910,11 +921,11 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-3 lg:gap-4">
-                    {CATEGORIES.filter(c => c.bentoSpan !== 'hidden').map((cat) => (
+                    {CATEGORIES.filter(c => c.bentoSpan !== 'hidden' && c.id !== 'all').map((cat) => (
                         <button 
                             key={cat.id}
                             onClick={() => onNavigate('full_menu', cat.id)}
-                            className={`relative h-44 md:h-[240px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 ${cat.bentoSpan}`}
+                            className={`relative h-[194px] md:h-[264px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 ${cat.bentoSpan}`}
                         >
                             <img 
                                 src={cat.image} 
@@ -1079,14 +1090,13 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
             <div className="mb-20 md:mb-[7.5rem]">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
                     <div className="flex flex-col text-left">
-                        <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Avis Clients</span>
-                        <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Ce qu'on dit de nous</h3>
+                        <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Avis Clients</h3>
                     </div>
                     <div 
-                        className="flex items-center gap-3 bg-red-50 px-6 py-3 rounded-full border border-red-100 shadow-lg shadow-red-900/5 self-start md:self-auto"
+                        className="flex items-center gap-2.5 md:gap-3 bg-red-50 px-5 py-2.5 md:px-6 md:py-3 rounded-full border border-red-100 shadow-lg shadow-red-900/5 self-start md:self-auto"
                     >
-                        <Star className="w-4 h-4 text-red-600 fill-red-600" />
-                        <span className="text-[11px] font-black text-red-600 uppercase tracking-[0.2em]">4.8/5 sur Google</span>
+                        <Star className="w-3.5 h-3.5 md:w-4 md:h-4 text-red-600 fill-red-600" />
+                        <span className="text-[9.5px] md:text-[11px] font-black text-red-600 uppercase tracking-[0.2em]">4.8/5 sur Google</span>
                     </div>
                 </div>
                 
@@ -1212,7 +1222,7 @@ const MenuPage = ({ category, onBack, onMenuClick, onAddToCart }: { category: Pa
 
   return (
     <div className="min-h-screen bg-white">
-      <Header onBack={onBack} onCallClick={() => window.location.href = 'tel:0782777560'} title={titles[category as keyof typeof titles]} />
+      <Header isSmallLogo={true} onBack={onBack} onCallClick={() => window.location.href = 'tel:0782777560'} title={titles[category as keyof typeof titles]} />
       
       {/* Category Hero Image */}
       <div className="w-full h-48 relative overflow-hidden bg-slate-200">
@@ -1227,7 +1237,7 @@ const MenuPage = ({ category, onBack, onMenuClick, onAddToCart }: { category: Pa
 
       <div className="max-w-4xl mx-auto w-full px-4 md:px-8">
         {/* Main View Toggle */}
-        <div className="px-6 py-3 md:py-6 sticky top-16 z-30 bg-white/95 backdrop-blur-sm border-b border-slate-100 mb-2 max-w-lg mx-auto">
+        <div className="px-6 py-3 md:py-6 sticky top-[81px] md:top-[61px] z-30 bg-white/95 backdrop-blur-sm border-b border-slate-100 mb-2 max-w-lg mx-auto">
             <div className="bg-slate-100 p-1.5 rounded-2xl flex shadow-inner">
                 <button 
                   onClick={() => setActiveTab('carte')}
@@ -2047,12 +2057,29 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
   }, [pizzaBase]);
 
   const filteredItems = useMemo(() => {
+    if (activeCategory === 'all') {
+      // Collect all items from all categories
+      const allItems: any[] = [];
+      const seen = new Set();
+      
+      CATEGORIES.forEach(cat => {
+        const items = cat.id === 'pizza' ? PIZZA_MENU : cat.menu || [];
+        items.forEach(item => {
+          const key = `${cat.id}-${item.name}`;
+          if (!seen.has(key)) {
+            allItems.push({ ...item, categoryId: cat.id });
+            seen.add(key);
+          }
+        });
+      });
+      return allItems;
+    }
     return activeCategory === 'pizza' ? filteredPizzaMenu : activeCategoryData?.menu || [];
   }, [activeCategory, filteredPizzaMenu, activeCategoryData]);
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Header onLogoClick={onLogoClick} onCallClick={() => window.location.href = 'tel:0782777560'} />
+      <Header isSmallLogo={true} onLogoClick={onLogoClick} onCallClick={() => window.location.href = 'tel:0782777560'} />
       
       <div className="flex-1 max-w-7xl mx-auto w-full flex flex-col md:flex-row bg-white">
         {/* Desktop Sidebar */}
@@ -2071,9 +2098,9 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                   `}
                 >
                   <span className={activeCategory === cat.id ? 'text-white' : 'text-slate-300'}>
-                    {cat.icon}
+                    {cat.id === 'all' ? <LayoutGrid className="w-4 h-4 md:w-5 md:h-5 text-inherit" /> : cat.icon}
                   </span>
-                  {cat.id === 'texmex' ? 'Tex-Mex' : cat.name}
+                  {cat.id === 'all' ? 'Voir tout' : (cat.id === 'texmex' ? 'Tex-Mex' : cat.name)}
                 </button>
               ))}
             </nav>
@@ -2088,7 +2115,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
         </aside>
 
         {/* Mobile Sub-Header & Tabs */}
-        <div className="md:hidden sticky top-[57px] z-30 bg-white/95 backdrop-blur-md border-b border-slate-100">
+        <div className="md:hidden sticky top-[81px] z-30 bg-white/95 backdrop-blur-md border-b border-slate-100">
           <div className="px-4 py-3">
             <div className="flex overflow-x-auto no-scrollbar gap-2">
               {CATEGORIES.map((cat) => (
@@ -2104,10 +2131,14 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                       : 'bg-white border border-slate-100 text-slate-500'}
                   `}
                 >
-                  <span className={activeCategory === cat.id ? 'text-white' : 'text-slate-600'}>
-                    {cat.icon}
-                  </span>
-                  {cat.id === 'texmex' ? 'Tex-Mex' : `${cat.name}`}
+                  {cat.id === 'all' ? (
+                    <LayoutGrid className={`w-3.5 h-3.5 ${activeCategory === 'all' ? 'text-white' : 'text-slate-600'}`} />
+                  ) : (
+                    <span className={activeCategory === cat.id ? 'text-white' : 'text-slate-600'}>
+                      {cat.icon}
+                    </span>
+                  )}
+                  {cat.id === 'all' ? 'Voir tout' : (cat.id === 'texmex' ? 'Tex-Mex' : cat.name)}
                 </button>
               ))}
             </div>
@@ -2128,14 +2159,14 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                 className="absolute inset-0"
               >
                 <img 
-                  src={activeCategoryData?.image} 
-                  alt={activeCategoryData?.name}
+                  src={activeCategory === 'all' ? 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=2070' : activeCategoryData?.image} 
+                  alt={activeCategory === 'all' ? 'Toute la Carte' : activeCategoryData?.name}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
                 <div className="absolute bottom-6 md:bottom-8 left-6 md:left-10">
                   <h1 className="text-3xl md:text-5xl font-serif font-bold text-white mb-2">
-                    {activeCategoryData?.name}
+                    {activeCategory === 'all' ? 'Toute la Carte' : activeCategoryData?.name}
                   </h1>
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-1 bg-red-600 rounded-full" />
@@ -2186,12 +2217,12 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="flex flex-col divide-y divide-slate-100"
           >
-            {filteredItems.map((item) => (
+            {filteredItems.map((item, idx) => (
               <MenuListItem 
-                key={`${activeCategory}-${item.name}`} 
+                key={`${activeCategory}-${item.name}-${idx}`} 
                 item={item} 
-                category={activeCategory} 
-                onAddToCart={(v, p) => onAddToCart(item, activeCategory, v, p)} 
+                category={activeCategory === 'all' ? item.categoryId : activeCategory} 
+                onAddToCart={(v, p) => onAddToCart(item, activeCategory === 'all' ? item.categoryId : activeCategory, v, p)} 
               />
             ))}
             
@@ -2222,7 +2253,7 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
   
-  const [activeMenuCategory, setActiveMenuCategory] = useState<string>('pizza');
+  const [activeMenuCategory, setActiveMenuCategory] = useState<string>('all');
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -2244,7 +2275,7 @@ export default function App() {
     if (category) {
       setActiveMenuCategory(category);
     } else if (page === 'full_menu') {
-      setActiveMenuCategory('pizza');
+      setActiveMenuCategory('all');
     }
     
     if (page === 'home') {
