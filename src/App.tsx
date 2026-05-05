@@ -103,7 +103,7 @@ const ReviewCard = ({ name, initials, rating, date, text, tags }: {
 
     return (
         <div 
-            className="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-md transition-shadow relative group flex flex-col h-full"
+            className="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-md transition-shadow relative group flex flex-col h-full min-h-[300px] md:min-h-[340px]"
         >
             <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-600 font-bold text-lg">
@@ -440,7 +440,7 @@ const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, onCallClick, t
     useImageLogo?: boolean,
     isSmallLogo?: boolean
 }) => (
-  <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 py-5 md:py-3">
+  <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 py-3 md:py-3">
     <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 flex items-center justify-between relative">
         <button onClick={onLogoClick} className="flex items-center gap-2.5 md:gap-2 hover:opacity-80 transition-opacity">
             {useImageLogo ? (
@@ -540,13 +540,7 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
           className="fixed inset-0 z-[60] bg-white flex flex-col h-full overflow-hidden"
         >
           {/* Header inside drawer */}
-          <div className="flex justify-between items-center px-4 py-6 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center shadow-lg shadow-red-200">
-                <UtensilsCrossed className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-serif font-bold text-lg tracking-tight text-slate-900">L'Artisanale</span>
-            </div>
+          <div className="flex justify-end items-center px-4 py-6 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
             <button 
               onClick={onClose} 
               id="close-drawer" 
@@ -583,7 +577,7 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
                   {item.action ? (
                     <button 
                       onClick={() => { item.action(); onClose(); }}
-                      className="group py-4 text-left w-full border-b border-transparent hover:border-slate-100 transition-all"
+                      className="group py-4 text-center w-full border-b border-transparent hover:border-slate-100 transition-all"
                     >
                       <span className="text-2xl md:text-3xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
                         {item.label}
@@ -595,7 +589,7 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={onClose}
-                      className="group py-4 text-left block w-full border-b border-transparent hover:border-slate-100 transition-all"
+                      className="group py-4 text-center block w-full border-b border-transparent hover:border-slate-100 transition-all"
                     >
                       <span className="text-2xl md:text-3xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
                         {item.label}
@@ -840,16 +834,37 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 pointer-events-none" />
           </motion.div>
           
-          <div className="relative z-10 text-center px-4 md:px-16 lg:px-24 mb-[19rem] md:mb-0">
-            <div>
-                <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-2 tracking-tight">
+          <div className="relative z-10 text-center px-4 md:px-16 lg:px-24 mb-[16rem] md:mb-0">
+            <div className="flex flex-col items-center">
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.1, duration: 0.8 }}
+                  className="mb-4 flex items-center gap-1.5 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20"
+                >
+                    <div className={`w-1.5 h-1.5 rounded-full ${isOpen ? 'bg-green-500' : 'bg-red-500'} shadow-[0_0_10px_rgba(239,68,68,0.5)] animate-pulse`} />
+                    <span className="text-[8px] text-white font-black uppercase tracking-widest">
+                        {isOpen ? 'Ouvert' : 'Fermé'}
+                    </span>
+                </motion.div>
+                <motion.h2 
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.8 }}
+                  className="text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-4 tracking-tighter"
+                >
                     L'Artisanale
-                </h2>
-                <div className="flex items-center justify-center gap-3 text-white/90">
-                    <p className="font-black tracking-[0.3em] uppercase text-[10px] md:text-sm">
+                </motion.h2>
+                <motion.div 
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                  className="flex items-center justify-center gap-3 text-white/90"
+                >
+                    <p className="font-black tracking-[0.4em] uppercase text-[9px] md:text-xs">
                         Le Goût Authentique livré chez vous
                     </p>
-                </div>
+                </motion.div>
             </div>
           </div>
 
@@ -869,12 +884,6 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                               <span className="block font-black text-[18px] md:text-2xl leading-tight text-white">Commande en ligne</span>
                               <span className="text-[9px] md:text-[10px] uppercase opacity-60 font-bold tracking-widest block text-red-100">Service Rapide</span>
                           </div>
-                      </div>
-                      <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-white/10 px-2 py-1 rounded-full border border-white/20 backdrop-blur-sm">
-                          <div className={`w-2 h-2 rounded-full ${isOpen ? 'bg-green-500' : 'bg-red-500'} shadow-sm animate-pulse`} />
-                          <span className="text-[8px] text-white font-black uppercase tracking-wider">
-                              {isOpen ? 'Ouvert' : 'Fermé'}
-                          </span>
                       </div>
                   </button>
 
@@ -909,15 +918,14 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
           </div>
         </section>
 
-        <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 mt-16 md:mt-32 relative z-0 pb-16">
-
+        <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 mt-16 md:mt-24 relative z-0 pb-16">
 
             {/* Category Grid - Bento Style Optimized for Desktop */}
-            <div id="bento-grid" className="mb-16 md:mb-18">
+            <div id="bento-grid" className="mb-16 md:mb-20">
                 <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 gap-4">
                     <div className="flex flex-col text-left">
-                        <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Gastronomie</span>
-                        <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Explorer la Carte</h3>
+                        <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Notre Carte</span>
+                        <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Explorer le Menu</h3>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-3 lg:gap-4">
@@ -942,7 +950,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                                     </span>
                                 </div>
                                 <div className="mt-4 flex items-center gap-2 text-white/50 group-hover:text-white transition-colors duration-500">
-                                    <span className="text-[10px] font-black uppercase tracking-widest">En savoir plus</span>
+                                    <span className="text-[10px] font-black uppercase tracking-widest">Voir le menu</span>
                                     <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                                 </div>
                             </div>
@@ -952,9 +960,9 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
             </div>
 
             {/* Nos Incontournables Section */}
-            <div className="pt-12 pb-9 md:pt-20 md:pb-15">
-                <div className="flex flex-col text-left mb-8">
-                    <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Sélection</span>
+            <div className="py-8 md:py-16">
+                <div className="flex flex-col text-left mb-12">
+                    <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Suggestions</span>
                     <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Nos Incontournables</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-1 gap-4 md:gap-y-4">
@@ -1007,7 +1015,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 </div>
             </div>
             
-            <div className="pt-12 pb-16 md:pt-18 md:pb-24 mb-12">
+            <div className="py-8 md:py-16">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
                         <div className="flex flex-col text-left">
                             <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Valeurs</span>
@@ -1033,7 +1041,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                             { 
                                 icon: Clock, 
                                 title: 'Disponibilité', 
-                                desc: 'Ouvert du Samedi au Vendredi (Dimanche fermé) avec un service de livraison rapide et efficace à Draria.',
+                                desc: 'Ouvert du Samedi au Vendredi (fermé le Dimanche). Livraison express sur Draria et ses environs.',
                                 color: 'blue'
                             },
                         ].map((item, idx) => (
@@ -1057,10 +1065,10 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 </div>
 
             {/* Gallery Section */}
-            <div id="gallery-section" className="mb-20 md:mb-[7.5rem] scroll-mt-24">
+            <div id="gallery-section" className="py-8 md:py-16 scroll-mt-24">
                 <div className="flex flex-col text-left mb-12">
                     <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Galerie</span>
-                    <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Nos Réalisations</h3>
+                    <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">La Touche Artisanale</h3>
                 </div>
                 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
@@ -1087,9 +1095,10 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
             </div>
 
             {/* Review Section */}
-            <div className="mb-20 md:mb-[7.5rem]">
+            <div className="py-8 md:py-16">
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
                     <div className="flex flex-col text-left">
+                        <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Témoignages</span>
                         <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Avis Clients</h3>
                     </div>
                     <div 
@@ -1130,11 +1139,11 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 </div>
             </div>
 
-            <div className="mt-4 mb-16">
+            <div className="mt-12 md:mt-24 mb-16">
                 {/* Localisation Section */}
-                <div className="relative overflow-hidden group rounded-[2rem] md:rounded-[3rem]">
+                <div className="relative overflow-hidden group rounded-[2.5rem] md:rounded-[4rem] border border-slate-100">
                     {/* Background with parallax-like scaling */}
-                    <div className="absolute inset-0 bg-slate-900">
+                    <div className="absolute inset-0 bg-slate-950">
                         <motion.img 
                             initial={{ scale: 1.2, opacity: 0.2 }}
                             whileInView={{ scale: 1, opacity: 0.1 }}
@@ -1150,7 +1159,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                             <span className="text-red-500 font-black text-[9px] uppercase tracking-[0.4em] mb-4 block">Le Rendez-vous</span>
                             <h3 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">Venez nous voir à Draria</h3>
                             <p className="text-slate-400 text-sm md:text-base mb-8 font-medium leading-relaxed">
-                                Sam-Jeu: 11h30—15h30 / 18h00—00h00 | Ven: 18h00—00h00 | Dimanche: Fermé
+                                Sam—Jeu : 11h30—15h30 & 18h00—00h00 | Ven : 18h00—00h00 | Dimanche : Fermé
                             </p>
                             
                             <motion.a 
