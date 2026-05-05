@@ -851,7 +851,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 <button 
                     id="link-order-online"
                     onClick={() => onNavigate('full_menu')}
-                    className="w-full bg-red-600 text-white p-5 md:p-6 rounded-2xl md:rounded-3xl flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98] relative"
+                    className="w-full bg-red-600 text-white p-5 md:p-6 rounded-[2.5rem] flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98] relative"
                 >
                     <div className="flex items-center gap-4 text-left">
                         <div className="bg-white/10 p-2.5 md:p-3.5 rounded-xl">
@@ -873,7 +873,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
 
                 <button 
                     onClick={() => onNavigate('full_menu')}
-                    className="bg-white border border-slate-100 p-5 md:p-6 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                    className="bg-white border border-slate-100 p-5 md:p-6 rounded-[2.5rem] flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                 >
                     <div className="bg-red-50 p-2.5 md:p-3.5 rounded-xl text-red-600">
                         <MenuIcon className="w-6 h-6 md:w-7 md:h-7" />
@@ -888,7 +888,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
                     target="_blank" 
                     rel="noreferrer"
-                    className="bg-white border border-slate-100 p-5 md:p-6 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                    className="bg-white border border-slate-100 p-5 md:p-6 rounded-[2.5rem] flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                 >
                     <div className="bg-red-50 p-2.5 md:p-3.5 rounded-xl text-red-600">
                         <MapPin className="w-6 h-6 md:w-7 md:h-7" />
