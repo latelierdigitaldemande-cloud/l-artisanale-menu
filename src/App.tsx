@@ -898,27 +898,27 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                   <button 
                       id="link-order-online"
                       onClick={() => onNavigate('full_menu')}
-                      className="w-full bg-white border border-slate-100 py-[22px] px-5 md:py-[30px] md:px-6 rounded-[20px] flex items-center gap-3.5 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                      className="w-full bg-white border border-slate-100 py-[24px] px-5 md:py-[33px] md:px-6 rounded-[20px] flex items-center gap-3.5 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                   >
                       <div className="bg-red-50 p-2 md:p-3.5 rounded-xl text-red-600">
-                          <ShoppingBag className="w-[21px] h-[21px] md:w-7 md:h-7" />
+                          <ShoppingBag className="w-[23px] h-[23px] md:w-[31px] md:h-[31px]" />
                       </div>
                       <div className="text-left">
-                          <span className="block font-black text-[18px] md:text-2xl leading-tight">Commande en ligne</span>
-                          <span className="text-[9px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Service Rapide</span>
+                          <span className="block font-black text-[20px] md:text-[26.4px] leading-tight">Commande en ligne</span>
+                          <span className="text-[10px] md:text-[11px] uppercase text-slate-400 font-bold tracking-widest block">Service Rapide</span>
                       </div>
                   </button>
 
                   <button 
                       onClick={() => onNavigate('full_menu')}
-                      className="bg-white border border-slate-100 py-[22px] px-5 md:py-[30px] md:px-6 rounded-[20px] flex items-center gap-3.5 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                      className="bg-white border border-slate-100 py-[24px] px-5 md:py-[33px] md:px-6 rounded-[20px] flex items-center gap-3.5 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                   >
                       <div className="bg-red-50 p-2 md:p-3.5 rounded-xl text-red-600">
-                          <MenuIcon className="w-[21px] h-[21px] md:w-7 md:h-7" />
+                          <MenuIcon className="w-[23px] h-[23px] md:w-[31px] md:h-[31px]" />
                       </div>
                       <div className="text-left">
-                          <span className="block font-black text-[18px] md:text-2xl leading-tight">Notre carte</span>
-                          <span className="text-[9px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Découvrez nos plats</span>
+                          <span className="block font-black text-[20px] md:text-[26.4px] leading-tight">Notre carte</span>
+                          <span className="text-[10px] md:text-[11px] uppercase text-slate-400 font-bold tracking-widest block">Découvrez nos plats</span>
                       </div>
                   </button>
 
@@ -926,14 +926,14 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                       href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
                       target="_blank" 
                       rel="noreferrer"
-                      className="bg-white border border-slate-100 py-[22px] px-5 md:py-[30px] md:px-6 rounded-[20px] flex items-center gap-3.5 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                      className="bg-white border border-slate-100 py-[24px] px-5 md:py-[33px] md:px-6 rounded-[20px] flex items-center gap-3.5 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                   >
                       <div className="bg-red-50 p-2 md:p-3.5 rounded-xl text-red-600">
-                          <MapPin className="w-[21px] h-[21px] md:w-7 md:h-7" />
+                          <MapPin className="w-[23px] h-[23px] md:w-[31px] md:h-[31px]" />
                       </div>
                       <div className="text-left">
-                          <span className="block font-black text-[18px] md:text-2xl leading-tight">Nous trouver</span>
-                          <span className="text-[9px] md:text-[10px] uppercase text-slate-400 font-bold tracking-widest block">Draria, Alger</span>
+                          <span className="block font-black text-[20px] md:text-[26.4px] leading-tight">Nous trouver</span>
+                          <span className="text-[10px] md:text-[11px] uppercase text-slate-400 font-bold tracking-widest block">Draria, Alger</span>
                       </div>
                   </a>
               </div>
