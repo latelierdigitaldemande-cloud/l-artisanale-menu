@@ -29,6 +29,7 @@ import {
   Star
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 
 // --- Types ---
 type Page = 'home' | 'pizza' | 'burger' | 'tacos' | 'texmex' | 'full_menu';
@@ -2204,12 +2205,9 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
 
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>(() => {
-    if (typeof window !== 'undefined') {
-      return window.location.pathname === '/carte' ? 'full_menu' : 'home';
-    }
-    return 'home';
-  });
+  const navigate = useNavigate();
+  const location = useLocation();
+  
   const [activeMenuCategory, setActiveMenuCategory] = useState<string>('pizza');
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -2226,34 +2224,20 @@ export default function App() {
   const [initialSupplements, setInitialSupplements] = useState<string[] | undefined>();
   const [editingCartId, setEditingCartId] = useState<string | null>(null);
 
-  useEffect(() => {
-    const handlePopState = () => {
-      const path = window.location.pathname;
-      if (path === '/carte') {
-        setCurrentPage('full_menu');
-      } else {
-        setCurrentPage('home');
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
   const toggleNav = () => setIsNavOpen(!isNavOpen);
 
   const navigateTo = (page: Page, category?: string) => {
-    const url = page === 'home' ? '/' : '/carte';
-    if (window.location.pathname !== url) {
-      window.history.pushState({ page, category }, '', url);
-    }
-    
     if (category) {
       setActiveMenuCategory(category);
     } else if (page === 'full_menu') {
       setActiveMenuCategory('pizza');
     }
-    setCurrentPage(page);
+    
+    if (page === 'home') {
+      navigate('/');
+    } else {
+      navigate('/carte');
+    }
     setIsNavOpen(false);
   };
 
@@ -2379,41 +2363,44 @@ export default function App() {
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   const cartTotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
+  const isMenuPage = location.pathname === '/carte';
+
   return (
     <div id="app-root" className="min-h-screen">
       <AnimatePresence mode="wait" initial={false}>
-        {currentPage === 'home' ? (
-          <motion.div 
-            key="home"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, x: -10 }}
-            transition={{ duration: 0.3 }}
-          >
-            <HomePage onNavigate={navigateTo} onMenuClick={toggleNav} hasCart={cartCount > 0} />
-          </motion.div>
-        ) : (
-          <motion.div 
-            key="full_menu_view"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <FullMenuPage 
-              onBack={() => navigateTo('home')} 
-              onMenuClick={toggleNav}
-              onAddToCart={startCustomization}
-              activeCategory={currentPage === 'full_menu' ? activeMenuCategory : currentPage}
-              setActiveCategory={(cat) => {
-                setActiveMenuCategory(cat);
-                setCurrentPage('full_menu');
-                // Optional: update URL with category if desired, e.g. history.replaceState
-              }}
-              onLogoClick={() => navigateTo('home')}
-            />
-          </motion.div>
-        )}
+        <Routes location={location}>
+          <Route path="/" element={
+            <motion.div 
+              key="home"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, x: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <HomePage onNavigate={navigateTo} onMenuClick={toggleNav} hasCart={cartCount > 0} />
+            </motion.div>
+          } />
+          <Route path="/carte" element={
+            <motion.div 
+              key="full_menu_view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <FullMenuPage 
+                onBack={() => navigateTo('home')} 
+                onMenuClick={toggleNav}
+                onAddToCart={startCustomization}
+                activeCategory={activeMenuCategory}
+                setActiveCategory={(cat) => {
+                  setActiveMenuCategory(cat);
+                }}
+                onLogoClick={() => navigateTo('home')}
+              />
+            </motion.div>
+          } />
+        </Routes>
       </AnimatePresence>
 
       <NavigationDrawer 
@@ -2422,50 +2409,54 @@ export default function App() {
         onNavigate={navigateTo} 
       />
 
-      <CustomizationModal 
-        isOpen={!!customizingItem}
-        item={customizingItem}
-        category={customizingCategory}
-        onClose={() => { setCustomizingItem(null); setEditingCartId(null); }}
-        onConfirm={confirmAddToCart}
-        initialVariant={initialVariant}
-        initialPrice={initialPrice}
-        initialSauces={initialSauces}
-        initialCrudites={initialCrudites}
-        initialIsMenu={initialIsMenu}
-        initialSupplements={initialSupplements}
-        isEditing={!!editingCartId}
-      />
+      {isMenuPage && (
+        <>
+          <CustomizationModal 
+            isOpen={!!customizingItem}
+            item={customizingItem}
+            category={customizingCategory}
+            onClose={() => { setCustomizingItem(null); setEditingCartId(null); }}
+            onConfirm={confirmAddToCart}
+            initialVariant={initialVariant}
+            initialPrice={initialPrice}
+            initialSauces={initialSauces}
+            initialCrudites={initialCrudites}
+            initialIsMenu={initialIsMenu}
+            initialSupplements={initialSupplements}
+            isEditing={!!editingCartId}
+          />
 
-      <CartDrawer 
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cart={cart}
-        onUpdateQuantity={updateQuantity}
-        onRemove={removeItem}
-        onEdit={startEditCartItem}
-      />
+          <CartDrawer 
+            isOpen={isCartOpen}
+            onClose={() => setIsCartOpen(false)}
+            cart={cart}
+            onUpdateQuantity={updateQuantity}
+            onRemove={removeItem}
+            onEdit={startEditCartItem}
+          />
 
-      {/* Floating Cart Button */}
-      {cartCount > 0 && (
-        <motion.div 
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="fixed bottom-8 right-6 lg:bottom-10 lg:right-10 z-40"
-        >
-          <button 
-            id="floating-cart"
-            onClick={() => setIsCartOpen(true)}
-            className="bg-red-600 text-white rounded-full p-5 lg:p-6 flex items-center shadow-2xl hover:scale-110 active:scale-95 transition-all"
-          >
-            <div className="relative">
-                <ShoppingBag className="w-7 h-7 lg:w-8 lg:h-8" />
-                <span className="absolute -top-2 -right-2 bg-slate-900 text-white text-[10px] font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-50">
-                    {cartCount}
-                </span>
-            </div>
-          </button>
-        </motion.div>
+          {/* Floating Cart Button */}
+          {cartCount > 0 && (
+            <motion.div 
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              className="fixed bottom-8 right-6 lg:bottom-10 lg:right-10 z-40"
+            >
+              <button 
+                id="floating-cart"
+                onClick={() => setIsCartOpen(true)}
+                className="bg-red-600 text-white rounded-full p-5 lg:p-6 flex items-center shadow-2xl hover:scale-110 active:scale-95 transition-all"
+              >
+                <div className="relative">
+                    <ShoppingBag className="w-7 h-7 lg:w-8 lg:h-8" />
+                    <span className="absolute -top-2 -right-2 bg-slate-900 text-white text-[10px] font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-50">
+                        {cartCount}
+                    </span>
+                </div>
+              </button>
+            </motion.div>
+          )}
+        </>
       )}
     </div>
   );
