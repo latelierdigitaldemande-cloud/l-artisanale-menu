@@ -829,7 +829,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 pointer-events-none" />
           </motion.div>
           
-          <div className="relative z-10 text-center px-4 md:px-16 lg:px-24 mb-60 md:mb-0">
+          <div className="relative z-10 text-center px-4 md:px-16 lg:px-24 mb-[28rem] md:mb-0">
             <div>
                 <h2 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-2 tracking-tight">
                     L'Artisanale
@@ -843,7 +843,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
           </div>
 
           {/* Action Blocks integrated for mobile visibility */}
-          <div className="absolute bottom-4 md:-bottom-16 left-0 right-0 z-20 px-4 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
+          <div className="absolute bottom-28 md:-bottom-16 left-0 right-0 z-20 px-4 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                   <button 
                       id="link-order-online"
