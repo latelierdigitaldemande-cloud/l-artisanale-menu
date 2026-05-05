@@ -236,7 +236,7 @@ const CATEGORIES = [
     name: 'Pizzas', 
     subtitle: 'Au Feu de Bois', 
     menu: PIZZA_MENU, 
-    icon: <UtensilsCrossed className="w-4 h-4 md:w-5 md:h-5" />, 
+    icon: <span className="text-sm md:text-lg">🍕</span>, 
     image: 'https://lesoeufs.ca/wp-content/uploads/2024/06/EFC-pizza-with-eggs-1280x720-1.jpg',
     bentoSpan: 'md:col-span-8'
   },
@@ -245,7 +245,7 @@ const CATEGORIES = [
     name: 'Burgers', 
     subtitle: 'Gourmet', 
     menu: BURGER_MENU, 
-    icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-orange-400" />, 
+    icon: <span className="text-sm md:text-lg">🍔</span>, 
     image: 'https://storage.googleapis.com/luma-du-shop-production/original_images/LUMA-rezept-crispy-chicken-burger-007.jpg',
     bentoSpan: 'md:col-span-4'
   },
@@ -254,7 +254,7 @@ const CATEGORIES = [
     name: 'Tacos', 
     subtitle: "Sauce Fromagère Incluse", 
     menu: TACOS_MENU, 
-    icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-sm bg-yellow-400" />, 
+    icon: <span className="text-sm md:text-lg">🌮</span>, 
     image: 'https://www.lactalisfoodservice.fr/app/uploads/2025/05/tacos-montagnard-1.png',
     bentoSpan: 'md:col-span-4'
   },
@@ -263,7 +263,7 @@ const CATEGORIES = [
     name: 'Tex-Mex', 
     subtitle: 'Délices Mix', 
     menu: TEXMEX_MENU, 
-    icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-red-400" />, 
+    icon: <span className="text-sm md:text-lg">🍗</span>, 
     image: 'https://www.afarmgirlsdabbles.com/wp-content/uploads/2023/04/Chicken-Fries-with-Garlic-Aioli-Sauce52387.jpg',
     bentoSpan: 'md:col-span-8'
   },
@@ -272,7 +272,7 @@ const CATEGORIES = [
     name: 'Boissons', 
     subtitle: 'Fraîcheur', 
     menu: DRINKS, 
-    icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-blue-400" />, 
+    icon: <span className="text-sm md:text-lg">🥤</span>, 
     image: 'https://www.pequerecetas.com/wp-content/uploads/2013/04/refrescos-para-ninos.jpg',
     bentoSpan: 'hidden'
   },
@@ -281,7 +281,7 @@ const CATEGORIES = [
     name: 'Desserts', 
     subtitle: 'Douceurs', 
     menu: DESSERT_MENU, 
-    icon: <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-pink-400" />, 
+    icon: <span className="text-sm md:text-lg">🍰</span>, 
     image: 'https://www.macphie.com/app/uploads/2024/09/Tiramisu-Mactop-traditional-1920px-1280x896.jpg',
     bentoSpan: 'hidden'
   },
@@ -904,7 +904,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                           <ShoppingBag className="w-[23px] h-[23px] md:w-[31px] md:h-[31px]" />
                       </div>
                       <div className="text-left">
-                          <span className="block font-black text-[20px] md:text-[26.4px] leading-tight">Commande en ligne</span>
+                          <span className="block font-black text-[20px] md:text-[26.4px] leading-tight">MENU COMPLET</span>
                           <span className="text-[10px] md:text-[11px] uppercase text-slate-400 font-bold tracking-widest block">Service Rapide</span>
                       </div>
                   </button>
@@ -917,7 +917,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                           <MenuIcon className="w-[23px] h-[23px] md:w-[31px] md:h-[31px]" />
                       </div>
                       <div className="text-left">
-                          <span className="block font-black text-[20px] md:text-[26.4px] leading-tight">Notre carte</span>
+                          <span className="block font-black text-[20px] md:text-[26.4px] leading-tight">COMMANDE EN LIGNE</span>
                           <span className="text-[10px] md:text-[11px] uppercase text-slate-400 font-bold tracking-widest block">Découvrez nos plats</span>
                       </div>
                   </button>
@@ -932,7 +932,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                           <MapPin className="w-[23px] h-[23px] md:w-[31px] md:h-[31px]" />
                       </div>
                       <div className="text-left">
-                          <span className="block font-black text-[20px] md:text-[26.4px] leading-tight">Nous trouver</span>
+                          <span className="block font-black text-[20px] md:text-[26.4px] leading-tight">NOUS TROUVER (DRARIA)</span>
                           <span className="text-[10px] md:text-[11px] uppercase text-slate-400 font-bold tracking-widest block">Draria, Alger</span>
                       </div>
                   </a>
@@ -2247,14 +2247,30 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="flex flex-col divide-y divide-slate-100"
           >
-            {filteredItems.map((item, idx) => (
-              <MenuListItem 
-                key={`${activeCategory}-${item.name}-${idx}`} 
-                item={item} 
-                category={activeCategory === 'all' ? item.categoryId : activeCategory} 
-                onAddToCart={(v, p) => onAddToCart(item, activeCategory === 'all' ? item.categoryId : activeCategory, v, p)} 
-              />
-            ))}
+            {filteredItems.map((item, idx) => {
+              const showHeader = activeCategory === 'all' && (idx === 0 || filteredItems[idx - 1].categoryId !== item.categoryId);
+              const categoryData = CATEGORIES.find(c => c.id === item.categoryId);
+              
+              return (
+                <div key={`${activeCategory}-${item.name}-${idx}`}>
+                  {showHeader && (
+                    <div className="pt-10 pb-4 mb-2 border-b-2 border-red-600/10 flex items-center gap-3 first:pt-4">
+                      <div className="bg-red-50 p-2 rounded-xl text-red-600">
+                         {categoryData?.icon || <LayoutGrid className="w-4 h-4" />}
+                      </div>
+                      <h3 className="text-xl md:text-2xl font-serif font-bold text-slate-900 capitalize">
+                        {categoryData?.name || item.categoryId}
+                      </h3>
+                    </div>
+                  )}
+                  <MenuListItem 
+                    item={item} 
+                    category={activeCategory === 'all' ? item.categoryId : activeCategory} 
+                    onAddToCart={(v, p) => onAddToCart(item, activeCategory === 'all' ? item.categoryId : activeCategory, v, p)} 
+                  />
+                </div>
+              );
+            })}
             
             {/* Mini Footer */}
             <div className="mt-12 -mx-4 md:-mx-8 lg:-mx-12 -mb-10 py-14 px-10 bg-slate-900 flex flex-col items-center gap-3">
