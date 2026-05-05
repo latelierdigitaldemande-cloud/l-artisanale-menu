@@ -420,37 +420,52 @@ const Accordion = ({ title, children }: { title: string, children: ReactNode }) 
   );
 };
 
-const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, onCallClick, title }: { 
+const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, onCallClick, title, useImageLogo }: { 
     onMenuClick?: () => void, 
     onBack?: () => void, 
     onLogoClick?: () => void,
     onOrderClick?: () => void,
     onCallClick?: () => void,
-    title?: string 
+    title?: string,
+    useImageLogo?: boolean
 }) => (
-  <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 md:px-12 lg:px-24 py-3">
-    <div className="max-w-7xl mx-auto w-full flex items-center justify-between relative">
-        {onBack ? (
-        <button onClick={onBack} id="header-back" className="p-2 -ml-2 rounded-full hover:bg-slate-100">
-            <ArrowLeft className="w-5 h-5 text-slate-800" />
+  <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 py-5 md:py-3">
+    <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 flex items-center justify-between relative">
+        <button onClick={onLogoClick} className="flex items-center gap-2.5 md:gap-2 hover:opacity-80 transition-opacity">
+            {useImageLogo ? (
+                <img 
+                    src="https://scontent.falg7-6.fna.fbcdn.net/v/t39.30808-6/298339068_379924957653168_8646108471508860568_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=EwO7uVSm4CwQ7kNvwFCdIlg&_nc_oc=AdoFYx3L6RqcvVlxaLIILY8TDP-hWAw5rL-YhnuEoVEDRbtv7jPoCzqNyC5pYixYoHI&_nc_zt=23&_nc_ht=scontent.falg7-6.fna&_nc_gid=5Ir_kphaLNa1qX73hPu7mg&_nc_ss=7b289&oh=00_Af4A-933NTSqmoYI4qic2lXzxKKAlxoMxCOyqmvK1XtZ0Q&oe=69FF6900" 
+                    alt="L'Artisanale Logo" 
+                    className="w-12 h-12 md:w-10 md:h-10 object-cover rounded shadow-sm border border-slate-100"
+                    referrerPolicy="no-referrer"
+                />
+            ) : (
+                <>
+                    <UtensilsCrossed className="w-8 h-8 md:w-5 md:h-5 text-red-600" />
+                    <span className="font-bold text-xl md:text-lg tracking-tight">L'Artisanale</span>
+                </>
+            )}
         </button>
-        ) : (
-        <button onClick={onLogoClick} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <UtensilsCrossed className="w-5 h-5 text-red-600" />
-            <span className="font-bold text-base md:text-lg tracking-tight">L'Artisanale</span>
-        </button>
-        )}
         
         <div className="absolute left-1/2 -translate-x-1/2">
         {title && <h1 className="font-bold text-slate-900 text-lg md:text-xl whitespace-nowrap">{title}</h1>}
         </div>
  
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 md:gap-4">
+            {onBack && (
+                <button 
+                    onClick={onBack} 
+                    className="flex items-center gap-1.5 px-3 py-2 md:px-4 md:py-2 rounded-full bg-slate-50 text-slate-700 hover:bg-red-50 hover:text-red-600 transition-all text-sm font-bold border border-slate-100"
+                >
+                    <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
+                    <span className="hidden sm:inline">Retour</span>
+                </button>
+            )}
             <div className="hidden md:flex items-center gap-6">
                 {onOrderClick && (
                   <button 
                     onClick={onOrderClick}
-                    className="bg-red-600 text-white px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-900 transition-all shadow-lg shadow-red-900/10"
+                    className="bg-red-600 text-white px-8 py-3.5 rounded-full text-sm font-bold hover:bg-slate-900 transition-all shadow-lg shadow-red-900/10"
                   >
                     Commander en ligne
                   </button>
@@ -484,9 +499,9 @@ const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, onCallClick, t
             <button 
                 onClick={() => onMenuClick()} 
                 id="header-menu" 
-                className="md:hidden p-2 -mr-2 rounded-full hover:bg-slate-100"
+                className="md:hidden p-1 -mr-2 rounded-full hover:bg-slate-100"
             >
-                <MenuIcon className="w-5 h-5 text-slate-800" />
+                <MenuIcon className="w-8 h-8 text-slate-800" />
             </button>
             )}
         </div>
@@ -792,6 +807,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
         onMenuClick={onMenuClick} 
         onOrderClick={() => onNavigate('full_menu')} 
         onLogoClick={() => onNavigate('home')} 
+        useImageLogo={true}
       />
       
       <main className="flex-1 w-full flex flex-col items-center">
@@ -819,11 +835,9 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     L'Artisanale
                 </h2>
                 <div className="flex items-center justify-center gap-3 text-white/90">
-                    <div className="h-px w-8 md:w-10 bg-red-600" />
                     <p className="font-black tracking-[0.3em] uppercase text-[10px] md:text-sm">
-                        Le Goût Authentique
+                        Le Goût Authentique livré chez vous
                     </p>
-                    <div className="h-px w-8 md:w-10 bg-red-600" />
                 </div>
             </div>
           </div>
@@ -837,10 +851,10 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 <button 
                     id="link-order-online"
                     onClick={() => onNavigate('full_menu')}
-                    className="w-full bg-red-600 text-white p-6 md:p-7 rounded-2xl md:rounded-3xl flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98] relative"
+                    className="w-full bg-red-600 text-white p-5 md:p-6 rounded-2xl md:rounded-3xl flex items-center justify-between group hover:bg-slate-900 transition-all shadow-xl active:scale-[0.98] relative"
                 >
                     <div className="flex items-center gap-4 text-left">
-                        <div className="bg-white/10 p-3 md:p-4 rounded-xl">
+                        <div className="bg-white/10 p-2.5 md:p-3.5 rounded-xl">
                             <ShoppingBag className="w-6 h-6 md:w-7 md:h-7" />
                         </div>
                         <div>
@@ -859,9 +873,9 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
 
                 <button 
                     onClick={() => onNavigate('full_menu')}
-                    className="bg-white border border-slate-100 p-6 md:p-7 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                    className="bg-white border border-slate-100 p-5 md:p-6 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                 >
-                    <div className="bg-red-50 p-3 md:p-4 rounded-xl text-red-600">
+                    <div className="bg-red-50 p-2.5 md:p-3.5 rounded-xl text-red-600">
                         <MenuIcon className="w-6 h-6 md:w-7 md:h-7" />
                     </div>
                     <div className="text-left">
@@ -874,9 +888,9 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                     href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
                     target="_blank" 
                     rel="noreferrer"
-                    className="bg-white border border-slate-100 p-6 md:p-7 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
+                    className="bg-white border border-slate-100 p-5 md:p-6 rounded-2xl md:rounded-3xl flex items-center gap-4 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
                 >
-                    <div className="bg-red-50 p-3 md:p-4 rounded-xl text-red-600">
+                    <div className="bg-red-50 p-2.5 md:p-3.5 rounded-xl text-red-600">
                         <MapPin className="w-6 h-6 md:w-7 md:h-7" />
                     </div>
                     <div className="text-left">
@@ -986,7 +1000,7 @@ const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, 
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
                         <div className="flex flex-col text-left">
                             <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Valeurs</span>
-                            <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Notre Engagement</h3>
+                            <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Nos Engagements</h3>
                         </div>
                     </div>
                     <div 
@@ -2038,7 +2052,7 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Header onBack={onBack} onLogoClick={onLogoClick} onCallClick={() => window.location.href = 'tel:0782777560'} title="La Carte" />
+      <Header onLogoClick={onLogoClick} onCallClick={() => window.location.href = 'tel:0782777560'} />
       
       <div className="flex-1 max-w-7xl mx-auto w-full flex flex-col md:flex-row bg-white">
         {/* Desktop Sidebar */}
