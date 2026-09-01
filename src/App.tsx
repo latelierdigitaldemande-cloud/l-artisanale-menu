@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, useMemo, ReactNode, FormEvent, Fragment } from 'react';
+import { useState, useEffect, useMemo, useRef, ReactNode, FormEvent, Fragment } from 'react';
 import { 
   Instagram, 
   Facebook,
@@ -156,22 +156,22 @@ const ReviewCard = ({ name, initials, rating, date, text, tags }: {
 // --- Data ---
 const PIZZA_MENU: MenuItem[] = [
   // Base Tomate
-  { name: 'Marguerita', price: { standard: 450, large: 800 }, description: 'Sauce tomate, fromage, mozzarella, basilic frais, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: 'Thon', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, thon, oignons, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: 'Poulet', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poulet mariné, poivrons, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: 'Viande Hachée', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, viande hachée fraîche, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: 'Vegie', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poivrons, oignons, tomate, aubergines, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: 'Oriental', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, merguez, poivrons grillés, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: 'BBQ', price: { standard: 700, large: 1300 }, description: 'Sauce tomate, fromage, viande hachée, oeuf, poivrons, olives, sauce BBQ.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: '3 Fromages', price: { standard: 750, large: 1400 }, description: 'Sauce tomate, mozzarella, gruyère, boursin, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: "L'Artisanale", price: { standard: 900, large: 1700 }, description: 'Sauce tomate ou crème, viande hachée, poulet fumé, boursin, olives.', base: 'tomato', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'Marguerita', price: { standard: 450, large: 800 }, description: 'Sauce tomate, fromage, mozzarella, basilic frais, olives.', base: 'tomato', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: 'Thon', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, thon, oignons, olives.', base: 'tomato', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: 'Poulet', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poulet mariné, poivrons, olives.', base: 'tomato', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: 'Viande Hachée', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, viande hachée fraîche, olives.', base: 'tomato', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: 'Vegie', price: { standard: 600, large: 1100 }, description: 'Sauce tomate, fromage, poivrons, oignons, tomate, aubergines, olives.', base: 'tomato', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: 'Oriental', price: { standard: 650, large: 1200 }, description: 'Sauce tomate, fromage, merguez, poivrons grillés, olives.', base: 'tomato', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: 'BBQ', price: { standard: 700, large: 1300 }, description: 'Sauce tomate, fromage, viande hachée, oeuf, poivrons, olives, sauce BBQ.', base: 'tomato', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: '3 Fromages', price: { standard: 750, large: 1400 }, description: 'Sauce tomate, mozzarella, gruyère, boursin, olives.', base: 'tomato', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: "L'Artisanale", price: { standard: 900, large: 1700 }, description: 'Sauce tomate ou crème, viande hachée, poulet fumé, boursin, olives.', base: 'tomato', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
   // Base Crème
-  { name: 'Forestière', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, oignons, champignons, olives.', base: 'cream', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: 'Tartiflette', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, champignons, pomme de terre, olives.', base: 'cream', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: 'Boisée', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, poivrons, sauce fromagère.', base: 'cream', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: 'Boursin', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, boursin, olives.', base: 'cream', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: 'Raclette', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, raclette, pomme de terre, olives.', base: 'cream', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
-  { name: 'Saumon', price: { standard: 1100, large: 2100 }, description: 'Crème fraîche, fromage, saumon fumé de qualité, oignons, boursin.', base: 'cream', image: 'https://res.cloudinary.com/dopnnowvl/image/upload/f_auto,q_auto/Image_36_m05xbs' },
+  { name: 'Forestière', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, oignons, champignons, olives.', base: 'cream', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: 'Tartiflette', price: { standard: 750, large: 1400 }, description: 'Crème fraîche, fromage, poulet fumé, champignons, pomme de terre, olives.', base: 'cream', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: 'Boisée', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, poivrons, sauce fromagère.', base: 'cream', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: 'Boursin', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, boursin, olives.', base: 'cream', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: 'Raclette', price: { standard: 850, large: 1600 }, description: 'Crème fraîche, fromage, poulet, raclette, pomme de terre, olives.', base: 'cream', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
+  { name: 'Saumon', price: { standard: 1100, large: 2100 }, description: 'Crème fraîche, fromage, saumon fumé de qualité, oignons, boursin.', base: 'cream', image: 'https://i.ibb.co/39SCP8Ff/Margerita.webp' },
 ];
 
 const BURGER_MENU: MenuItem[] = [
@@ -427,7 +427,7 @@ const MenuListItem = ({ item, category, onAddToCart }: MenuListItemProps) => {
           className="w-full h-8 sm:h-9 px-3 flex items-center justify-center bg-slate-900 text-white rounded-full shadow-xs hover:bg-red-600 active:scale-[0.98] transition-all cursor-pointer"
           aria-label={`Ajouter au panier - ${startingPrice} DA`}
         >
-          <span className="text-xs sm:text-[13px] font-semibold tracking-tight text-white">
+          <span className="text-[11px] sm:text-xs font-semibold tracking-tight text-white">
             {startingPrice} DA
           </span>
         </button>
@@ -666,80 +666,6 @@ const PriceDisplay = ({ item, onAddToCart }: { item: MenuItem, onAddToCart: (var
   );
 };
 
-const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }) => (
-  <footer className="w-full mt-auto bg-slate-900 text-white relative overflow-hidden text-center">
-    <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/5 blur-[100px] rounded-full" />
-    <div className="absolute bottom-0 left-0 w-64 h-64 bg-red-600/5 blur-[100px] rounded-full" />
-    
-    <div className="max-w-md mx-auto px-4 py-12 relative z-10 flex flex-col items-center justify-center space-y-8">
-      {/* Brand */}
-      <div className="flex flex-col items-center gap-3">
-        <div className="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center shadow-lg shadow-red-900/50">
-          <UtensilsCrossed className="w-6 h-6 text-white" />
-        </div>
-        <h4 className="font-semibold text-xl tracking-tight text-white">L'Artisanale</h4>
-      </div>
-
-      {/* Social Icons */}
-      <div className="flex items-center justify-center gap-3">
-        {[
-          { icon: Instagram, href: "https://www.instagram.com/lartisanale_draria/" },
-          { icon: Music, href: "https://tiktok.com" },
-          { icon: Facebook, href: "https://www.facebook.com/lartisanaledraria/?locale=fr_FR" }
-        ].map((social, i) => (
-          <a 
-            key={i} 
-            href={social.href} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="w-9 h-9 bg-white/5 rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-red-600 transition-all border border-white/5"
-          >
-            <social.icon className="w-4 h-4" />
-          </a>
-        ))}
-      </div>
-
-      {/* Contact Info */}
-      <div className="flex flex-col items-center justify-center gap-5 pt-2">
-        <a 
-          href="tel:0782777560" 
-          className="flex items-center gap-3 group text-left"
-        >
-          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-red-500 group-hover:bg-red-600 group-hover:text-white transition-all">
-            <Phone className="w-4 h-4" />
-          </div>
-          <div>
-            <p className="text-[10px] font-black uppercase text-slate-500 mb-0.5 tracking-widest">Par Téléphone</p>
-            <p className="text-sm font-bold text-white group-hover:text-red-500 transition-colors">0782 77 75 60</p>
-          </div>
-        </a>
-
-        <a 
-          href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="flex items-center gap-3 group text-left"
-        >
-          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-red-500 group-hover:bg-red-600 group-hover:text-white transition-all">
-            <MapPin className="w-4 h-4" />
-          </div>
-          <div>
-            <p className="text-[10px] font-black uppercase text-slate-500 mb-0.5 tracking-widest">Localisation</p>
-            <p className="text-sm font-bold text-white group-hover:text-red-500 transition-colors">Draria, Centre</p>
-          </div>
-        </a>
-      </div>
-
-      {/* Bottom copyright */}
-      <div className="w-full pt-6 border-t border-white/5 flex justify-center items-center">
-        <p className="text-[9px] text-slate-500 font-black uppercase tracking-[0.3em]">
-          L'ARTISANALE DRARIA - 2026
-        </p>
-      </div>
-    </div>
-  </footer>
-);
-
 const HomePage = ({ 
   onNavigate, 
   onMenuClick, 
@@ -760,6 +686,9 @@ const HomePage = ({
   const [deliveryMode, setDeliveryMode] = useState<'delivery' | 'takeaway'>('delivery');
   const [shareCopied, setShareCopied] = useState(false);
 
+  const isManualScrollingRef = useRef(false);
+  const scrollTimeoutRef = useRef<any>(null);
+
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -774,41 +703,90 @@ const HomePage = ({
     }
   };
 
+  const MENU_SECTIONS = useMemo(() => [
+    { id: 'pizza', name: 'Pizzas', subtitle: 'Au Feu de Bois', icon: <span className="text-base">🍕</span>, items: PIZZA_MENU },
+    { id: 'burger', name: 'Burgers', subtitle: 'Gourmet', icon: <span className="text-base">🍔</span>, items: BURGER_MENU },
+    { id: 'tacos', name: 'Tacos', subtitle: 'Sauce Fromagère Incluse', icon: <span className="text-base">🌮</span>, items: TACOS_MENU },
+    { id: 'texmex', name: 'Tex-Mex', subtitle: 'Délices Mix', icon: <span className="text-base">🍗</span>, items: TEXMEX_MENU },
+    { id: 'drinks', name: 'Boissons', subtitle: 'Fraîcheur', icon: <span className="text-base">🥤</span>, items: DRINKS },
+    { id: 'desserts', name: 'Desserts', subtitle: 'Douceurs', icon: <span className="text-base">🍰</span>, items: DESSERT_MENU },
+  ], []);
+
+  const TAB_ITEMS = useMemo(() => [
+    { id: 'all', label: 'Tout' },
+    { id: 'pizza', label: 'Pizzas' },
+    { id: 'burger', label: 'Burgers' },
+    { id: 'tacos', label: 'Tacos' },
+    { id: 'texmex', label: 'Tex-Mex' },
+    { id: 'drinks', label: 'Boissons' },
+    { id: 'desserts', label: 'Desserts' },
+  ], []);
+
+  const handleCategoryClick = (catId: string) => {
+    setActiveCategory(catId);
+    isManualScrollingRef.current = true;
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+
+    if (catId === 'all') {
+      const el = document.getElementById('menu-section');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      const el = document.getElementById(`section-${catId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    scrollTimeoutRef.current = setTimeout(() => {
+      isManualScrollingRef.current = false;
+    }, 850);
+  };
+
   const scrollToMenu = (catId?: string) => {
     if (catId) {
-      setActiveCategory(catId);
-    }
-    const el = document.getElementById('menu-section');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      handleCategoryClick(catId);
+    } else {
+      handleCategoryClick('all');
     }
   };
 
-  const activeCategoryData = useMemo(() => CATEGORIES.find(c => c.id === activeCategory), [activeCategory]);
-
-  const filteredPizzaMenu = useMemo(() => {
-    return PIZZA_MENU;
-  }, []);
-
-  const filteredItems = useMemo(() => {
-    if (activeCategory === 'all') {
-      const allItems: any[] = [];
-      const seen = new Set();
+  // Scroll-spy: Sync active category tab when scrolling naturally
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isManualScrollingRef.current) return;
       
-      CATEGORIES.forEach(cat => {
-        const items = cat.id === 'pizza' ? PIZZA_MENU : cat.menu || [];
-        items.forEach(item => {
-          const key = `${cat.id}-${item.name}`;
-          if (!seen.has(key)) {
-            allItems.push({ ...item, categoryId: cat.id });
-            seen.add(key);
-          }
-        });
-      });
-      return allItems;
+      const sections = MENU_SECTIONS.map(s => document.getElementById(`section-${s.id}`)).filter(Boolean) as HTMLElement[];
+      const scrollPosition = window.scrollY + 160;
+
+      const menuSection = document.getElementById('menu-section');
+      if (menuSection && window.scrollY < (menuSection.offsetTop - 80)) {
+        setActiveCategory('all');
+        return;
+      }
+
+      let currentCat = 'all';
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i];
+        if (section && section.offsetTop <= scrollPosition) {
+          currentCat = section.id.replace('section-', '');
+        }
+      }
+      setActiveCategory(currentCat);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [MENU_SECTIONS, setActiveCategory]);
+
+  // Keep active tab centered in horizontal tabs bar
+  useEffect(() => {
+    const tabBtn = document.getElementById(`tab-${activeCategory}`);
+    if (tabBtn) {
+      tabBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
-    return activeCategory === 'pizza' ? filteredPizzaMenu : activeCategoryData?.menu || [];
-  }, [activeCategory, filteredPizzaMenu, activeCategoryData]);
+  }, [activeCategory]);
   
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -964,27 +942,25 @@ const HomePage = ({
           </div>
         </section>
 
-        {/* --- Direct Real Menu Integration --- */}
-        <section id="menu-section" className="w-full max-w-md mx-auto px-4 pt-2 pb-20 scroll-mt-16">
-          {/* Category Filter Tabs Bar (App Style) */}
-          <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md pt-2 pb-0 mb-5 border-b border-slate-200 -mx-4 px-4">
+        {/* --- Native App Continuous Menu Integration --- */}
+        <section id="menu-section" className="w-full max-w-md mx-auto px-4 pt-2 pb-24 scroll-mt-16">
+          {/* Category Filter Tabs Bar (Sticky Native App Style) */}
+          <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md pt-2 pb-0 mb-5 border-b border-slate-200 -mx-4 px-4 shadow-xs">
             <div className="max-w-md mx-auto flex overflow-x-auto no-scrollbar gap-6 justify-start items-center">
-              {CATEGORIES.map((cat) => {
+              {TAB_ITEMS.map((cat) => {
                 const isSelected = activeCategory === cat.id;
-                const label = cat.id === 'all' ? 'Tout' : (cat.id === 'texmex' ? 'Tex-Mex' : cat.name);
                 return (
                   <button 
                     key={cat.id}
-                    onClick={() => {
-                      setActiveCategory(cat.id);
-                    }}
+                    id={`tab-${cat.id}`}
+                    onClick={() => handleCategoryClick(cat.id)}
                     className={`relative pb-3 text-sm transition-colors whitespace-nowrap cursor-pointer shrink-0
                       ${isSelected 
                         ? 'text-slate-900 font-semibold' 
                         : 'text-slate-400 hover:text-slate-600 font-normal'}
                     `}
                   >
-                    <span>{label}</span>
+                    <span>{cat.label}</span>
                     {isSelected && (
                       <motion.div 
                         layoutId="activeCategoryTabIndicator"
@@ -998,57 +974,44 @@ const HomePage = ({
             </div>
           </div>
 
-          {/* Menu Items Grid - 2x2 Column Mobile */}
-          <motion.div 
-            key={activeCategory}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.2 }}
-            className="grid grid-cols-2 gap-2.5 sm:gap-3"
-          >
-            {filteredItems.map((item, idx) => {
-              const showHeader = activeCategory === 'all' && (idx === 0 || filteredItems[idx - 1].categoryId !== item.categoryId);
-              const categoryData = CATEGORIES.find(c => c.id === item.categoryId);
-              const effectiveCat = activeCategory === 'all' ? item.categoryId : activeCategory;
-
-              return (
-                <Fragment key={`${activeCategory}-${item.name}-${idx}`}>
-                  {showHeader && (
-                    <div className="col-span-2 pt-6 pb-3 mb-1 border-b border-slate-100 flex items-center gap-2.5 first:pt-0">
-                      <div className="bg-red-50 p-2 rounded-xl text-red-600 shadow-xs">
-                         {categoryData?.icon || <LayoutGrid className="w-4 h-4" />}
-                      </div>
-                      <div>
-                        <h3 className="text-sm sm:text-base font-semibold text-slate-800 capitalize tracking-tight">
-                          {categoryData?.name || item.categoryId}
-                        </h3>
-                        <p className="text-[10px] font-normal text-slate-400 uppercase tracking-wider">{categoryData?.subtitle}</p>
-                      </div>
-                    </div>
-                  )}
-                  <div className="w-full h-full flex">
-                    <MenuListItem 
-                      item={item} 
-                      category={effectiveCat} 
-                      onAddToCart={(v, p) => onAddToCart(item, effectiveCat, v, p)} 
-                    />
+          {/* Continuous Category Sections */}
+          <div className="space-y-8">
+            {MENU_SECTIONS.map((section) => (
+              <div 
+                key={section.id} 
+                id={`section-${section.id}`} 
+                className="scroll-mt-14 pt-2"
+              >
+                {/* Section Header */}
+                <div className="pb-2.5 mb-3 border-b border-slate-100 flex items-center gap-2.5">
+                  <div className="bg-red-50 w-8 h-8 rounded-xl text-red-600 shadow-xs flex items-center justify-center shrink-0">
+                    {section.icon}
                   </div>
-                </Fragment>
-              );
-            })}
+                  <div>
+                    <h3 className="text-sm sm:text-base font-semibold text-slate-800 capitalize tracking-tight">
+                      {section.name}
+                    </h3>
+                    <p className="text-[10px] font-normal text-slate-400 uppercase tracking-wider">{section.subtitle}</p>
+                  </div>
+                </div>
 
-            {filteredItems.length === 0 && (
-              <div className="col-span-2 py-12 text-center bg-slate-50 rounded-2xl border border-slate-100">
-                <p className="text-slate-500 font-bold text-sm">Aucun produit trouvé dans cette catégorie.</p>
+                {/* 2-Column Product Cards Grid */}
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+                  {section.items.map((item, idx) => (
+                    <MenuListItem 
+                      key={`${section.id}-${item.name}-${idx}`} 
+                      item={item} 
+                      category={section.id} 
+                      onAddToCart={(v, p) => onAddToCart(item, section.id, v, p)} 
+                    />
+                  ))}
+                </div>
               </div>
-            )}
-          </motion.div>
+            ))}
+          </div>
         </section>
 
       </main>
-
-      <Footer onNavigate={onNavigate} />
     </div>
   );
 };
@@ -2076,16 +2039,6 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                 </div>
               );
             })}
-            
-            {/* Mini Footer */}
-            <div className="mt-12 -mx-4 md:-mx-8 lg:-mx-12 -mb-10 py-14 px-10 bg-slate-900 flex flex-col items-center gap-3">
-              <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-white border border-white/10">
-                <UtensilsCrossed className="w-5 h-5" />
-              </div>
-              <span className="font-semibold text-lg tracking-tight text-white">L'Artisanale</span>
-              <div className="w-7 h-1 bg-red-600 rounded-full mt-1" />
-              <p className="text-[9px] text-slate-500 font-medium uppercase tracking-wider">2026 l'artisanale draria</p>
-            </div>
 
             {filteredItems.length === 0 && (
               <div className="py-20 text-center">
