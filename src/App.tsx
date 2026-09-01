@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, useMemo, ReactNode, FormEvent } from 'react';
+import { useState, useEffect, useMemo, ReactNode, FormEvent, Fragment } from 'react';
 import { 
   Instagram, 
   Facebook,
@@ -18,6 +18,7 @@ import {
   ArrowLeft,
   UtensilsCrossed,
   ShoppingBag,
+  ArrowRight,
   Search,
   Plus,
   Minus,
@@ -27,7 +28,16 @@ import {
   Home,
   Navigation,
   Star,
-  LayoutGrid
+  LayoutGrid,
+  Quote,
+  Heart,
+  Share2,
+  Bike,
+  Footprints,
+  Percent,
+  Crown,
+  Sparkles,
+  Check
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
@@ -301,6 +311,33 @@ const GALLERY_IMAGES = [
   { url: 'https://www.pequerecetas.com/wp-content/uploads/2013/04/refrescos-para-ninos.jpg', title: 'Boissons Fraîches' },
 ];
 
+const REVIEWS = [
+  {
+    name: "Sami B.",
+    text: "La meilleure pizza au feu de bois de Draria. Pâte fine et croustillante, ingrédients frais. Un vrai régal !",
+    initials: "SB",
+    rating: 5,
+    date: "Il y a 2 jours",
+    tags: ["Pizza", "Authentique"]
+  },
+  {
+    name: "Lina M.",
+    text: "Le burger smash est incroyable ! Le service est rapide et l'équipe est aux petits soins.",
+    initials: "LM",
+    rating: 5,
+    date: "Il y a 1 semaine",
+    tags: ["Burger", "Service"]
+  },
+  {
+    name: "Karim T.",
+    text: "Tacos bien garnis et sauce fromagère maison délicieuse. Je recommande vivement !",
+    initials: "KT",
+    rating: 4,
+    date: "Il y a 2 semaines",
+    tags: ["Tacos", "Généreux"]
+  }
+];
+
 // --- Helper Functions ---
 const getAlgerTime = () => {
   const now = new Date();
@@ -357,54 +394,60 @@ const MenuListItem = ({ item, category, onAddToCart }: MenuListItemProps) => {
   return (
     <motion.div 
       variants={itemVariants}
-      className="group bg-white rounded-2xl border border-slate-100 p-3 md:p-4 hover:shadow-xl hover:border-red-100 transition-all flex gap-4 md:gap-6 items-center"
+      className="group bg-white rounded-2xl border border-slate-100 p-2.5 sm:p-3 hover:shadow-md hover:border-red-100 transition-all flex flex-col justify-between h-full relative cursor-pointer w-full"
+      onClick={() => onAddToCart()}
     >
-      {/* Product Image - Left Side Square */}
-      <div className="relative w-24 h-24 md:w-28 md:h-28 flex-shrink-0 overflow-hidden rounded-xl bg-slate-50 border border-slate-100">
-        <img 
-          src={item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=200'} 
-          alt={item.name}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
-      </div>
-      
-      {/* Content */}
-      <div className="flex-grow min-w-0">
-        <div className="flex justify-between items-start gap-2 mb-1">
-          <h4 className="font-serif text-lg md:text-xl font-bold text-slate-900 leading-tight truncate group-hover:text-red-600 transition-colors">
-            {item.name}
-          </h4>
-          <span className="text-sm md:text-base font-black text-slate-900 tabular-nums whitespace-nowrap bg-red-50 text-red-600 px-2 py-1 rounded-lg">
-            {startingPrice} <span className="text-[10px] uppercase opacity-70">DA</span>
+      <div>
+        {/* Product Image - Aspect Square on Top */}
+        <div className="relative w-full aspect-square overflow-hidden rounded-xl bg-slate-50 border border-slate-100/80 mb-2">
+          <img 
+            src={item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=300'} 
+            alt={item.name}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
+          
+          <span className="absolute top-2 left-2 bg-white/95 backdrop-blur-xs text-slate-700 text-[8px] font-medium uppercase px-1.5 py-0.5 rounded-md shadow-xs">
+            {category === 'pizza' ? 'Feu de bois' : category}
           </span>
         </div>
         
-        {item.description && (
-          <p className="text-slate-500 text-[11px] md:text-[13px] font-medium leading-relaxed line-clamp-2 mb-3">
-            {item.description}
-          </p>
-        )}
-
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5 min-w-0">
-             <span className="text-[9px] font-black uppercase text-slate-400 tracking-wider truncate">
-              {category === 'pizza' ? 'Au Feu de Bois' : category}
-            </span>
-          </div>
+        {/* Content */}
+        <div>
+          <h4 className="text-xs sm:text-sm font-semibold text-slate-800 leading-snug line-clamp-1 group-hover:text-red-600 transition-colors">
+            {item.name}
+          </h4>
           
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              onAddToCart();
-            }}
-            className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center bg-slate-900 text-white rounded-xl shadow-md hover:bg-red-600 hover:-translate-y-0.5 transition-all active:scale-95 flex-shrink-0"
-            aria-label="Ajouter au panier"
-          >
-            <Plus className="w-5 h-5 md:w-6 md:h-6" />
-          </button>
+          {item.description && (
+            <p className="text-slate-400 text-[10px] font-normal leading-tight line-clamp-2 mt-1">
+              {item.description}
+            </p>
+          )}
         </div>
+      </div>
+
+      {/* Bottom price and add button */}
+      <div className="flex items-center justify-between mt-3 pt-2 border-t border-slate-100/80">
+        <div className="flex flex-col leading-tight">
+          {typeof price !== 'number' && (
+            <span className="text-[7px] text-slate-400 font-medium uppercase tracking-wider">Dès</span>
+          )}
+          <span className="text-xs font-semibold text-slate-900 tabular-nums">
+            {startingPrice} <span className="text-[9px] font-normal text-slate-500 uppercase">DA</span>
+          </span>
+        </div>
+        
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            onAddToCart();
+          }}
+          className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-slate-900 text-white rounded-xl shadow-xs hover:bg-red-600 active:scale-90 transition-all flex-shrink-0 cursor-pointer"
+          aria-label="Ajouter au panier"
+        >
+          <Plus className="w-4 h-4" />
+        </button>
       </div>
     </motion.div>
   );
@@ -450,83 +493,56 @@ const Header = ({ onMenuClick, onBack, onLogoClick, onOrderClick, onCallClick, t
     useImageLogo?: boolean,
     isSmallLogo?: boolean
 }) => (
-  <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100 h-16 md:h-20 flex items-center">
-    <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 flex items-center justify-between relative">
-        <button onClick={onLogoClick} className="flex items-center gap-2.5 md:gap-2 hover:opacity-80 transition-opacity">
+  <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100 h-16 flex items-center">
+    <div className="w-full max-w-md mx-auto px-4 flex items-center justify-between relative">
+        <button onClick={onLogoClick} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             {useImageLogo ? (
                 <img 
                     src="https://scontent.falg7-6.fna.fbcdn.net/v/t39.30808-6/298339068_379924957653168_8646108471508860568_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=EwO7uVSm4CwQ7kNvwFCdIlg&_nc_oc=AdoFYx3L6RqcvVlxaLIILY8TDP-hWAw5rL-YhnuEoVEDRbtv7jPoCzqNyC5pYixYoHI&_nc_zt=23&_nc_ht=scontent.falg7-6.fna&_nc_gid=5Ir_kphaLNa1qX73hPu7mg&_nc_ss=7b289&oh=00_Af4A-933NTSqmoYI4qic2lXzxKKAlxoMxCOyqmvK1XtZ0Q&oe=69FF6900" 
                     alt="L'Artisanale Logo" 
-                    className={`${isSmallLogo ? 'w-[45px] h-[45px] md:w-[43px] md:h-[43px]' : 'w-[53px] h-[53px] md:w-[51px] md:h-[51px]'} object-cover rounded shadow-sm border border-slate-100`}
+                    className="w-11 h-11 object-cover rounded-xl shadow-sm border border-slate-100"
                     referrerPolicy="no-referrer"
                 />
             ) : (
                 <>
-                    <UtensilsCrossed className={`${isSmallLogo ? 'w-[30px] h-[30px] md:w-[22px] md:h-[22px]' : 'w-[35px] h-[35px] md:w-[25px] md:h-[25px]'} text-red-600`} />
-                    <span className={`font-bold tracking-tight ${isSmallLogo ? 'text-lg md:text-[18.5px]' : 'text-xl md:text-[21px]'}`}>L'Artisanale</span>
+                    <UtensilsCrossed className="w-6 h-6 text-red-600" />
+                    <span className="font-bold tracking-tight text-lg">L'Artisanale</span>
                 </>
             )}
         </button>
         
         <div className="absolute left-1/2 -translate-x-1/2">
-        {title && <h1 className="font-bold text-slate-900 text-lg md:text-xl whitespace-nowrap">{title}</h1>}
+          {title && <h1 className="font-bold text-slate-900 text-base whitespace-nowrap">{title}</h1>}
         </div>
  
-        <div className="flex items-center gap-3 md:gap-4">
+        <div className="flex items-center gap-2">
             {onBack && (
                 <button 
                     onClick={onBack} 
-                    className="flex items-center gap-1.5 px-3 py-2 md:px-4 md:py-2 rounded-full bg-slate-50 text-slate-700 hover:bg-red-50 hover:text-red-600 transition-all text-sm font-bold border border-slate-100"
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-slate-50 text-slate-700 hover:bg-red-50 hover:text-red-600 transition-all text-xs font-bold border border-slate-100"
                 >
-                    <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
-                    <span className="hidden sm:inline">Retour</span>
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>Retour</span>
                 </button>
             )}
-            <div className="hidden md:flex items-center gap-6">
-                {onOrderClick && (
-                  <button 
-                    onClick={onOrderClick}
-                    className="bg-red-600 text-white px-8 py-3.5 rounded-full text-sm font-bold hover:bg-slate-900 transition-all shadow-lg shadow-red-900/10"
-                  >
-                    Commander en ligne
-                  </button>
-                )}
-                {onCallClick && (
-                  <button 
-                    onClick={onCallClick} 
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 hover:bg-slate-100 transition-all"
-                  >
-                    <Phone className="w-5 h-5" />
-                  </button>
-                )}
-                {onMenuClick && (
-                  <button 
-                    onClick={() => onMenuClick?.()} 
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 hover:bg-slate-100 transition-all"
-                  >
-                    <MenuIcon className="w-5 h-5" />
-                  </button>
-                )}
-            </div>
             {onCallClick && (
-              <button 
-                onClick={onCallClick} 
-                className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 active:scale-95 transition-all -mr-1"
+              <a 
+                href="tel:0782777560" 
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 active:scale-95 transition-all border border-slate-100"
               >
-                <Phone className="w-5 h-5" />
-              </button>
+                <Phone className="w-4 h-4" />
+              </a>
             )}
             {onMenuClick && (
-            <button 
-                onClick={() => onMenuClick()} 
-                id="header-menu" 
-                className="md:hidden p-1 -mr-2 rounded-full hover:bg-slate-100"
-            >
-                <MenuIcon className="w-8 h-8 text-slate-800" />
-            </button>
+              <button 
+                  onClick={() => onMenuClick()} 
+                  id="header-menu" 
+                  className="w-9 h-9 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 hover:bg-slate-100 active:scale-95 transition-all border border-slate-100"
+              >
+                  <MenuIcon className="w-5 h-5 text-slate-800" />
+              </button>
             )}
         </div>
-        {!onMenuClick && !onOrderClick && !onCallClick && <div className="w-10"></div>}
     </div>
   </header>
 );
@@ -540,56 +556,47 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
         />
         <motion.div 
           initial={{ y: '-100%' }}
           animate={{ y: 0 }}
           exit={{ y: '-100%' }}
           transition={{ type: 'spring', damping: 30, stiffness: 100, mass: 1 }}
-          className="fixed inset-0 z-[60] bg-white flex flex-col h-full overflow-hidden"
+          className="fixed inset-0 z-[60] bg-white flex flex-col h-full overflow-hidden max-w-md mx-auto"
         >
           {/* Header inside drawer */}
-          <div className="flex justify-end items-center px-4 py-6 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
+          <div className="flex justify-end items-center px-4 py-5 w-full">
             <button 
               onClick={onClose} 
               id="close-drawer" 
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 hover:bg-red-50 hover:text-red-600 transition-all active:scale-90"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 hover:bg-red-50 hover:text-red-600 transition-all active:scale-90 border border-slate-100"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Menu Content */}
-          <div className="flex-1 flex flex-col justify-center px-4 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
-            <nav className="flex flex-col gap-6">
+          <div className="flex-1 flex flex-col justify-center px-6 w-full">
+            <nav className="flex flex-col gap-4">
               {[
                 { label: 'Accueil', action: () => onNavigate('home') },
                 { label: 'La Carte', action: () => onNavigate('full_menu') },
-                { label: 'Galerie', action: () => {
-                  const el = document.getElementById('gallery-section');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  else onNavigate('home');
-                  setTimeout(() => {
-                    const el2 = document.getElementById('gallery-section');
-                    if (el2) el2.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
-                }},
                 { label: 'Adresse', href: 'https://maps.app.goo.gl/ooZi92NoWhsah1iX6' },
                 { label: 'Livraison', href: 'tel:0782777560' },
               ].map((item, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + index * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ delay: 0.1 + index * 0.05, duration: 0.4 }}
                 >
                   {item.action ? (
                     <button 
                       onClick={() => { item.action(); onClose(); }}
-                      className="group py-4 text-center w-full border-b border-transparent hover:border-slate-100 transition-all"
+                      className="group py-3 text-center w-full border-b border-slate-100 hover:border-red-100 transition-all"
                     >
-                      <span className="text-2xl md:text-3xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
+                      <span className="text-2xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
                         {item.label}
                       </span>
                     </button>
@@ -599,9 +606,9 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={onClose}
-                      className="group py-4 text-center block w-full border-b border-transparent hover:border-slate-100 transition-all"
+                      className="group py-3 text-center block w-full border-b border-slate-100 hover:border-red-100 transition-all"
                     >
-                      <span className="text-2xl md:text-3xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
+                      <span className="text-2xl font-bold text-slate-900 group-hover:text-red-600 transition-all duration-300">
                         {item.label}
                       </span>
                     </a>
@@ -614,26 +621,24 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="mt-8 pt-6 border-t border-slate-100 flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
+              transition={{ delay: 0.35 }}
+              className="mt-8 pt-6 border-t border-slate-100 flex justify-center items-center gap-6"
             >
-              <div className="flex gap-10 md:flex hidden">
-                {[
-                  { icon: Instagram, href: "https://www.instagram.com/lartisanale_draria/" },
-                  { icon: Music, href: "https://tiktok.com" },
-                  { icon: Facebook, href: "https://www.facebook.com/lartisanaledraria/?locale=fr_FR" }
-                ].map((social, i) => (
-                  <a 
-                    key={i} 
-                    href={social.href} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-slate-400 hover:text-red-600 transition-colors transform hover:scale-110"
-                  >
-                    <social.icon className="w-5 h-5" />
-                  </a>
-                ))}
-              </div>
+              {[
+                { icon: Instagram, href: "https://www.instagram.com/lartisanale_draria/" },
+                { icon: Music, href: "https://tiktok.com" },
+                { icon: Facebook, href: "https://www.facebook.com/lartisanaledraria/?locale=fr_FR" }
+              ].map((social, i) => (
+                <a 
+                  key={i} 
+                  href={social.href} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors border border-slate-100"
+                >
+                  <social.icon className="w-4 h-4" />
+                </a>
+              ))}
             </motion.div>
           </div>
         </motion.div>
@@ -678,126 +683,72 @@ const PriceDisplay = ({ item, onAddToCart }: { item: MenuItem, onAddToCart: (var
 };
 
 const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }) => (
-  <footer className="w-full mt-auto bg-slate-900 text-white relative overflow-hidden">
+  <footer className="w-full mt-auto bg-slate-900 text-white relative overflow-hidden text-center">
     <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/5 blur-[100px] rounded-full" />
     <div className="absolute bottom-0 left-0 w-64 h-64 bg-red-600/5 blur-[100px] rounded-full" />
     
-    <div className="max-w-7xl mx-auto px-4 py-12 md:px-12 lg:px-24 relative z-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-20">
-        {/* Column 1: Brand */}
-        <div className="space-y-8">
-          <div className="flex items-center gap-4">
-            <div className="w-11 h-11 rounded-lg bg-red-600 flex items-center justify-center shadow-lg shadow-red-900/50">
-              <UtensilsCrossed className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h4 className="font-serif text-2xl font-bold tracking-tight">L'Artisanale</h4>
-              <p className="text-[11px] font-black uppercase tracking-[0.2em] text-red-500">Draria • Qualité Supérieure</p>
-            </div>
-          </div>
-          <div className="space-y-2">
-            <p className="text-sm text-slate-400 leading-relaxed max-w-xs font-medium uppercase">
-              LE GOÛT AUTHENTIQUE LIVRÉ CHEZ VOUS
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            {[
-              { icon: Instagram, href: "https://www.instagram.com/lartisanale_draria/" },
-              { icon: Music, href: "https://tiktok.com" },
-              { icon: Facebook, href: "https://www.facebook.com/lartisanaledraria/?locale=fr_FR" }
-            ].map((social, i) => (
-              <a key={i} href={social.href} target="_blank" rel="noopener noreferrer" className="w-8 h-8 bg-white/5 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-red-600 transition-all border border-white/5">
-                <social.icon className="w-3.5 h-3.5" />
-              </a>
-            ))}
-          </div>
+    <div className="max-w-md mx-auto px-4 py-12 relative z-10 flex flex-col items-center justify-center space-y-8">
+      {/* Brand */}
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center shadow-lg shadow-red-900/50">
+          <UtensilsCrossed className="w-6 h-6 text-white" />
         </div>
-
-        {/* Column 2: Navigation */}
-        <div className="space-y-6">
-          <h5 className="font-black text-[11px] uppercase tracking-[0.2em] text-slate-500">Navigation</h5>
-          <ul className="space-y-3">
-            <li>
-              <button 
-                onClick={() => onNavigate?.('home')} 
-                className="text-sm font-medium text-slate-300 hover:text-red-500 transition-colors flex items-center gap-2"
-              >
-                Accueil
-              </button>
-            </li>
-            <li>
-              <button 
-                onClick={() => onNavigate?.('full_menu')} 
-                className="text-sm font-medium text-slate-300 hover:text-red-500 transition-colors flex items-center gap-2"
-              >
-                La Carte
-              </button>
-            </li>
-            <li>
-              <button 
-                onClick={() => {
-                  const el = document.getElementById('gallery-section');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  else onNavigate?.('home');
-                  setTimeout(() => {
-                    const el2 = document.getElementById('gallery-section');
-                    if (el2) el2.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
-                }}
-                className="text-sm font-medium text-slate-300 hover:text-red-500 transition-colors flex items-center gap-2"
-              >
-                Galerie
-              </button>
-            </li>
-            <li>
-              <a 
-                href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-sm font-medium text-slate-300 hover:text-red-500 transition-colors flex items-center gap-2"
-              >
-                Adresse
-              </a>
-            </li>
-            <li>
-              <button 
-                className="text-sm font-medium text-slate-300 hover:text-red-500 transition-colors flex items-center gap-2"
-              >
-                Livraison
-              </button>
-            </li>
-          </ul>
-        </div>
-
-        {/* Column 3: Contact Info */}
-        <div className="space-y-8">
-          <h5 className="font-black text-[11px] uppercase tracking-[0.2em] text-slate-500">Contact</h5>
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-red-500 transition-all">
-                <Phone className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="text-[10px] font-black uppercase text-slate-500 mb-0.5 tracking-widest">Par Téléphone</p>
-                <p className="text-base font-bold underline cursor-pointer hover:text-red-500 transition-colors">0782 77 75 60</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-red-500 transition-all">
-                <MapPin className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="text-[10px] font-black uppercase text-slate-500 mb-0.5 tracking-widest">Localisation</p>
-                <p className="text-sm font-bold">Route des Chwayin, Draria</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
+        <h4 className="font-semibold text-xl tracking-tight text-white">L'Artisanale</h4>
       </div>
 
-      <div className="mt-12 pt-6 border-t border-white/5 flex justify-center items-center">
-        <p className="text-[8px] text-slate-500 font-black uppercase tracking-[0.3em]">
+      {/* Social Icons */}
+      <div className="flex items-center justify-center gap-3">
+        {[
+          { icon: Instagram, href: "https://www.instagram.com/lartisanale_draria/" },
+          { icon: Music, href: "https://tiktok.com" },
+          { icon: Facebook, href: "https://www.facebook.com/lartisanaledraria/?locale=fr_FR" }
+        ].map((social, i) => (
+          <a 
+            key={i} 
+            href={social.href} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="w-9 h-9 bg-white/5 rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-red-600 transition-all border border-white/5"
+          >
+            <social.icon className="w-4 h-4" />
+          </a>
+        ))}
+      </div>
+
+      {/* Contact Info */}
+      <div className="flex flex-col items-center justify-center gap-5 pt-2">
+        <a 
+          href="tel:0782777560" 
+          className="flex items-center gap-3 group text-left"
+        >
+          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-red-500 group-hover:bg-red-600 group-hover:text-white transition-all">
+            <Phone className="w-4 h-4" />
+          </div>
+          <div>
+            <p className="text-[10px] font-black uppercase text-slate-500 mb-0.5 tracking-widest">Par Téléphone</p>
+            <p className="text-sm font-bold text-white group-hover:text-red-500 transition-colors">0782 77 75 60</p>
+          </div>
+        </a>
+
+        <a 
+          href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="flex items-center gap-3 group text-left"
+        >
+          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-red-500 group-hover:bg-red-600 group-hover:text-white transition-all">
+            <MapPin className="w-4 h-4" />
+          </div>
+          <div>
+            <p className="text-[10px] font-black uppercase text-slate-500 mb-0.5 tracking-widest">Localisation</p>
+            <p className="text-sm font-bold text-white group-hover:text-red-500 transition-colors">Draria, Centre</p>
+          </div>
+        </a>
+      </div>
+
+      {/* Bottom copyright */}
+      <div className="w-full pt-6 border-t border-white/5 flex justify-center items-center">
+        <p className="text-[9px] text-slate-500 font-black uppercase tracking-[0.3em]">
           L'ARTISANALE DRARIA - 2026
         </p>
       </div>
@@ -805,433 +756,384 @@ const Footer = ({ onNavigate }: { onNavigate?: (p: Page, cat?: string) => void }
   </footer>
 );
 
-const HomePage = ({ onNavigate, onMenuClick, hasCart }: { onNavigate: (p: Page, cat?: string) => void, onMenuClick: () => void, hasCart: boolean }) => {
+const HomePage = ({ 
+  onNavigate, 
+  onMenuClick, 
+  hasCart,
+  onAddToCart,
+  activeCategory,
+  setActiveCategory
+}: { 
+  onNavigate: (p: Page, cat?: string) => void, 
+  onMenuClick: () => void, 
+  hasCart: boolean,
+  onAddToCart: (item: MenuItem, cat: string, variant?: string, priceVal?: number) => void,
+  activeCategory: string,
+  setActiveCategory: (cat: string) => void
+}) => {
   const isOpen = checkIsOpen();
-  const [scrolled, setScrolled] = useState(false);
+  const [pizzaBase, setPizzaBase] = useState<'tomato' | 'cream'>('tomato');
+  const [isLiked, setIsLiked] = useState(false);
+  const [deliveryMode, setDeliveryMode] = useState<'delivery' | 'takeaway'>('delivery');
+  const [shareCopied, setShareCopied] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    const handleScroll = () => setScrolled(window.scrollY > 100);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: "L'Artisanale Maison",
+        text: "Découvrez le menu de L'Artisanale Maison !",
+        url: window.location.href,
+      }).catch(() => {});
+    } else {
+      navigator.clipboard?.writeText(window.location.href);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
+    }
+  };
+
+  const scrollToMenu = (catId?: string) => {
+    if (catId) {
+      setActiveCategory(catId);
+    }
+    const el = document.getElementById('menu-section');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const activeCategoryData = useMemo(() => CATEGORIES.find(c => c.id === activeCategory), [activeCategory]);
+
+  const filteredPizzaMenu = useMemo(() => {
+    return PIZZA_MENU.filter(p => !p.base || p.base === pizzaBase);
+  }, [pizzaBase]);
+
+  const filteredItems = useMemo(() => {
+    if (activeCategory === 'all') {
+      const allItems: any[] = [];
+      const seen = new Set();
+      
+      CATEGORIES.forEach(cat => {
+        const items = cat.id === 'pizza' ? PIZZA_MENU : cat.menu || [];
+        items.forEach(item => {
+          const key = `${cat.id}-${item.name}`;
+          if (!seen.has(key)) {
+            allItems.push({ ...item, categoryId: cat.id });
+            seen.add(key);
+          }
+        });
+      });
+      return allItems;
+    }
+    return activeCategory === 'pizza' ? filteredPizzaMenu : activeCategoryData?.menu || [];
+  }, [activeCategory, filteredPizzaMenu, activeCategoryData]);
   
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Header 
-        onMenuClick={onMenuClick} 
-        onOrderClick={() => onNavigate('full_menu')} 
-        onLogoClick={() => onNavigate('home')} 
-        useImageLogo={true}
-      />
-      
       <main className="flex-1 w-full flex flex-col items-center">
-        {/* Hero Section */}
-        <section className="relative w-full h-[calc(100dvh-88px)] md:h-[60vh] lg:h-[65vh] flex items-center justify-center overflow-hidden md:overflow-visible">
-          <motion.div 
-            initial={{ scale: 1.1 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 20, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
-            className="absolute inset-0 w-full h-full"
-          >
+        {/* New Delivery-App Style Hero Banner */}
+        <section className="relative w-full max-w-md mx-auto">
+          {/* Top Banner Image */}
+          <div className="relative w-full h-52 sm:h-56 bg-slate-900 overflow-hidden">
             <img 
-                src="https://tb-static.uber.com/prod/image-proc/processed_images/56ca44860149e20d3b8e469263f518fd/c9252e6c6cd289c588c3381bc77b1dfc.jpeg" 
-                alt="Hero Pizza" 
-                className="w-full h-full object-cover"
+               src="https://i.ibb.co/jkK7n323/HP-Hero-XS-Hut-Summer-0726-1.jpg" 
+               alt="L'Artisanale Banner" 
+               className="w-full h-full object-cover"
+               referrerPolicy="no-referrer"
             />
-            {/* Light Overlay + Gradient over everything */}
-            <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 pointer-events-none" />
-          </motion.div>
-          
-          <div className="relative z-10 text-center px-4 md:px-16 lg:px-24 mb-[18rem] md:mb-0 -mt-12 md:mt-0">
-            <div className="flex flex-col items-center">
-                <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.1, duration: 0.8 }}
-                  className="mb-4 flex items-center gap-[6.6px] bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20"
-                >
-                    <div className={`w-[6.6px] h-[6.6px] rounded-full ${isOpen ? 'bg-green-500' : 'bg-red-500'} shadow-[0_0_10px_rgba(239,68,68,0.5)] animate-pulse`} />
-                    <span className="text-[8.8px] text-white font-black uppercase tracking-widest">
-                        {isOpen ? 'Ouvert' : 'Fermé'}
-                    </span>
-                </motion.div>
-                <motion.h2 
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2, duration: 0.8 }}
-                  className="text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-4 tracking-tighter"
-                >
-                    L'Artisanale
-                </motion.h2>
-                <motion.div 
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
-                  className="flex items-center justify-center gap-3 text-white/90"
-                >
-                    <p className="font-black tracking-[0.4em] uppercase text-[9px] md:text-xs">
-                        Le Goût Authentique livré chez vous
-                    </p>
-                </motion.div>
+            {/* Dark gradient for text & button legibility */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/60" />
 
-                {/* Mobile Social Icons - Moved here */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6, duration: 0.8 }}
-                  className="flex items-center gap-5 mt-5 md:hidden"
+            {/* Top Floating Action Buttons */}
+            <div className="absolute top-4 left-0 right-0 px-4 flex items-center justify-between z-20">
+              <button 
+                onClick={onMenuClick}
+                aria-label="Menu"
+                className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center border border-white/30 active:scale-95 transition-all shadow-md cursor-pointer hover:bg-white/30"
+              >
+                <MenuIcon className="w-5 h-5" />
+              </button>
+
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => setIsLiked(!isLiked)}
+                  aria-label="Favori"
+                  className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center border border-white/30 active:scale-95 transition-all shadow-md cursor-pointer hover:bg-white/30"
                 >
-                  {[
-                    { icon: Instagram, href: "https://www.instagram.com/lartisanale_draria/" },
-                    { icon: Music, href: "https://tiktok.com" },
-                    { icon: Facebook, href: "https://www.facebook.com/lartisanaledraria/?locale=fr_FR" }
-                  ].map((social, i) => (
-                    <a 
-                      key={i} 
-                      href={social.href} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-white hover:text-red-600 transition-colors transform hover:scale-110 bg-white/10 p-2.5 rounded-full border border-white/20 backdrop-blur-sm"
-                    >
-                      <social.icon className="w-[20.6px] h-[20.6px]" />
-                    </a>
-                  ))}
-                </motion.div>
+                  <Heart className={`w-5 h-5 transition-colors ${isLiked ? 'fill-red-500 text-red-500' : 'text-white'}`} />
+                </button>
+
+                <button 
+                  onClick={handleShare}
+                  aria-label="Partager"
+                  className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center border border-white/30 active:scale-95 transition-all shadow-md cursor-pointer hover:bg-white/30 relative"
+                >
+                  <Share2 className="w-5 h-5 text-white" />
+                  {shareCopied && (
+                    <span className="absolute -bottom-8 right-0 bg-slate-900 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow whitespace-nowrap">
+                      Lien copié !
+                    </span>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Action Blocks integrated for mobile visibility */}
-          <div className="absolute bottom-16 md:-bottom-16 left-0 right-0 z-20 px-4 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                  <button 
-                      id="link-order-online"
-                      onClick={() => onNavigate('full_menu')}
-                      className="w-full bg-white border border-slate-100 py-[24px] px-5 md:py-[33px] md:px-6 rounded-[20px] flex items-center gap-3.5 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
-                  >
-                      <div className="bg-red-50 p-2 md:p-3.5 rounded-xl text-red-600">
-                          <ShoppingBag className="w-[23px] h-[23px] md:w-[31px] md:h-[31px]" />
-                      </div>
-                      <div className="text-left">
-                          <span className="block font-black text-[18px] md:text-[23px] leading-tight">MENU COMPLET</span>
-                          <span className="text-[10px] md:text-[11px] uppercase text-slate-400 font-bold tracking-widest block">Service Rapide</span>
-                      </div>
-                  </button>
-
-                  <button 
-                      onClick={() => onNavigate('full_menu')}
-                      className="bg-white border border-slate-100 py-[24px] px-5 md:py-[33px] md:px-6 rounded-[20px] flex items-center gap-3.5 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
-                  >
-                      <div className="bg-red-50 p-2 md:p-3.5 rounded-xl text-red-600">
-                          <MenuIcon className="w-[23px] h-[23px] md:w-[31px] md:h-[31px]" />
-                      </div>
-                      <div className="text-left">
-                          <span className="block font-black text-[18px] md:text-[23px] leading-tight">COMMANDE EN LIGNE</span>
-                          <span className="text-[10px] md:text-[11px] uppercase text-slate-400 font-bold tracking-widest block">Découvrez nos plats</span>
-                      </div>
-                  </button>
-
-                  <a 
-                      href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
-                      target="_blank" 
-                      rel="noreferrer"
-                      className="bg-white border border-slate-100 py-[24px] px-5 md:py-[33px] md:px-6 rounded-[20px] flex items-center gap-3.5 text-slate-800 shadow-lg hover:border-red-600 transition-all group active:scale-[0.98]"
-                  >
-                      <div className="bg-red-50 p-2 md:p-3.5 rounded-xl text-red-600">
-                          <MapPin className="w-[23px] h-[23px] md:w-[31px] md:h-[31px]" />
-                      </div>
-                      <div className="text-left">
-                          <span className="block font-black text-[18px] md:text-[23px] leading-tight">NOUS TROUVER (DRARIA)</span>
-                          <span className="text-[10px] md:text-[11px] uppercase text-slate-400 font-bold tracking-widest block">Draria, Alger</span>
-                      </div>
-                  </a>
+          {/* Restaurant Card Body Overlapping the Banner */}
+          <div className="relative px-4 pb-2">
+            {/* Center Logo Badge */}
+            <div className="relative -mt-11 z-20 flex justify-center">
+              <div className="w-22 h-22 rounded-full border-4 border-white shadow-xl overflow-hidden bg-red-600 flex items-center justify-center">
+                <img 
+                  src="https://scontent.falg7-6.fna.fbcdn.net/v/t39.30808-6/298339068_379924957653168_8646108471508860568_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=EwO7uVSm4CwQ7kNvwFCdIlg&_nc_oc=AdoFYx3L6RqcvVlxaLIILY8TDP-hWAw5rL-YhnuEoVEDRbtv7jPoCzqNyC5pYixYoHI&_nc_zt=23&_nc_ht=scontent.falg7-6.fna&_nc_gid=5Ir_kphaLNa1qX73hPu7mg&_nc_ss=7b289&oh=00_Af4A-933NTSqmoYI4qic2lXzxKKAlxoMxCOyqmvK1XtZ0Q&oe=69FF6900" 
+                  alt="L'Artisanale Logo" 
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
               </div>
+            </div>
+
+            {/* Restaurant Title & Info */}
+            <div className="text-center mt-2.5">
+              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+                L'Artisanale Maison
+              </h1>
+              
+              <div className="flex items-center justify-center gap-1.5 text-xs text-slate-500 mt-1 font-medium flex-wrap">
+                <span className="flex items-center text-amber-500 font-semibold">
+                  <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 mr-1" />
+                  4.8
+                </span>
+                <span className="text-slate-400 font-normal">(1 652)</span>
+                <span className="text-slate-300">•</span>
+                <span className="text-red-500 font-medium">FoodyPro+</span>
+                <span className="text-slate-300">•</span>
+                <span className="text-slate-400 font-normal">0.1 km</span>
+              </div>
+            </div>
+
+            {/* Delivery / Takeaway Switcher Pill */}
+            <div className="mt-4 bg-slate-50 border border-slate-200/80 rounded-full p-1.5 px-3 flex items-center justify-between shadow-xs">
+              <div className="flex items-center gap-1 bg-white p-0.5 rounded-full border border-slate-200/60 shadow-inner">
+                <button 
+                  onClick={() => setDeliveryMode('delivery')}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+                    deliveryMode === 'delivery' 
+                      ? 'bg-[#FF5A36] text-white shadow-sm' 
+                      : 'text-slate-400 hover:text-slate-600'
+                  }`}
+                  title="Livraison"
+                >
+                  <Bike className="w-4 h-4" />
+                </button>
+                <button 
+                  onClick={() => setDeliveryMode('takeaway')}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+                    deliveryMode === 'takeaway' 
+                      ? 'bg-[#FF5A36] text-white shadow-sm' 
+                      : 'text-slate-400 hover:text-slate-600'
+                  }`}
+                  title="À emporter / Sur place"
+                >
+                  <Footprints className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className="text-right pr-2">
+                <p className="text-xs font-semibold text-slate-800 leading-tight">
+                  {deliveryMode === 'delivery' ? 'Temps de livraison: 10-20 min' : 'À emporter: 10-15 min'}
+                </p>
+                <p className="text-[11px] text-slate-400 mt-0.5 font-normal">
+                  {deliveryMode === 'delivery' ? 'Frais: 3.5€ • Commande min: 27€' : 'Sans frais • Prêt en restaurant'}
+                </p>
+              </div>
+            </div>
+
+            {/* Promo & Discount Coupon Cards */}
+            <div className="mt-4 flex gap-3 overflow-x-auto no-scrollbar py-1 -mx-4 px-4">
+              {/* Coupon 1: 50% Off */}
+              <div className="shrink-0 w-[240px] bg-white border border-slate-200/90 rounded-2xl p-3 relative shadow-xs">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-6 h-6 rounded-lg bg-red-50 text-red-600 flex items-center justify-center text-xs font-semibold">
+                    <Percent className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="font-semibold text-sm text-slate-800">50% de réduction</span>
+                </div>
+                <p className="text-[11px] text-slate-400 leading-snug font-normal">
+                  Commande minimum 20€. Valable sur tous les articles. Appliqué auto.
+                </p>
+              </div>
+
+              {/* Coupon 2: 30% Off */}
+              <div className="shrink-0 w-[240px] bg-white border border-slate-200/90 rounded-2xl p-3 relative shadow-xs">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-6 h-6 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center text-xs font-semibold">
+                    <Crown className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="font-semibold text-sm text-slate-800">30% de réduction</span>
+                </div>
+                <p className="text-[11px] text-slate-400 leading-snug font-normal">
+                  Commande minimum 15€. Valable sur les menus. Appliqué auto.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
-        <div className="max-w-7xl mx-auto w-full px-4 md:px-12 lg:px-24 mt-16 md:mt-24 relative z-0 pb-16">
-
-            {/* Category Grid - Bento Style Optimized for Desktop */}
-            <div id="bento-grid" className="mb-16 md:mb-20">
-                <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 gap-4">
-                    <div className="flex flex-col text-left">
-                        <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Notre Carte</span>
-                        <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Explorer le Menu</h3>
-                    </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 lg:gap-4">
-                    {CATEGORIES.filter(c => c.bentoSpan !== 'hidden' && c.id !== 'all').map((cat) => (
-                        <button 
-                            key={cat.id}
-                            onClick={() => onNavigate('full_menu', cat.id)}
-                            className={`relative h-[217px] md:h-[296px] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden group shadow-lg transition-all duration-700 ${cat.bentoSpan}`}
-                        >
-                            <img 
-                                src={cat.image} 
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s] ease-out" 
-                                alt={cat.name} 
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-black/10 to-transparent p-6 md:p-8 flex flex-col justify-end">
-                                <div className="text-left w-full sm:translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                    <span className="text-[10px] md:text-[12px] text-red-500 font-bold uppercase tracking-[0.4em] block mb-2 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
-                                        {cat.subtitle}
-                                    </span>
-                                    <span className="text-white font-serif text-3xl md:text-5xl font-bold block leading-none">
-                                        {cat.name}
-                                    </span>
-                                </div>
-                                <div className="mt-4 flex items-center gap-2 text-white/50 group-hover:text-white transition-colors duration-500">
-                                    <span className="text-[10px] font-black uppercase tracking-widest">Voir le menu</span>
-                                    <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                                </div>
-                            </div>
-                        </button>
-                    ))}
-                </div>
+        {/* --- Direct Real Menu Integration --- */}
+        <section id="menu-section" className="w-full max-w-md mx-auto px-4 pt-4 pb-20 scroll-mt-16">
+          
+          {/* Header Title for Menu */}
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-red-600 font-medium text-[10px] uppercase tracking-wider mb-2">
+              <UtensilsCrossed className="w-3 h-3" />
+              La Carte de L'Artisanale
             </div>
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+              Nos Délicieuses Spécialités
+            </h2>
+            <p className="text-slate-400 text-xs font-normal max-w-xs mx-auto mt-1">
+              Pizzas au feu de bois, burgers gourmets, tacos et douceurs maison.
+            </p>
+          </div>
 
-            {/* Nos Incontournables Section */}
-            <div className="py-8 md:py-16">
-                <div className="flex flex-col text-left mb-12">
-                    <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Suggestions</span>
-                    <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Nos Incontournables</h3>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-1 gap-4 md:gap-y-4">
-                    {[
-                        { name: 'Pizza Saumon', price: '1100 DA', desc: 'Saumon fumé de qualité, aneth fraîche, crème onctueuse.', cat: 'Signature', catId: 'pizza' },
-                        { name: 'Double Smash', price: '900 DA', desc: 'Deux steaks de boeuf pur jus, cheddar affiné, sauce secrète.', cat: 'Gourmet', catId: 'burger' },
-                        { name: 'Wrap Poulet', price: '550 DA', desc: 'Poulet mariné 24h, crudités croquantes, sauce maison.', cat: 'Authentique', catId: 'texmex' },
-                    ].map((item, idx) => (
-                        <div 
-                            key={idx} 
-                            onClick={() => onNavigate('full_menu', item.catId)}
-                            className="group py-5 flex flex-col justify-between gap-4 transition-all hover:bg-slate-100/50 rounded-2xl px-4 bg-slate-50/10 md:bg-transparent md:px-2 md:py-6 cursor-pointer border border-transparent hover:border-slate-100"
-                        >
-                            <div className="space-y-4">
-                                <div className="space-y-2">
-                                    <div className="flex justify-between items-start gap-2">
-                                        <h4 className="font-serif text-[19.2px] md:text-lg font-bold text-slate-950 group-hover:text-red-600 transition-colors leading-tight">
-                                            {item.name}
-                                        </h4>
-                                        <span className="text-sm md:text-base font-black text-slate-950 tabular-nums whitespace-nowrap">
-                                            {item.price}
-                                        </span>
-                                    </div>
-                                    <p className="text-slate-600 text-[12px] md:text-sm font-medium leading-relaxed line-clamp-2">
-                                        {item.desc}
-                                    </p>
-                                    <div className="flex items-center gap-1.5 pt-1">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-red-600/40 group-hover:bg-red-600 transition-colors" />
-                                        <span className="text-[10px] md:text-[11px] font-black uppercase text-slate-400 tracking-wider group-hover:text-slate-500 transition-colors">
-                                            {item.cat}
-                                        </span>
-                                    </div>
-                                </div>
-                                
-                                <div className="pt-2 md:pt-0">
-                                    <button 
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            onNavigate('full_menu', item.catId);
-                                        }}
-                                        className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-full text-[10px] uppercase font-black tracking-widest hover:bg-red-600 transition-colors shadow-lg active:scale-95"
-                                    >
-                                        Commander
-                                        <ChevronRight className="w-3 h-3" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+          {/* Category Filter Chips / Bar */}
+          <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md py-3 mb-5 border-y border-slate-100 -mx-4 px-4 shadow-xs">
+            <div className="max-w-md mx-auto flex overflow-x-auto no-scrollbar gap-2 justify-start items-center py-0.5">
+              {CATEGORIES.map((cat) => {
+                const isSelected = activeCategory === cat.id;
+                return (
+                  <button 
+                    key={cat.id}
+                    onClick={() => {
+                      setActiveCategory(cat.id);
+                    }}
+                    className={`px-3.5 py-2 rounded-xl text-xs font-medium transition-all whitespace-nowrap flex items-center gap-1.5 cursor-pointer shrink-0
+                      ${isSelected 
+                        ? 'bg-red-600 text-white shadow-sm' 
+                        : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/60'}
+                    `}
+                  >
+                    <span className={isSelected ? 'text-white' : 'text-slate-400'}>
+                      {cat.id === 'all' ? (
+                        <LayoutGrid className="w-3.5 h-3.5" />
+                      ) : (
+                        cat.icon
+                      )}
+                    </span>
+                    <span>{cat.id === 'all' ? 'Voir tout' : (cat.id === 'texmex' ? 'Tex-Mex' : cat.name)}</span>
+                  </button>
+                );
+              })}
             </div>
-            
-            <div className="py-8 md:py-16">
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
-                        <div className="flex flex-col text-left">
-                            <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Valeurs</span>
-                            <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Nos Engagements</h3>
-                        </div>
-                    </div>
-                    <div 
-                        className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
-                    >
-                        {[
-                            { 
-                                icon: UtensilsCrossed, 
-                                title: 'Savoir-Faire', 
-                                desc: 'Nos chefs maîtrisent l\'art de la pizza au feu de bois et de la cuisine traditionnelle.',
-                                color: 'red'
-                            },
-                            { 
-                                icon: Star, 
-                                title: 'Qualité Premium', 
-                                desc: 'Des ingrédients frais sélectionnés chaque matin pour une saveur authentique.',
-                                color: 'orange'
-                            },
-                            { 
-                                icon: Clock, 
-                                title: 'Disponibilité', 
-                                desc: 'Ouvert du Samedi au Vendredi (fermé le Dimanche). Livraison express sur Draria et ses environs.',
-                                color: 'blue'
-                            },
-                        ].map((item, idx) => (
-                            <div 
-                                key={idx}
-                                className="group p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] bg-slate-50 border border-slate-100 hover:shadow-xl transition-all duration-700 relative overflow-hidden"
-                            >
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/5 blur-[40px] group-hover:bg-red-600/10 transition-all" />
-                                <div className="relative z-10">
-                                    <div className="w-14 h-14 rounded-xl bg-white shadow-xl flex items-center justify-center text-red-600 mb-8 border border-slate-100 group-hover:scale-110 transition-transform duration-700">
-                                        <item.icon className="w-7 h-7" />
-                                    </div>
-                                    <h4 className="font-serif text-[21.6px] md:text-2xl font-bold text-slate-900 mb-4">{item.title}</h4>
-                                    <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium transition-opacity">
-                                        {item.desc}
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+          </div>
 
-            {/* Gallery Section */}
-            <div id="gallery-section" className="py-8 md:py-16 scroll-mt-24">
-                <div className="flex flex-col text-left mb-12">
-                    <span className="text-red-500 font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Galerie</span>
-                    <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">La Touche Artisanale</h3>
+          {/* Category Banner Card */}
+          <div className="relative h-36 rounded-2xl overflow-hidden mb-6 shadow-md border border-slate-100">
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={activeCategory}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute inset-0"
+              >
+                <img 
+                  src={activeCategory === 'all' ? 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=1000' : activeCategoryData?.image} 
+                  alt={activeCategory === 'all' ? 'Toute la Carte' : activeCategoryData?.name}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/40 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <span className="text-[9px] font-medium uppercase tracking-wider text-red-400 block mb-0.5">
+                    {activeCategory === 'all' ? 'Menu Complet' : activeCategoryData?.subtitle}
+                  </span>
+                  <h3 className="text-lg font-semibold mb-0.5 leading-tight">
+                    {activeCategory === 'all' ? 'Toute la Carte' : activeCategoryData?.name}
+                  </h3>
+                  <p className="text-white/80 text-[11px] font-normal line-clamp-1">
+                    {activeCategory === 'pizza' ? 'Cuites dans notre four traditionnel au feu de bois' : 
+                     activeCategory === 'burger' ? 'Steaks frais smashés et buns artisanaux' :
+                     activeCategory === 'tacos' ? 'Généreusement garnis avec sauce fromagère' :
+                     activeCategory === 'texmex' ? 'Tenders croustillants et spécialités' :
+                     activeCategory === 'desserts' ? 'Douceurs préparées maison' :
+                     activeCategory === 'drinks' ? 'Boissons fraîches' :
+                     'Découvrez toutes nos recettes préparées à Draria'}
+                  </p>
                 </div>
-                
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
-                    {GALLERY_IMAGES.map((img, idx) => (
-                        <motion.div 
-                            key={idx}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: idx * 0.1, duration: 0.5 }}
-                            viewport={{ once: true }}
-                            className={`${idx >= 4 ? 'hidden md:block' : ''} aspect-[1/0.92] md:aspect-[5/4] relative group overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg`}
-                        >
-                            <img 
-                                src={img.url} 
-                                alt={img.title}
-                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                            />
-                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                <p className="text-white font-bold text-sm md:text-lg text-center">{img.title}</p>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Pizza Base Toggle (Tomate / Crème) */}
+          {(activeCategory === 'pizza' || activeCategory === 'all') && (
+            <div className="flex justify-center mb-5">
+              <div className="bg-slate-100 p-1 rounded-xl flex border border-slate-200 shadow-inner w-full max-w-xs">
+                <button 
+                  onClick={() => setPizzaBase('tomato')}
+                  className={`flex-1 py-1.5 rounded-lg text-[11px] font-medium transition-all cursor-pointer text-center ${pizzaBase === 'tomato' ? 'bg-white shadow-sm text-red-600 font-semibold' : 'text-slate-500'}`}
+                >
+                  🍅 Base Tomate
+                </button>
+                <button 
+                  onClick={() => setPizzaBase('cream')}
+                  className={`flex-1 py-1.5 rounded-lg text-[11px] font-medium transition-all cursor-pointer text-center ${pizzaBase === 'cream' ? 'bg-white shadow-sm text-red-600 font-semibold' : 'text-slate-500'}`}
+                >
+                  🥛 Base Crème
+                </button>
+              </div>
             </div>
+          )}
 
-            {/* Review Section */}
-            <div className="py-8 md:py-16">
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 gap-6">
-                    <div className="flex flex-col text-left">
-                        <h3 className="font-serif text-[32px] md:text-[43px] font-bold text-slate-900 leading-none">Avis Clients</h3>
+          {/* Menu Items Grid - 2x2 Column Mobile */}
+          <motion.div 
+            key={`${activeCategory}-${pizzaBase}`}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
+            className="grid grid-cols-2 gap-2.5 sm:gap-3"
+          >
+            {filteredItems.map((item, idx) => {
+              const showHeader = activeCategory === 'all' && (idx === 0 || filteredItems[idx - 1].categoryId !== item.categoryId);
+              const categoryData = CATEGORIES.find(c => c.id === item.categoryId);
+              const effectiveCat = activeCategory === 'all' ? item.categoryId : activeCategory;
+
+              return (
+                <Fragment key={`${activeCategory}-${item.name}-${idx}`}>
+                  {showHeader && (
+                    <div className="col-span-2 pt-6 pb-3 mb-1 border-b border-slate-100 flex items-center gap-2.5 first:pt-0">
+                      <div className="bg-red-50 p-2 rounded-xl text-red-600 shadow-xs">
+                         {categoryData?.icon || <LayoutGrid className="w-4 h-4" />}
+                      </div>
+                      <div>
+                        <h3 className="text-sm sm:text-base font-semibold text-slate-800 capitalize tracking-tight">
+                          {categoryData?.name || item.categoryId}
+                        </h3>
+                        <p className="text-[10px] font-normal text-slate-400 uppercase tracking-wider">{categoryData?.subtitle}</p>
+                      </div>
                     </div>
-                    <div 
-                        className="flex items-center gap-2.5 md:gap-3 bg-red-50 px-5 py-2.5 md:px-6 md:py-3 rounded-full border border-red-100 shadow-lg shadow-red-900/5 self-start md:self-auto"
-                    >
-                        <Star className="w-3.5 h-3.5 md:w-4 md:h-4 text-red-600 fill-red-600" />
-                        <span className="text-[9.5px] md:text-[11px] font-black text-red-600 uppercase tracking-[0.2em]">4.8/5 sur Google</span>
-                    </div>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                    <ReviewCard 
-                        name="Sabrina Bd"
-                        initials="S"
-                        rating={5}
-                        date="il y a 3 mois"
-                        text="De passage sur Draria à Alger, belle découverte de la pizzeria l’artisanale ! L’endroit est impeccable, le personnel est très aimable et accueillant. Les produits sont frais et de qualité pour avoir testé les pizzas viande hachée, poulet curry, 3 fromages, tacos et hamburger. Le goût était savoureux et authentique. Je recommande ❤️"
-                        tags={["1 avis"]}
+                  )}
+                  <div className="w-full h-full flex">
+                    <MenuListItem 
+                      item={item} 
+                      category={effectiveCat} 
+                      onAddToCart={(v, p) => onAddToCart(item, effectiveCat, v, p)} 
                     />
+                  </div>
+                </Fragment>
+              );
+            })}
 
-                    <ReviewCard 
-                        name="Brice Belkheir"
-                        initials="B"
-                        rating={5}
-                        date="il y a 9 mois"
-                        text="Excellente qualité !!! Et très très bon rapport qualité-prix !"
-                        tags={["Local Guide", "25 avis"]}
-                    />
-
-                    <ReviewCard 
-                        name="Synouhi Ko"
-                        initials="S"
-                        rating={5}
-                        date="il y a 10 mois"
-                        text="Excellent tacos. Si vous voulez un tacos à la française alors je vous conseille fortement"
-                        tags={["Local Guide", "25 avis"]}
-                    />
-                </div>
-            </div>
-
-            <div className="mt-12 md:mt-24 mb-16">
-                {/* Localisation Section */}
-                <div className="relative overflow-hidden group rounded-[2.5rem] md:rounded-[4rem] border border-slate-100">
-                    {/* Background with parallax-like scaling */}
-                    <div className="absolute inset-0 bg-slate-950">
-                        <motion.img 
-                            initial={{ scale: 1.2, opacity: 0.2 }}
-                            whileInView={{ scale: 1, opacity: 0.1 }}
-                            transition={{ duration: 2, ease: "easeOut" }}
-                            src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1548&auto=format&fit=crop" 
-                            alt="Background Draria"
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-                    
-                    <div className="relative z-10 p-8 md:p-16 lg:p-20 flex flex-col md:flex-row items-start md:items-center justify-between gap-8 text-left">
-                        <div className="max-w-2xl">
-                            <span className="text-red-500 font-black text-[9px] uppercase tracking-[0.4em] mb-4 block">Le Rendez-vous</span>
-                            <h3 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">Venez nous voir à Draria</h3>
-                            <p className="text-slate-400 text-sm md:text-base mb-8 font-medium leading-relaxed">
-                                Sam—Jeu : 11h30—15h30 & 18h00—00h00 | Ven : 18h00—00h00 | Dimanche : Fermé
-                            </p>
-                            
-                            <motion.a 
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                href="https://maps.app.goo.gl/ooZi92NoWhsah1iX6" 
-                                target="_blank" 
-                                rel="noreferrer"
-                                className="inline-flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all shadow-xl"
-                            >
-                                <MapPin className="w-4 h-4" />
-                                Itinéraire Google Maps
-                            </motion.a>
-                        </div>
-                        
-                        {/* Right side info for desktop/tablet removed per request */}
-                    </div>
-                </div>
-            </div>
-        </div>
+            {filteredItems.length === 0 && (
+              <div className="col-span-2 py-12 text-center bg-slate-50 rounded-2xl border border-slate-100">
+                <p className="text-slate-500 font-bold text-sm">Aucun produit trouvé dans cette catégorie.</p>
+              </div>
+            )}
+          </motion.div>
+        </section>
 
       </main>
-
-      {/* Floating Action Menu for Website feel */}
-      <AnimatePresence>
-        {scrolled && (
-            <motion.div 
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 100, opacity: 0 }}
-                className="fixed bottom-6 left-6 z-50 transition-all duration-500"
-            >
-                <a 
-                    href="tel:0782777560" 
-                    className="w-14 h-14 flex items-center justify-center bg-red-600 text-white rounded-full hover:bg-slate-900 transition-all shadow-2xl shadow-red-900/40 group active:scale-95"
-                >
-                    <Phone className="w-6 h-6 group-hover:animate-bounce" />
-                </a>
-            </motion.div>
-        )}
-      </AnimatePresence>
 
       <Footer onNavigate={onNavigate} />
     </div>
@@ -1264,20 +1166,21 @@ const MenuPage = ({ category, onBack, onMenuClick, onAddToCart }: { category: Pa
     <div className="min-h-screen bg-white">
       <Header isSmallLogo={true} onBack={onBack} onCallClick={() => window.location.href = 'tel:0782777560'} title={titles[category as keyof typeof titles]} />
       
-      {/* Category Hero Image */}
-      <div className="w-full h-48 relative overflow-hidden bg-slate-200">
-        <img 
-          src={`https://picsum.photos/seed/${category}/800/400`} 
-          alt={category} 
-          className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-black/20" />
-      </div>
+      <div className="max-w-md mx-auto w-full">
+        {/* Category Hero Image */}
+        <div className="w-full h-48 relative overflow-hidden bg-slate-200">
+          <img 
+            src={`https://picsum.photos/seed/${category}/800/400`} 
+            alt={category} 
+            className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-black/20" />
+        </div>
 
-      <div className="max-w-4xl mx-auto w-full px-4 md:px-8">
-        {/* Main View Toggle */}
-        <div className="px-6 py-3 md:py-6 sticky top-16 md:top-20 z-30 bg-white/95 backdrop-blur-sm border-b border-slate-100 mb-2 max-w-lg mx-auto">
+        <div className="w-full px-4">
+          {/* Main View Toggle */}
+          <div className="px-2 py-3 sticky top-16 z-30 bg-white/95 backdrop-blur-sm border-b border-slate-100 mb-2">
             <div className="bg-slate-100 p-1.5 rounded-2xl flex shadow-inner">
                 <button 
                   onClick={() => setActiveTab('carte')}
@@ -1339,7 +1242,7 @@ const MenuPage = ({ category, onBack, onMenuClick, onAddToCart }: { category: Pa
                           }
                         }
                       }}
-                      className="px-4 pt-4 pb-20 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-x-12 md:gap-y-4"
+                      className="px-4 pt-4 pb-20 grid grid-cols-2 gap-2.5 sm:gap-3"
                     >
                     {menuItems.map((item, idx) => (
                         <MenuListItem 
@@ -1439,6 +1342,7 @@ const MenuPage = ({ category, onBack, onMenuClick, onAddToCart }: { category: Pa
         </div>
       </div>
     </div>
+  </div>
   );
 };
 
@@ -1554,7 +1458,7 @@ const CustomizationModal = ({
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-x-0 bottom-0 md:inset-y-0 md:right-0 md:left-auto md:w-[450px] z-[70] w-full max-h-[90vh] md:max-h-full bg-white rounded-t-[32px] md:rounded-l-[32px] md:rounded-t-none overflow-hidden flex flex-col"
+            className="fixed inset-x-0 bottom-0 z-[70] w-full max-w-[480px] mx-auto max-h-[90vh] bg-white rounded-t-[32px] overflow-hidden flex flex-col shadow-2xl"
           >
             <div className="p-6 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10">
               <h2 className="text-xl font-bold text-slate-800">Personnaliser</h2>
@@ -1570,7 +1474,7 @@ const CustomizationModal = ({
                   <div className="flex items-center gap-2 mb-2">
                     <span className="px-2 py-1 bg-red-50 text-red-600 text-[8px] font-black uppercase tracking-[0.2em] rounded-md">{category}</span>
                   </div>
-                  <h3 className="text-3xl font-serif font-bold text-slate-900 mb-3">{item.name}</h3>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">{item.name}</h3>
                   <p className="text-sm text-slate-500 leading-relaxed font-medium">
                     {item.description || (category === 'pizza' ? "Une délicieuse pizza artisanale, cuite lentement au feu de bois pour un goût authentique et une pâte croustillante." : category === 'burger' ? "Un burger gourmet généreux, avec des produits frais et une viande de qualité, servi avec nos frites maison." : "Une spécialité préparée avec le plus grand soin par nos artisans pour un moment de plaisir unique.")}
                   </p>
@@ -1968,7 +1872,7 @@ const CartDrawer = ({
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-x-0 bottom-0 md:inset-y-0 md:right-0 md:left-auto md:w-[450px] z-50 w-full max-h-[90vh] md:max-h-full bg-white rounded-t-[32px] md:rounded-l-[32px] md:rounded-t-none overflow-hidden flex flex-col shadow-2xl"
+            className="fixed inset-x-0 bottom-0 z-50 w-full max-w-[480px] mx-auto max-h-[90vh] bg-white rounded-t-[32px] overflow-hidden flex flex-col shadow-2xl"
           >
             {step === 'cart' ? (
                 <>
@@ -2205,12 +2109,12 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
                 <div className="absolute bottom-6 md:bottom-8 left-6 md:left-10">
-                  <h1 className="text-3xl md:text-5xl font-serif font-bold text-white mb-2">
+                  <h1 className="text-3xl md:text-5xl font-bold text-white mb-2">
                     {activeCategory === 'all' ? 'Toute la Carte' : activeCategoryData?.name}
                   </h1>
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-1 bg-red-600 rounded-full" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/80">L'Artisanale</span>
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-white/80">L'Artisanale</span>
                   </div>
                 </div>
               </motion.div>
@@ -2222,9 +2126,9 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
             <div className="hidden md:block">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-8 h-1 bg-red-600 rounded-full" />
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-red-600">Sélection du jour</span>
+                <span className="text-[10px] font-medium uppercase tracking-wider text-red-600">Sélection du jour</span>
               </div>
-              <p className="text-slate-400 font-bold uppercase text-[10px] tracking-widest">
+              <p className="text-slate-400 font-medium uppercase text-[10px] tracking-wider">
                 Découvrez nos saveurs authentiques
               </p>
             </div>
@@ -2234,13 +2138,13 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                 <div className="bg-slate-50 p-1 rounded-2xl flex border border-slate-100 min-w-0">
                   <button 
                     onClick={() => setPizzaBase('tomato')}
-                    className={`flex-1 px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${pizzaBase === 'tomato' ? 'bg-white shadow-md text-red-600' : 'text-slate-500'}`}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-[11px] font-medium uppercase tracking-wider transition-all ${pizzaBase === 'tomato' ? 'bg-white shadow-md text-red-600 font-semibold' : 'text-slate-500'}`}
                   >
                     Tomate
                   </button>
                   <button 
                     onClick={() => setPizzaBase('cream')}
-                    className={`flex-1 px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all ${pizzaBase === 'cream' ? 'bg-white shadow-md text-red-600' : 'text-slate-500'}`}
+                    className={`flex-1 px-4 py-2.5 rounded-xl text-[11px] font-medium uppercase tracking-wider transition-all ${pizzaBase === 'cream' ? 'bg-white shadow-md text-red-600 font-semibold' : 'text-slate-500'}`}
                   >
                     Crème
                   </button>
@@ -2269,10 +2173,10 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
                          {categoryData?.icon || <LayoutGrid className="w-5 h-5" />}
                       </div>
                       <div>
-                        <h3 className="text-2xl md:text-3xl font-serif font-black text-slate-900 capitalize tracking-tight">
+                        <h3 className="text-xl md:text-2xl font-bold text-slate-800 capitalize tracking-tight">
                           {categoryData?.name || item.categoryId}
                         </h3>
-                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-0.5">{categoryData?.subtitle}</p>
+                        <p className="text-xs font-normal text-slate-400 uppercase tracking-wider mt-0.5">{categoryData?.subtitle}</p>
                       </div>
                     </div>
                   )}
@@ -2290,9 +2194,9 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
               <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-white border border-white/10">
                 <UtensilsCrossed className="w-5 h-5" />
               </div>
-              <span className="font-serif font-bold text-lg tracking-tight text-white">L'Artisanale</span>
+              <span className="font-semibold text-lg tracking-tight text-white">L'Artisanale</span>
               <div className="w-7 h-1 bg-red-600 rounded-full mt-1" />
-              <p className="text-[9px] text-slate-500 font-black uppercase tracking-[0.2em]">2026 l'artisanale draria</p>
+              <p className="text-[9px] text-slate-500 font-medium uppercase tracking-wider">2026 l'artisanale draria</p>
             </div>
 
             {filteredItems.length === 0 && (
@@ -2470,7 +2374,7 @@ export default function App() {
   const isMenuPage = location.pathname === '/carte';
 
   return (
-    <div id="app-root" className="min-h-screen">
+    <div id="app-root" className="min-h-screen bg-white flex flex-col selection:bg-red-500 selection:text-white">
       <AnimatePresence mode="wait" initial={false}>
         <Routes location={location}>
           <Route path="/" element={
@@ -2481,7 +2385,14 @@ export default function App() {
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.3 }}
             >
-              <HomePage onNavigate={navigateTo} onMenuClick={toggleNav} hasCart={cartCount > 0} />
+              <HomePage 
+                onNavigate={navigateTo} 
+                onMenuClick={toggleNav} 
+                hasCart={cartCount > 0} 
+                onAddToCart={startCustomization}
+                activeCategory={activeMenuCategory}
+                setActiveCategory={setActiveMenuCategory}
+              />
             </motion.div>
           } />
           <Route path="/carte" element={
@@ -2513,54 +2424,48 @@ export default function App() {
         onNavigate={navigateTo} 
       />
 
-      {isMenuPage && (
-        <>
-          <CustomizationModal 
-            isOpen={!!customizingItem}
-            item={customizingItem}
-            category={customizingCategory}
-            onClose={() => { setCustomizingItem(null); setEditingCartId(null); }}
-            onConfirm={confirmAddToCart}
-            initialVariant={initialVariant}
-            initialPrice={initialPrice}
-            initialSauces={initialSauces}
-            initialCrudites={initialCrudites}
-            initialIsMenu={initialIsMenu}
-            initialSupplements={initialSupplements}
-            isEditing={!!editingCartId}
-          />
+      <CustomizationModal 
+        isOpen={!!customizingItem}
+        item={customizingItem}
+        category={customizingCategory}
+        onClose={() => { setCustomizingItem(null); setEditingCartId(null); }}
+        onConfirm={confirmAddToCart}
+        initialVariant={initialVariant}
+        initialPrice={initialPrice}
+        initialSauces={initialSauces}
+        initialCrudites={initialCrudites}
+        initialIsMenu={initialIsMenu}
+        initialSupplements={initialSupplements}
+        isEditing={!!editingCartId}
+      />
 
-          <CartDrawer 
-            isOpen={isCartOpen}
-            onClose={() => setIsCartOpen(false)}
-            cart={cart}
-            onUpdateQuantity={updateQuantity}
-            onRemove={removeItem}
-            onEdit={startEditCartItem}
-          />
+      <CartDrawer 
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cart={cart}
+        onUpdateQuantity={updateQuantity}
+        onRemove={removeItem}
+        onEdit={startEditCartItem}
+      />
 
-          {/* Floating Cart Button */}
-          {cartCount > 0 && (
-            <motion.div 
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              className="fixed bottom-8 right-6 lg:bottom-10 lg:right-10 z-40"
-            >
-              <button 
-                id="floating-cart"
-                onClick={() => setIsCartOpen(true)}
-                className="bg-red-600 text-white rounded-full p-5 lg:p-6 flex items-center shadow-2xl hover:scale-110 active:scale-95 transition-all"
-              >
-                <div className="relative">
-                    <ShoppingBag className="w-7 h-7 lg:w-8 lg:h-8" />
-                    <span className="absolute -top-2 -right-2 bg-slate-900 text-white text-[10px] font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-50">
-                        {cartCount}
-                    </span>
-                </div>
-              </button>
-            </motion.div>
-          )}
-        </>
+      {/* Floating Cart Button */}
+      {cartCount > 0 && (
+        <div className="fixed inset-x-0 bottom-6 z-40 max-w-md mx-auto pointer-events-none px-4 flex justify-end">
+          <motion.button 
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            id="floating-cart"
+            onClick={() => setIsCartOpen(true)}
+            className="pointer-events-auto bg-red-600 text-white rounded-full p-4 flex items-center shadow-2xl hover:scale-105 active:scale-95 transition-all cursor-pointer"
+          >
+            <div className="relative">
+                <ShoppingBag className="w-6 h-6" />
+                <span className="absolute -top-2 -right-2 bg-slate-900 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+                    {cartCount}
+                </span>
+            </div>
+          </motion.button>
+        </div>
       )}
     </div>
   );
