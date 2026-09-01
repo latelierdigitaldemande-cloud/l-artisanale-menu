@@ -398,8 +398,8 @@ const MenuListItem = ({ item, category, onAddToCart }: MenuListItemProps) => {
       onClick={() => onAddToCart()}
     >
       <div>
-        {/* Product Image - Aspect Square on Top */}
-        <div className="relative w-full aspect-square overflow-hidden rounded-xl bg-slate-50 border border-slate-100/80 mb-2">
+        {/* Product Image - Reduced height for more compact card */}
+        <div className="relative w-full aspect-[4/3] overflow-hidden rounded-xl bg-slate-50 border border-slate-100/80 mb-2">
           <img 
             src={item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=300'} 
             alt={item.name}
@@ -407,10 +407,6 @@ const MenuListItem = ({ item, category, onAddToCart }: MenuListItemProps) => {
             referrerPolicy="no-referrer"
           />
           <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
-          
-          <span className="absolute top-2 left-2 bg-white/95 backdrop-blur-xs text-slate-700 text-[8px] font-medium uppercase px-1.5 py-0.5 rounded-md shadow-xs">
-            {category === 'pizza' ? 'Feu de bois' : category}
-          </span>
         </div>
         
         {/* Content */}
@@ -418,35 +414,22 @@ const MenuListItem = ({ item, category, onAddToCart }: MenuListItemProps) => {
           <h4 className="text-xs sm:text-sm font-semibold text-slate-800 leading-snug line-clamp-1 group-hover:text-red-600 transition-colors">
             {item.name}
           </h4>
-          
-          {item.description && (
-            <p className="text-slate-400 text-[10px] font-normal leading-tight line-clamp-2 mt-1">
-              {item.description}
-            </p>
-          )}
         </div>
       </div>
 
-      {/* Bottom price and add button */}
-      <div className="flex items-center justify-between mt-3 pt-2 border-t border-slate-100/80">
-        <div className="flex flex-col leading-tight">
-          {typeof price !== 'number' && (
-            <span className="text-[7px] text-slate-400 font-medium uppercase tracking-wider">Dès</span>
-          )}
-          <span className="text-xs font-semibold text-slate-900 tabular-nums">
-            {startingPrice} <span className="text-[9px] font-normal text-slate-500 uppercase">DA</span>
-          </span>
-        </div>
-        
+      {/* Full-width add button with centered price */}
+      <div className="mt-2 pt-2 border-t border-slate-100/80">
         <button 
           onClick={(e) => {
             e.stopPropagation();
             onAddToCart();
           }}
-          className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-slate-900 text-white rounded-xl shadow-xs hover:bg-red-600 active:scale-90 transition-all flex-shrink-0 cursor-pointer"
-          aria-label="Ajouter au panier"
+          className="w-full h-8 sm:h-9 px-3 flex items-center justify-center bg-slate-900 text-white rounded-full shadow-xs hover:bg-red-600 active:scale-[0.98] transition-all cursor-pointer"
+          aria-label={`Ajouter au panier - ${startingPrice} DA`}
         >
-          <Plus className="w-4 h-4" />
+          <span className="text-xs sm:text-[13px] font-semibold tracking-tight text-white">
+            {startingPrice} DA
+          </span>
         </button>
       </div>
     </motion.div>
@@ -559,18 +542,19 @@ const NavigationDrawer = ({ isOpen, onClose, onNavigate }: { isOpen: boolean, on
           className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
         />
         <motion.div 
-          initial={{ y: '-100%' }}
-          animate={{ y: 0 }}
-          exit={{ y: '-100%' }}
-          transition={{ type: 'spring', damping: 30, stiffness: 100, mass: 1 }}
-          className="fixed inset-0 z-[60] bg-white flex flex-col h-full overflow-hidden max-w-md mx-auto"
+          initial={{ x: '100%' }}
+          animate={{ x: 0 }}
+          exit={{ x: '100%' }}
+          transition={{ type: 'spring', damping: 30, stiffness: 200 }}
+          className="fixed inset-0 z-[60] bg-white flex flex-col h-full overflow-hidden max-w-md mx-auto shadow-2xl"
         >
           {/* Header inside drawer */}
-          <div className="flex justify-end items-center px-4 py-5 w-full">
+          <div className="flex justify-start items-center px-4 py-5 w-full">
             <button 
               onClick={onClose} 
               id="close-drawer" 
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 hover:bg-red-50 hover:text-red-600 transition-all active:scale-90 border border-slate-100"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-900 hover:bg-red-50 hover:text-red-600 transition-all active:scale-90 border border-slate-100 cursor-pointer"
+              aria-label="Fermer le menu"
             >
               <X className="w-5 h-5" />
             </button>
@@ -911,39 +895,41 @@ const HomePage = ({
             </div>
 
             {/* Delivery / Takeaway Switcher Pill */}
-            <div className="mt-4 bg-slate-50 border border-slate-200/80 rounded-full p-1.5 px-3 flex items-center justify-between shadow-xs">
-              <div className="flex items-center gap-1 bg-white p-0.5 rounded-full border border-slate-200/60 shadow-inner">
-                <button 
-                  onClick={() => setDeliveryMode('delivery')}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer ${
-                    deliveryMode === 'delivery' 
-                      ? 'bg-[#FF5A36] text-white shadow-sm' 
-                      : 'text-slate-400 hover:text-slate-600'
-                  }`}
-                  title="Livraison"
-                >
-                  <Bike className="w-4 h-4" />
-                </button>
-                <button 
-                  onClick={() => setDeliveryMode('takeaway')}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer ${
-                    deliveryMode === 'takeaway' 
-                      ? 'bg-[#FF5A36] text-white shadow-sm' 
-                      : 'text-slate-400 hover:text-slate-600'
-                  }`}
-                  title="À emporter / Sur place"
-                >
-                  <Footprints className="w-4 h-4" />
-                </button>
-              </div>
+            <div className="mt-4 flex justify-center">
+              <div className="bg-slate-50 border border-slate-200/80 rounded-full p-1.5 pl-1.5 pr-4 flex items-center gap-3 shadow-xs">
+                <div className="flex items-center gap-1 bg-white p-0.5 rounded-full border border-slate-200/60 shadow-inner shrink-0">
+                  <button 
+                    onClick={() => setDeliveryMode('delivery')}
+                    className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+                      deliveryMode === 'delivery' 
+                        ? 'bg-[#FF5A36] text-white shadow-sm' 
+                        : 'text-slate-400 hover:text-slate-600'
+                    }`}
+                    title="Livraison"
+                  >
+                    <Bike className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => setDeliveryMode('takeaway')}
+                    className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+                      deliveryMode === 'takeaway' 
+                        ? 'bg-[#FF5A36] text-white shadow-sm' 
+                        : 'text-slate-400 hover:text-slate-600'
+                    }`}
+                    title="À emporter / Sur place"
+                  >
+                    <Footprints className="w-4 h-4" />
+                  </button>
+                </div>
 
-              <div className="text-right pr-2">
-                <p className="text-xs font-semibold text-slate-800 leading-tight">
-                  {deliveryMode === 'delivery' ? 'Temps de livraison: 10-20 min' : 'À emporter: 10-15 min'}
-                </p>
-                <p className="text-[11px] text-slate-400 mt-0.5 font-normal">
-                  {deliveryMode === 'delivery' ? 'Frais: 3.5€ • Commande min: 27€' : 'Sans frais • Prêt en restaurant'}
-                </p>
+                <div className="text-left">
+                  <p className="text-xs font-semibold text-slate-800 leading-tight">
+                    {deliveryMode === 'delivery' ? 'Temps de livraison: 10-20 min' : 'À emporter: 10-15 min'}
+                  </p>
+                  <p className="text-[11px] text-slate-400 mt-0.5 font-normal">
+                    {deliveryMode === 'delivery' ? 'Frais: 3.5€ • Commande min: 27€' : 'Sans frais • Prêt en restaurant'}
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -1364,25 +1350,44 @@ const CustomizationModal = ({
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="fixed inset-x-0 bottom-0 z-[70] w-full max-w-[480px] mx-auto max-h-[90vh] bg-white rounded-t-[32px] overflow-hidden flex flex-col shadow-2xl"
           >
-            <div className="p-6 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10">
-              <h2 className="text-xl font-bold text-slate-800">Personnaliser</h2>
-              <button onClick={onClose} className="p-2 bg-slate-100 rounded-full text-slate-500">
-                <X className="w-6 h-6" />
+            {/* Top Product Image Banner */}
+            <div className="relative w-full h-44 sm:h-52 bg-slate-100 flex-shrink-0 overflow-hidden">
+              <img 
+                src={item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=600'} 
+                alt={item.name}
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-black/40" />
+              
+              {/* Category Pill Tag */}
+              <div className="absolute top-4 left-4 z-10">
+                <span className="px-3 py-1 bg-white/95 backdrop-blur-md text-slate-800 text-[10px] font-bold uppercase tracking-wider rounded-full shadow-xs">
+                  {category === 'pizza' ? '🍕 Feu de bois' : category === 'burger' ? '🍔 Burger' : category === 'tacos' ? '🌮 Tacos' : category === 'texmex' ? '🍗 Tex-Mex' : category === 'desserts' ? '🍰 Dessert' : category === 'drinks' ? '🥤 Boisson' : (category || 'Menu')}
+                </span>
+              </div>
+
+              {/* Close Button Floating */}
+              <button 
+                onClick={onClose} 
+                className="absolute top-4 right-4 z-10 w-8 h-8 sm:w-9 sm:h-9 bg-black/40 hover:bg-black/60 backdrop-blur-md text-white rounded-full flex items-center justify-center transition-all active:scale-90 cursor-pointer shadow-sm"
+                aria-label="Fermer"
+              >
+                <X className="w-5 h-5" />
               </button>
+
+              {/* Title on Banner Bottom */}
+              <div className="absolute bottom-3 left-4 right-4 z-10 text-white">
+                <h3 className="text-xl sm:text-2xl font-bold leading-tight drop-shadow-sm">{item.name}</h3>
+              </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto no-scrollbar p-6 space-y-10">
+            <div className="flex-1 overflow-y-auto no-scrollbar p-6 space-y-8">
               {/* Item Info */}
-              <div className="flex flex-col gap-6">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="px-2 py-1 bg-red-50 text-red-600 text-[8px] font-black uppercase tracking-[0.2em] rounded-md">{category}</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">{item.name}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed font-medium">
-                    {item.description || (category === 'pizza' ? "Une délicieuse pizza artisanale, cuite lentement au feu de bois pour un goût authentique et une pâte croustillante." : category === 'burger' ? "Un burger gourmet généreux, avec des produits frais et une viande de qualité, servi avec nos frites maison." : "Une spécialité préparée avec le plus grand soin par nos artisans pour un moment de plaisir unique.")}
-                  </p>
-                </div>
+              <div className="flex flex-col gap-2">
+                <p className="text-sm text-slate-500 leading-relaxed font-normal">
+                  {item.description || (category === 'pizza' ? "Une délicieuse pizza artisanale, cuite lentement au feu de bois pour un goût authentique et une pâte croustillante." : category === 'burger' ? "Un burger gourmet généreux, avec des produits frais et une viande de qualité, servi avec nos frites maison." : "Une spécialité préparée avec le plus grand soin par nos artisans pour un moment de plaisir unique.")}
+                </p>
               </div>
 
               {/* Size Selection if applicable */}
