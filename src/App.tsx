@@ -772,7 +772,6 @@ const HomePage = ({
   setActiveCategory: (cat: string) => void
 }) => {
   const isOpen = checkIsOpen();
-  const [pizzaBase, setPizzaBase] = useState<'tomato' | 'cream'>('tomato');
   const [isLiked, setIsLiked] = useState(false);
   const [deliveryMode, setDeliveryMode] = useState<'delivery' | 'takeaway'>('delivery');
   const [shareCopied, setShareCopied] = useState(false);
@@ -804,8 +803,8 @@ const HomePage = ({
   const activeCategoryData = useMemo(() => CATEGORIES.find(c => c.id === activeCategory), [activeCategory]);
 
   const filteredPizzaMenu = useMemo(() => {
-    return PIZZA_MENU.filter(p => !p.base || p.base === pizzaBase);
-  }, [pizzaBase]);
+    return PIZZA_MENU;
+  }, []);
 
   const filteredItems = useMemo(() => {
     if (activeCategory === 'all') {
@@ -1013,67 +1012,9 @@ const HomePage = ({
             </div>
           </div>
 
-          {/* Category Banner Card */}
-          <div className="relative h-36 rounded-2xl overflow-hidden mb-6 shadow-md border border-slate-100">
-            <AnimatePresence mode="wait">
-              <motion.div 
-                key={activeCategory}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="absolute inset-0"
-              >
-                <img 
-                  src={activeCategory === 'all' ? 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=1000' : activeCategoryData?.image} 
-                  alt={activeCategory === 'all' ? 'Toute la Carte' : activeCategoryData?.name}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/40 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <span className="text-[9px] font-medium uppercase tracking-wider text-red-400 block mb-0.5">
-                    {activeCategory === 'all' ? 'Menu Complet' : activeCategoryData?.subtitle}
-                  </span>
-                  <h3 className="text-lg font-semibold mb-0.5 leading-tight">
-                    {activeCategory === 'all' ? 'Toute la Carte' : activeCategoryData?.name}
-                  </h3>
-                  <p className="text-white/80 text-[11px] font-normal line-clamp-1">
-                    {activeCategory === 'pizza' ? 'Cuites dans notre four traditionnel au feu de bois' : 
-                     activeCategory === 'burger' ? 'Steaks frais smashés et buns artisanaux' :
-                     activeCategory === 'tacos' ? 'Généreusement garnis avec sauce fromagère' :
-                     activeCategory === 'texmex' ? 'Tenders croustillants et spécialités' :
-                     activeCategory === 'desserts' ? 'Douceurs préparées maison' :
-                     activeCategory === 'drinks' ? 'Boissons fraîches' :
-                     'Découvrez toutes nos recettes préparées à Draria'}
-                  </p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Pizza Base Toggle (Tomate / Crème) */}
-          {(activeCategory === 'pizza' || activeCategory === 'all') && (
-            <div className="flex justify-center mb-5">
-              <div className="bg-slate-100 p-1 rounded-xl flex border border-slate-200 shadow-inner w-full max-w-xs">
-                <button 
-                  onClick={() => setPizzaBase('tomato')}
-                  className={`flex-1 py-1.5 rounded-lg text-[11px] font-medium transition-all cursor-pointer text-center ${pizzaBase === 'tomato' ? 'bg-white shadow-sm text-red-600 font-semibold' : 'text-slate-500'}`}
-                >
-                  🍅 Base Tomate
-                </button>
-                <button 
-                  onClick={() => setPizzaBase('cream')}
-                  className={`flex-1 py-1.5 rounded-lg text-[11px] font-medium transition-all cursor-pointer text-center ${pizzaBase === 'cream' ? 'bg-white shadow-sm text-red-600 font-semibold' : 'text-slate-500'}`}
-                >
-                  🥛 Base Crème
-                </button>
-              </div>
-            </div>
-          )}
-
           {/* Menu Items Grid - 2x2 Column Mobile */}
           <motion.div 
-            key={`${activeCategory}-${pizzaBase}`}
+            key={activeCategory}
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
@@ -1127,18 +1068,17 @@ const HomePage = ({
 };
 
 const MenuPage = ({ category, onBack, onMenuClick, onAddToCart }: { category: Page, onBack: () => void, onMenuClick: () => void, onAddToCart: (item: MenuItem, cat: string, variant?: string, priceVal?: number) => void }) => {
-  const [pizzaBase, setPizzaBase] = useState<'tomato' | 'cream'>('tomato');
   const [activeTab, setActiveTab] = useState<'carte' | 'extras'>('carte');
 
   const menuItems = useMemo(() => {
     switch (category) {
-      case 'pizza': return PIZZA_MENU.filter(p => !p.base || p.base === pizzaBase);
+      case 'pizza': return PIZZA_MENU;
       case 'burger': return BURGER_MENU;
       case 'tacos': return TACOS_MENU;
       case 'texmex': return TEXMEX_MENU;
       default: return [];
     }
-  }, [category, pizzaBase]);
+  }, [category]);
 
   const titles = {
     pizza: 'Nos Pizzas',
@@ -1192,31 +1132,9 @@ const MenuPage = ({ category, onBack, onMenuClick, onAddToCart }: { category: Pa
                     exit={{ opacity: 0, x: -10 }}
                     className="pb-8"
                 >
-                    {/* Pizza Toggle */}
-                    {category === 'pizza' && (
-                    <div className="px-6 mb-8 mt-4">
-                        <div className="bg-slate-50 p-1 rounded-xl flex border border-slate-100">
-                            <button 
-                                id="toggle-tomato"
-                                onClick={() => setPizzaBase('tomato')}
-                                className={`flex-1 py-2 rounded-lg text-[10px] font-bold transition-all ${pizzaBase === 'tomato' ? 'bg-white shadow-sm text-red-600' : 'text-slate-500'}`}
-                            >
-                                Base Tomate
-                            </button>
-                            <button 
-                                id="toggle-cream"
-                                onClick={() => setPizzaBase('cream')}
-                                className={`flex-1 py-2 rounded-lg text-[10px] font-bold transition-all ${pizzaBase === 'cream' ? 'bg-white shadow-sm text-red-600' : 'text-slate-500'}`}
-                            >
-                                Base Crème
-                            </button>
-                        </div>
-                    </div>
-                    )}
-
                     {/* Menu Items List */}
                     <motion.div 
-                      key={`${category}-${pizzaBase}`}
+                      key={category}
                       initial="hidden"
                       animate="visible"
                       variants={{
@@ -1974,17 +1892,11 @@ const CartDrawer = ({
 };
 
 const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setActiveCategory, onLogoClick }: { onBack: () => void, onMenuClick: () => void, onAddToCart: (item: MenuItem, cat: string, variant?: string, priceVal?: number) => void, activeCategory: string, setActiveCategory: (cat: string) => void, onLogoClick: () => void }) => {
-  const [pizzaBase, setPizzaBase] = useState<'tomato' | 'cream'>('tomato');
-
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [activeCategory]);
 
   const activeCategoryData = useMemo(() => CATEGORIES.find(c => c.id === activeCategory), [activeCategory]);
-
-  const filteredPizzaMenu = useMemo(() => {
-    return PIZZA_MENU.filter(p => !p.base || p.base === pizzaBase);
-  }, [pizzaBase]);
 
   const filteredItems = useMemo(() => {
     if (activeCategory === 'all') {
@@ -2004,8 +1916,8 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
       });
       return allItems;
     }
-    return activeCategory === 'pizza' ? filteredPizzaMenu : activeCategoryData?.menu || [];
-  }, [activeCategory, filteredPizzaMenu, activeCategoryData]);
+    return activeCategory === 'pizza' ? PIZZA_MENU : activeCategoryData?.menu || [];
+  }, [activeCategory, activeCategoryData]);
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -2121,25 +2033,6 @@ const FullMenuPage = ({ onBack, onMenuClick, onAddToCart, activeCategory, setAct
               <p className="text-slate-400 font-medium uppercase text-[10px] tracking-wider">
                 Découvrez nos saveurs authentiques
               </p>
-            </div>
-
-            <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4">
-              {activeCategory === 'pizza' && (
-                <div className="bg-slate-50 p-1 rounded-2xl flex border border-slate-100 min-w-0">
-                  <button 
-                    onClick={() => setPizzaBase('tomato')}
-                    className={`flex-1 px-4 py-2.5 rounded-xl text-[11px] font-medium uppercase tracking-wider transition-all ${pizzaBase === 'tomato' ? 'bg-white shadow-md text-red-600 font-semibold' : 'text-slate-500'}`}
-                  >
-                    Tomate
-                  </button>
-                  <button 
-                    onClick={() => setPizzaBase('cream')}
-                    className={`flex-1 px-4 py-2.5 rounded-xl text-[11px] font-medium uppercase tracking-wider transition-all ${pizzaBase === 'cream' ? 'bg-white shadow-md text-red-600 font-semibold' : 'text-slate-500'}`}
-                  >
-                    Crème
-                  </button>
-                </div>
-              )}
             </div>
           </div>
 
